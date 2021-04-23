@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:virtuallearningapp/view/screens/student/course_content/tabs/classroom/classroom.dart';
 import 'package:virtuallearningapp/view/screens/student/course_content/tabs/content/content.dart';
+import 'package:virtuallearningapp/view/screens/widgets/appbar.dart';
 
 class StudentCourseContent extends StatelessWidget {
   @override
@@ -12,8 +13,15 @@ class StudentCourseContent extends StatelessWidget {
           backgroundColor: Colors.grey.shade400,
           appBar: PreferredSize(
             preferredSize: Size.fromHeight(150),
-            child: AppBar(
-              bottom: TabBar(
+            child: AppBar(  leading: Container(), flexibleSpace: Padding(
+                padding: const EdgeInsets.only(bottom: 50),
+                child: CustomAppBar(
+                  username: "Saliu Johnson",
+                  departmentname: "HND Computer Science",
+                ),
+              ),
+              backgroundColor: Colors.orange,
+              bottom: TabBar(indicatorColor: Colors.white,
                 tabs: [
                   Tab(text: 'CONTENT'),
                   Tab(text: 'CLASSROOM'),

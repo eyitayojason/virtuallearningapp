@@ -12,7 +12,10 @@ class StudentDashboard extends StatelessWidget {
         backgroundColor: Colors.grey.shade400,
         appBar: PreferredSize(
           preferredSize: Size.fromHeight(100),
-          child: CustomAppBar(),
+          child: CustomAppBar(
+            username: "Saliu Johnson",
+            departmentname: "HND Computer Science",
+          ),
         ),
         body: _Body(),
       ),

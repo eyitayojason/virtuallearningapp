@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:virtuallearningapp/view/screens/Signup.dart';
 import 'package:virtuallearningapp/view/screens/lecturer/login/Loginscreen.dart';
 import 'package:virtuallearningapp/view/screens/student/login/Loginscreen.dart';
 import 'package:virtuallearningapp/view/screens/widgets/button.dart';
@@ -28,7 +29,8 @@ class FirstScreen extends StatelessWidget {
                         onPressed: () {
                           Navigator.push(
                             context,
-                            MaterialPageRoute(builder: (context) => StudentLogin()),
+                            MaterialPageRoute(
+                                builder: (context) => StudentLogin()),
                           );
                         },
                       ),
@@ -40,10 +42,27 @@ class FirstScreen extends StatelessWidget {
                         onPressed: () {
                           Navigator.push(
                             context,
-                            MaterialPageRoute(builder: (context) => LecturerLogin()),
+                            MaterialPageRoute(
+                                builder: (context) => LecturerLogin()),
                           );
                         },
                       ),
+                      SizedBox(
+                        height: 20,
+                      ),
+                      Center(
+                        child: InkWell(
+                          onTap: () => Navigator.push(
+                              context,
+                              MaterialPageRoute(
+                                builder: (context) => Signup(),
+                              )),
+                          child: Text(
+                            "Signup",
+                            style: TextStyle(fontWeight: FontWeight.bold),
+                          ),
+                        ),
+                      )
                     ],
                   ),
                 ),

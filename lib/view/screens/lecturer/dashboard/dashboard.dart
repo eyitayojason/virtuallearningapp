@@ -12,7 +12,10 @@ class LecturerDashboard extends StatelessWidget {
         backgroundColor: Colors.grey.shade400,
         appBar: PreferredSize(
           preferredSize: Size.fromHeight(100),
-          child: CustomAppBar(),
+          child: CustomAppBar(
+            username: "Mr Ogundele",
+            departmentname: "Department Of Computer Science",
+          ),
         ),
         body: _Body(),
       ),

@@ -1,8 +1,12 @@
 import 'package:flutter/material.dart';
 
 class CustomAppBar extends StatelessWidget {
+  final String username;
+  final String departmentname;
   const CustomAppBar({
     Key key,
+    this.username,
+    this.departmentname,
   }) : super(key: key);
 
   @override
@@ -16,9 +20,11 @@ class CustomAppBar extends StatelessWidget {
           mainAxisAlignment: MainAxisAlignment.end,
           children: [
             Text(
-              "Saliu Johnson",
+              username,
               style: TextStyle(
-                  color: Colors.white, fontSize: 30, fontWeight: FontWeight.bold),
+                  color: Colors.white,
+                  fontSize: 30,
+                  fontWeight: FontWeight.bold),
             ),
             Row(
               children: [
@@ -30,7 +36,7 @@ class CustomAppBar extends StatelessWidget {
                   width: 10,
                 ),
                 Text(
-                  "HND Computer Science",
+                  departmentname,
                   style: TextStyle(color: Colors.white, fontSize: 12),
                 ),
               ],
