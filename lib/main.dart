@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
-import 'Screens/Splashscreen.dart';
+import 'package:sizer/sizer.dart';
+import 'package:virtuallearningapp/view/Splashscreen.dart';
 
 void main() {
   runApp(MyApp());
@@ -8,12 +9,15 @@ void main() {
 class MyApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
-    return MaterialApp(
-        title: 'Virtual Learning App ',
-        debugShowCheckedModeBanner: false,
-        theme: ThemeData(),
-        home: Splashscreen(
-        
-        ));
+    return Sizer(
+      builder: (context, orientation, screenType) {
+        return MaterialApp(
+          title: 'Virtual Learning App ',
+          debugShowCheckedModeBanner: false,
+          theme: ThemeData(),
+          home: Splashscreen(),
+        );
+      },
+    );
   }
 }

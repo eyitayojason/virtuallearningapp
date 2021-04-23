@@ -1,0 +1,4 @@
+#Fri Apr 23 18:48:42 WAT 2021
+base.0=C\:\\Users\\USER\\Desktop\\FLUTTER PROJECTS\\virtuallearningapp\\build\\app\\intermediates\\dex\\debug\\mergeDexDebug\\classes.dex
+path.0=classes.dex
+renamed.0=classes.dex
