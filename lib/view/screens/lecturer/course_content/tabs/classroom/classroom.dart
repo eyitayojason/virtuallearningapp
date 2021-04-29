@@ -1,27 +1,113 @@
+import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
-import 'package:virtuallearningapp/view/screens/widgets/bubblestyle.dart';
-import 'package:virtuallearningapp/view/screens/widgets/chatbubbles.dart';
-import 'package:virtuallearningapp/view/screens/widgets/conversationEntry.dart';
+import 'package:virtuallearningapp/services%20and%20providers/auth.dart';
+import 'package:virtuallearningapp/services%20and%20providers/messagestream.dart';
 
-class LecturerClassroom extends StatelessWidget {
+final _firestore = FirebaseFirestore.instance;
+User loggedinuser;
+final _auth = FirebaseAuth.instance;
+
+class LecturerClassroom extends StatefulWidget {
+  @override
+  _LecturerClassroomState createState() => _LecturerClassroomState();
+}
+
+class _LecturerClassroomState extends State<LecturerClassroom> {
+  final messageTextController = TextEditingController();
+   void getCurrentUser() async {
+    try {
+      final user = _auth.currentUser;
+
+      if (user != null) {
+        loggedinuser = user;
+        print(loggedinuser.email);
+      }
+    } catch (e) {
+      print(e);
+    }
+  }
+  @override
+  void initState() {
+    super.initState();
+   getCurrentUser();
+  }
+
   @override
   Widget build(BuildContext context) {
-    return SafeArea(
-      child: DefaultTabController(
-        length: 2,
+    String userMessage;
+    return DefaultTabController(
+      length: 2,
+      child: SafeArea(
         child: Scaffold(
-          backgroundColor: Colors.grey.shade400,
-          body: Stack(
-            children: [
-              SingleChildScrollView(
-                child: InkWell(
-                  child: Chatbubbles(
-                    styleSomebody: Bubblestyle.styleSomebody,
-                    styleMe: Bubblestyle.styleMe,
+          backgroundColor: Colors.grey.shade300,
+          body: Column(
+            children: <Widget>[
+              MessagesStream(),
+              Align(
+                alignment: Alignment.bottomLeft,
+                child: Container(
+                  padding: EdgeInsets.only(left: 10, bottom: 10, top: 10),
+                  height: 60,
+                  width: double.infinity,
+                  color: Colors.white,
+                  child: Row(
+                    crossAxisAlignment: CrossAxisAlignment.center,
+                    children: <Widget>[
+                      Container(
+                        height: 30,
+                        width: 30,
+                        decoration: BoxDecoration(
+                          color: Colors.orange,
+                          borderRadius: BorderRadius.circular(30),
+                        ),
+                        child: InkWell(
+                          child: Icon(
+                            Icons.add,
+                            color: Colors.white,
+                            size: 20,
+                          ),
+                        ),
+                      ),
+                      SizedBox(
+                        width: 15,
+                      ),
+                      Expanded(
+                        child: TextField(
+                          decoration: InputDecoration(
+                              hintText: "Write message...",
+                              hintStyle: TextStyle(color: Colors.black54),
+                              border: InputBorder.none),
+                          controller: messageTextController,
+                          onChanged: (value) {
+                            userMessage = value;
+                          },
+                        ),
+                      ),
+                      SizedBox(
+                        width: 15,
+                      ),
+                      FloatingActionButton(
+                        onPressed: () {
+                          messageTextController.clear();
+                          _firestore.collection("Messages").add({
+                            "sender": loggedinuser.email,
+                            "text": userMessage,
+                            "timestamp": Timestamp.now().toDate()
+                          });
+                        },
+                        child: Icon(
+                          Icons.send,
+                          color: Colors.white,
+                          size: 18,
+                        ),
+                        backgroundColor: Colors.orange,
+                        elevation: 0,
+                      ),
+                    ],
                   ),
                 ),
               ),
-              Conversationentrybox(),
             ],
           ),
         ),

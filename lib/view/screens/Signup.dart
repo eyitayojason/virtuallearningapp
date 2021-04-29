@@ -1,29 +1,45 @@
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
+import 'package:modal_progress_hud/modal_progress_hud.dart';
+import 'package:provider/provider.dart';
+import 'package:sizer/sizer.dart';
+import 'package:virtuallearningapp/services%20and%20providers/auth.dart';
 import 'package:virtuallearningapp/view/screens/Firstscreen.dart';
 import 'package:virtuallearningapp/view/screens/widgets/button.dart';
 import 'package:virtuallearningapp/view/screens/widgets/form_textfield.dart';
 import 'package:virtuallearningapp/view/screens/widgets/logo.dart';
-import 'package:sizer/sizer.dart';
+
+final _auth = FirebaseAuth.instance;
+String email;
+String password;
+String fullname;
+String matricStaffno;
+User user;
 
 class Signup extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
+    var authentication = Provider.of<Authentication>(context);
+
     return SafeArea(
       child: Scaffold(
-        body: SingleChildScrollView(
-          child: Center(
-            child: Column(
-              children: [
-                SizedBox(height: 10.0.h),
-                Hero(
-                  tag: "yct",
-                  child: const Yctlogo(),
-                ),
-                SizedBox(height: 5.0.h),
-                Text('Sign Up'),
-                SizedBox(height: 5.0.h),
-                SignupForm(),
-              ],
+        body: ModalProgressHUD(
+          inAsyncCall: authentication.showspinner,
+          child: SingleChildScrollView(
+            child: Center(
+              child: Column(
+                children: [
+                  SizedBox(height: 10.0.h),
+                  Hero(
+                    tag: "yct",
+                    child: const Yctlogo(),
+                  ),
+                  SizedBox(height: 5.0.h),
+                  Text('Register'),
+                  SizedBox(height: 5.0.h),
+                  SignupForm(),
+                ],
+              ),
             ),
           ),
         ),
@@ -32,26 +48,13 @@ class Signup extends StatelessWidget {
   }
 }
 
-class SignupForm extends StatefulWidget {
-  @override
-  SignupFormState createState() {
-    return SignupFormState();
-  }
-}
-
-// Create a corresponding State class.
-// This class holds data related to the form.
-class SignupFormState extends State<SignupForm> {
-  // Create a global key that uniquely identifies the Form widget
-  // and allows validation of the form.
-  //
-  // Note: This is a GlobalKey<FormState>,
-  // not a GlobalKey<MyCustomFormState>.
+class SignupForm extends StatelessWidget {
   final formKey = GlobalKey<FormState>();
 
   @override
   Widget build(BuildContext context) {
-    // Build a Form widget using the _formKey created above.
+    var authentication = Provider.of<Authentication>(context);
+
     return Form(
       key: formKey,
       child: Padding(
@@ -59,34 +62,77 @@ class SignupFormState extends State<SignupForm> {
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.stretch,
           children: <Widget>[
-            CustomFormField(hintText: 'Fullname', obsureText: false),
+            CustomFormField(
+              hintText: 'Fullname',
+              obsureText: false,
+              validate: (value) {
+                if (value == null || value.isEmpty) {
+                  return 'Please enter your name';
+                }
+              },
+              onChanged: (value) {
+                fullname = value;
+              },
+            ),
             SizedBox(height: 20),
             CustomFormField(
-                hintText: 'Matric Number/Staff Number', obsureText: false),
+              hintText: 'Matric Number/Staff Number',
+              textInputType: TextInputType.number,
+              obsureText: false,
+              validate: (value) {
+                if (value == null || value.isEmpty) {
+                  return 'Please enter Matric Number/Staff Number';
+                }
+              },
+              onChanged: (value) => matricStaffno = value,
+            ),
             SizedBox(height: 20),
-            CustomFormField(hintText: 'Email', obsureText: false),
+            CustomFormField(
+              hintText: 'Email',
+              textInputType: TextInputType.emailAddress,
+              obsureText: false,
+              validate: (value) {
+                if (value == null || value.isEmpty) {
+                  return 'Please enter your email';
+                }
+              },
+              onChanged: (value) => email = value,
+            ),
             SizedBox(height: 20),
-            CustomFormField(hintText: 'Password', obsureText: true),
+            CustomFormField(
+              hintText: 'Password',
+              obsureText: true,
+              validate: (value) {
+                if (value == null || value.isEmpty) {
+                  return 'Please enter password';
+                }
+              },
+              onChanged: (value) => password = value,
+            ),
             SizedBox(height: 20),
             CustomButton(
               text: 'SIGNUP',
-              onPressed: () {
-                // Validate returns true if the form is valid, or false otherwise.
-                if (formKey.currentState.validate()) {
-                  setState(() {
-                    SnackBar(
-                      content: Text("Signup Sucessful"),
-                    );
-                  });
+              onPressed: () async {
+                try {
+                  if (formKey.currentState.validate()) {
+                    authentication.showSpinner();
+                    final newUser = await _auth.createUserWithEmailAndPassword(
+                        email: email, password: password);
+                    if (newUser != null) {
+                      Navigator.push(
+                        context,
+                        MaterialPageRoute(
+                          builder: (context) => FirstScreen(),
+                        ),
+                      );
+                    }
+                    authentication.showSubmitRequestSnackBar(
+                        context, "Registration Complete, Proceed to LOGIN");
 
-                  // If the form is valid, display a snackbar. In the real world,
-                  // you'd often call a server or save the information in a database.
-                  Navigator.push(
-                    context,
-                    MaterialPageRoute(
-                      builder: (context) => FirstScreen(),
-                    ),
-                  );
+                    authentication.stopSpinner();
+                  }
+                } catch (e) {
+                  print(e);
                 }
               },
             ),

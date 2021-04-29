@@ -1,9 +1,37 @@
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:virtuallearningapp/view/screens/lecturer/course_content/tabs/classroom/classroom.dart';
 import 'package:virtuallearningapp/view/screens/lecturer/course_content/tabs/content/content.dart';
 import 'package:virtuallearningapp/view/screens/widgets/appbar.dart';
 
-class LecturerCourseContent extends StatelessWidget {
+final _auth = FirebaseAuth.instance;
+User loggedinuser;
+
+class LecturerCourseContent extends StatefulWidget {
+  @override
+  _LecturerCourseContentState createState() => _LecturerCourseContentState();
+}
+
+class _LecturerCourseContentState extends State<LecturerCourseContent> {
+  void getCurrentUser() async {
+    try {
+      final user = _auth.currentUser;
+
+      if (user != null) {
+        loggedinuser = user;
+        print(loggedinuser.email);
+      }
+    } catch (e) {
+      print(e);
+    }
+  }
+
+  @override
+  void initState() {
+    super.initState();
+    getCurrentUser();
+  }
+
   @override
   Widget build(BuildContext context) {
     return SafeArea(
@@ -18,12 +46,13 @@ class LecturerCourseContent extends StatelessWidget {
               flexibleSpace: Padding(
                 padding: const EdgeInsets.only(bottom: 50),
                 child: CustomAppBar(
-                  username: "Mr Ogundele",
+                  username: loggedinuser.email,
                   departmentname: "Department Of Computer Science",
                 ),
               ),
               backgroundColor: Colors.orange,
-              bottom: TabBar(indicatorColor: Colors.white,
+              bottom: TabBar(
+                indicatorColor: Colors.white,
                 tabs: [
                   Tab(text: 'CONTENT'),
                   Tab(text: 'CLASSROOM'),

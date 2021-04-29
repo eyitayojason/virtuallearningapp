@@ -93,7 +93,7 @@ class _Message extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Text("Adsfadfsdfvdfsgfdgsfgfssdfaf.\nsddafsdfdasfsdafaasdffasfdasfsda");
+    return Text("Content goes here");
   }
 }
 
@@ -105,7 +105,7 @@ class _CourseTitle extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Text(
-      "COM 215 VISUAL BASIC",
+      "Content Title",
       style: TextStyle(fontSize: 18, fontWeight: FontWeight.w500),
     );
   }

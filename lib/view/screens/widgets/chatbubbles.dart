@@ -1,112 +1,48 @@
-import 'package:bubble/bubble.dart';
-import 'package:flutter/cupertino.dart';
+import 'package:flutter/material.dart';
 
-class Chatbubbles extends StatelessWidget {
-  const Chatbubbles({
-    Key key,
-    @required this.styleSomebody,
-    @required this.styleMe,
-  }) : super(key: key);
-
-  final BubbleStyle styleSomebody;
-  final BubbleStyle styleMe;
-
+class MessageBubble extends StatelessWidget {
+  const MessageBubble({this.sender, this.text, this.isMe, this.timestamp});
+  final timestamp;
+  final String sender;
+  final String text;
+  final bool isMe;
   @override
   Widget build(BuildContext context) {
-    return Column(
-      children: [
-        Bubble(
-          alignment: Alignment.center,
-          color: const Color.fromARGB(255, 212, 234, 244),
-          margin: const BubbleEdges.only(top: 8),
-          child: const Text(
-            'TODAY',
-            style: TextStyle(fontSize: 10),
+    return Padding(
+      padding: EdgeInsets.all(10.0),
+      child: Column(
+        crossAxisAlignment:
+            isMe ? CrossAxisAlignment.end : CrossAxisAlignment.start,
+        children: <Widget>[
+          Text(
+            sender,
+            style: TextStyle(fontSize: 12, color: Colors.black54),
           ),
-        ),
-        Bubble(
-          style: styleSomebody,
-          child: Column(
-            crossAxisAlignment: CrossAxisAlignment.start,
-            children: [
-              const Text(
-                "Lecturer:",
-                style: TextStyle(fontWeight: FontWeight.bold),
+          Material(
+            borderRadius: isMe
+                ? BorderRadius.only(
+                    topLeft: Radius.circular(30),
+                    bottomLeft: Radius.circular(30),
+                    bottomRight: Radius.circular(30),
+                  )
+                : BorderRadius.only(
+                    topRight: Radius.circular(30),
+                    bottomRight: Radius.circular(30),
+                    bottomLeft: Radius.circular(30),
+                  ),
+            elevation: 4,
+            color: isMe ? Colors.lightBlueAccent : Colors.white,
+            child: Padding(
+              padding: EdgeInsets.symmetric(horizontal: 20, vertical: 10),
+              child: Text(
+                "$text",
+                style: TextStyle(
+                    fontSize: 15, color: isMe ? Colors.white : Colors.black54),
               ),
-              SizedBox(
-                height: 10,
-              ),
-              const Text(
-                  'Hi Johnson. Sorry to bother you. I have a queston for you.'),
-            ],
+            ),
           ),
-        ),
-        Bubble(
-          style: styleMe,
-          child: Column(
-            crossAxisAlignment: CrossAxisAlignment.start,
-            children: [
-              const Text(
-                "Student:",
-                style: TextStyle(fontWeight: FontWeight.bold),
-              ),
-              SizedBox(
-                height: 10,
-              ),
-              const Text("Ok Sir?"),
-            ],
-          ),
-        ),
-        Bubble(
-          style: styleSomebody,
-          child: Column(
-            crossAxisAlignment: CrossAxisAlignment.start,
-            children: [
-              const Text(
-                "Lecturer:",
-                style: TextStyle(fontWeight: FontWeight.bold),
-              ),
-              SizedBox(
-                height: 10,
-              ),
-              const Text("I've been having a problem with my computer."),
-            ],
-          ),
-        ),
-        Bubble(
-          style: styleSomebody,
-          child: Column(
-            crossAxisAlignment: CrossAxisAlignment.start,
-            children: [
-              const Text(
-                "Lecturer:",
-                style: TextStyle(fontWeight: FontWeight.bold),
-              ),
-              SizedBox(
-                height: 10,
-              ),
-              const Text('Can you help me?'),
-            ],
-          ),
-        ),
-        Bubble(
-          style: styleMe,
-          child: Column(
-            crossAxisAlignment: CrossAxisAlignment.start,
-            children: [
-              const Text(
-                "Student:",
-                style: TextStyle(fontWeight: FontWeight.bold),
-              ),
-              SizedBox(
-                height: 10,
-              ),
-              const Text('Sure'),
-            ],
-          ),
-        ),
-      
-      ],
+        ],
+      ),
     );
   }
 }

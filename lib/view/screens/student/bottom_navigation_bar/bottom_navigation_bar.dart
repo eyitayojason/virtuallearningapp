@@ -34,15 +34,15 @@ class _BottomNavBArState extends State<BottomNavBAr> {
         items: const <BottomNavigationBarItem>[
           BottomNavigationBarItem(
             label: 'Dashboard',
-            icon: ImageIcon(AssetImage(IconImages.dashboard)),
+            icon: ImageIcon(
+              AssetImage(IconImages.dashboard),
+            ),
           ),
           BottomNavigationBarItem(
             label: 'Course',
-            icon: ImageIcon(AssetImage(IconImages.course)),
-          ),
-          BottomNavigationBarItem(
-            label: 'Profile',
-            icon: ImageIcon(AssetImage(IconImages.profile)),
+            icon: ImageIcon(
+              AssetImage(IconImages.course),
+            ),
           ),
         ],
         currentIndex: _selectedIndex,

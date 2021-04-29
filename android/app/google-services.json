@@ -1,0 +1,47 @@
+{
+  "project_info": {
+    "project_number": "888531787342",
+    "project_id": "virtuallearningapp",
+    "storage_bucket": "virtuallearningapp.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:888531787342:android:918b9ad191305a70b86d1f",
+        "android_client_info": {
+          "package_name": "com.example.virtuallearningapp"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "888531787342-5pg67jmmao34ldke2us5hi54mrn6fuek.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.example.virtuallearningapp",
+            "certificate_hash": "9153aeed8ac2d64153e532b577bd9a455fba25e1"
+          }
+        },
+        {
+          "client_id": "888531787342-sq183aqkufvb23cbfurguatrtokvs6l6.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyDwwwkDpUVr0qIbkKXEzZKwbysCZae6xCU"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "888531787342-sq183aqkufvb23cbfurguatrtokvs6l6.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

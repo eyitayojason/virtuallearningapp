@@ -1,0 +1,427 @@
+define(['dart_sdk', 'packages/flutter/src/widgets/widget_span.dart', 'packages/flutter/src/widgets/form.dart', 'packages/flutter/src/painting/edge_insets.dart', 'packages/flutter/src/rendering/flex.dart', 'packages/virtuallearningapp/view/screens/widgets/form_textfield.dart', 'packages/virtuallearningapp/view/screens/widgets/button.dart', 'packages/flutter/src/material/page.dart', 'packages/virtuallearningapp/view/screens/student/bottom_navigation_bar/bottom_navigation_bar.dart', 'packages/virtuallearningapp/view/screens/student/dashboard/dashboard.dart', 'packages/virtuallearningapp/view/screens/student/course_content/course_content.dart', 'packages/virtuallearningapp/view/screens/student/profile/profile.dart'], (function load__packages__virtuallearningapp__view__screens__student__login__form_dart(dart_sdk, packages__flutter__src__widgets__widget_span$46dart, packages__flutter__src__widgets__form$46dart, packages__flutter__src__painting__edge_insets$46dart, packages__flutter__src__rendering__flex$46dart, packages__virtuallearningapp__view__screens__widgets__form_textfield$46dart, packages__virtuallearningapp__view__screens__widgets__button$46dart, packages__flutter__src__material__page$46dart, packages__virtuallearningapp__view__screens__student__bottom_navigation_bar__bottom_navigation_bar$46dart, packages__virtuallearningapp__view__screens__student__dashboard__dashboard$46dart, packages__virtuallearningapp__view__screens__student__course_content__course_content$46dart, packages__virtuallearningapp__view__screens__student__profile__profile$46dart) {
+  'use strict';
+  const core = dart_sdk.core;
+  const _interceptors = dart_sdk._interceptors;
+  const dart = dart_sdk.dart;
+  const dartx = dart_sdk.dartx;
+  const framework = packages__flutter__src__widgets__widget_span$46dart.src__widgets__framework;
+  const basic = packages__flutter__src__widgets__widget_span$46dart.src__widgets__basic;
+  const widget_inspector = packages__flutter__src__widgets__widget_span$46dart.src__widgets__widget_inspector;
+  const navigator = packages__flutter__src__widgets__widget_span$46dart.src__widgets__navigator;
+  const form = packages__flutter__src__widgets__form$46dart.src__widgets__form;
+  const edge_insets = packages__flutter__src__painting__edge_insets$46dart.src__painting__edge_insets;
+  const flex = packages__flutter__src__rendering__flex$46dart.src__rendering__flex;
+  const form_textfield = packages__virtuallearningapp__view__screens__widgets__form_textfield$46dart.view__screens__widgets__form_textfield;
+  const button = packages__virtuallearningapp__view__screens__widgets__button$46dart.view__screens__widgets__button;
+  const page = packages__flutter__src__material__page$46dart.src__material__page;
+  const bottom_navigation_bar = packages__virtuallearningapp__view__screens__student__bottom_navigation_bar__bottom_navigation_bar$46dart.view__screens__student__bottom_navigation_bar__bottom_navigation_bar;
+  const dashboard = packages__virtuallearningapp__view__screens__student__dashboard__dashboard$46dart.view__screens__student__dashboard__dashboard;
+  const course_content = packages__virtuallearningapp__view__screens__student__course_content__course_content$46dart.view__screens__student__course_content__course_content;
+  const profile = packages__virtuallearningapp__view__screens__student__profile__profile$46dart.view__screens__student__profile__profile;
+  var form$ = Object.create(dart.library);
+  dart._checkModuleNullSafetyMode(false);
+  var T = {
+    FormStateL: () => (T.FormStateL = dart.constFn(dart.legacy(form.FormState)))(),
+    GlobalKeyOfFormStateL: () => (T.GlobalKeyOfFormStateL = dart.constFn(framework.GlobalKey$(T.FormStateL())))(),
+    _LocationL: () => (T._LocationL = dart.constFn(dart.legacy(widget_inspector._Location)))(),
+    WidgetL: () => (T.WidgetL = dart.constFn(dart.legacy(framework.Widget)))(),
+    JSArrayOfWidgetL: () => (T.JSArrayOfWidgetL = dart.constFn(_interceptors.JSArray$(T.WidgetL())))(),
+    BottomNavBArL: () => (T.BottomNavBArL = dart.constFn(dart.legacy(bottom_navigation_bar.BottomNavBAr)))(),
+    BuildContextL: () => (T.BuildContextL = dart.constFn(dart.legacy(framework.BuildContext)))(),
+    BuildContextLToBottomNavBArL: () => (T.BuildContextLToBottomNavBArL = dart.constFn(dart.fnType(T.BottomNavBArL(), [T.BuildContextL()])))(),
+    VoidToNull: () => (T.VoidToNull = dart.constFn(dart.fnType(core.Null, [])))()
+  };
+  var T$Eval = Object.assign({
+    _: () => T$Eval
+  }, T);
+  var S = {
+    _: () => S
+  };
+  var S$Eval = Object.assign({
+    _: () => S$Eval
+  }, S);
+  const CT = Object.create({
+    _: () => (C, CT)
+  });
+  dart.defineLazy(CT, {
+    get C0() {
+      return C[0] = dart.const({
+        __proto__: edge_insets.EdgeInsets.prototype,
+        [EdgeInsets_bottom]: 0,
+        [EdgeInsets_right]: 20,
+        [EdgeInsets_top]: 0,
+        [EdgeInsets_left]: 20
+      });
+    },
+    get C3() {
+      return C[3] = dart.const({
+        __proto__: widget_inspector._Location.prototype,
+        [_Location_parameterLocations]: null,
+        [_Location_name]: "hintText",
+        [_Location_column]: 29,
+        [_Location_line]: 36,
+        [_Location_file]: null
+      });
+    },
+    get C4() {
+      return C[4] = dart.const({
+        __proto__: widget_inspector._Location.prototype,
+        [_Location_parameterLocations]: null,
+        [_Location_name]: "obsureText",
+        [_Location_column]: 48,
+        [_Location_line]: 36,
+        [_Location_file]: null
+      });
+    },
+    get C2() {
+      return C[2] = dart.constList([C[3] || CT.C3, C[4] || CT.C4], T._LocationL());
+    },
+    get C1() {
+      return C[1] = dart.const({
+        __proto__: widget_inspector._Location.prototype,
+        [_Location_parameterLocations]: C[2] || CT.C2,
+        [_Location_name]: null,
+        [_Location_column]: 13,
+        [_Location_line]: 36,
+        [_Location_file]: "file:///C:/Users/Jason/Desktop/virtuallearningapp/lib/view/screens/student/login/form.dart"
+      });
+    },
+    get C7() {
+      return C[7] = dart.const({
+        __proto__: widget_inspector._Location.prototype,
+        [_Location_parameterLocations]: null,
+        [_Location_name]: "height",
+        [_Location_column]: 22,
+        [_Location_line]: 37,
+        [_Location_file]: null
+      });
+    },
+    get C6() {
+      return C[6] = dart.constList([C[7] || CT.C7], T._LocationL());
+    },
+    get C5() {
+      return C[5] = dart.const({
+        __proto__: widget_inspector._Location.prototype,
+        [_Location_parameterLocations]: C[6] || CT.C6,
+        [_Location_name]: null,
+        [_Location_column]: 13,
+        [_Location_line]: 37,
+        [_Location_file]: "file:///C:/Users/Jason/Desktop/virtuallearningapp/lib/view/screens/student/login/form.dart"
+      });
+    },
+    get C10() {
+      return C[10] = dart.const({
+        __proto__: widget_inspector._Location.prototype,
+        [_Location_parameterLocations]: null,
+        [_Location_name]: "hintText",
+        [_Location_column]: 29,
+        [_Location_line]: 38,
+        [_Location_file]: null
+      });
+    },
+    get C11() {
+      return C[11] = dart.const({
+        __proto__: widget_inspector._Location.prototype,
+        [_Location_parameterLocations]: null,
+        [_Location_name]: "obsureText",
+        [_Location_column]: 51,
+        [_Location_line]: 38,
+        [_Location_file]: null
+      });
+    },
+    get C9() {
+      return C[9] = dart.constList([C[10] || CT.C10, C[11] || CT.C11], T._LocationL());
+    },
+    get C8() {
+      return C[8] = dart.const({
+        __proto__: widget_inspector._Location.prototype,
+        [_Location_parameterLocations]: C[9] || CT.C9,
+        [_Location_name]: null,
+        [_Location_column]: 13,
+        [_Location_line]: 38,
+        [_Location_file]: "file:///C:/Users/Jason/Desktop/virtuallearningapp/lib/view/screens/student/login/form.dart"
+      });
+    },
+    get C14() {
+      return C[14] = dart.const({
+        __proto__: widget_inspector._Location.prototype,
+        [_Location_parameterLocations]: null,
+        [_Location_name]: "height",
+        [_Location_column]: 22,
+        [_Location_line]: 39,
+        [_Location_file]: null
+      });
+    },
+    get C13() {
+      return C[13] = dart.constList([C[14] || CT.C14], T._LocationL());
+    },
+    get C12() {
+      return C[12] = dart.const({
+        __proto__: widget_inspector._Location.prototype,
+        [_Location_parameterLocations]: C[13] || CT.C13,
+        [_Location_name]: null,
+        [_Location_column]: 13,
+        [_Location_line]: 39,
+        [_Location_file]: "file:///C:/Users/Jason/Desktop/virtuallearningapp/lib/view/screens/student/login/form.dart"
+      });
+    },
+    get C16() {
+      return C[16] = dart.constList([], T._LocationL());
+    },
+    get C15() {
+      return C[15] = dart.const({
+        __proto__: widget_inspector._Location.prototype,
+        [_Location_parameterLocations]: C[16] || CT.C16,
+        [_Location_name]: null,
+        [_Location_column]: 27,
+        [_Location_line]: 53,
+        [_Location_file]: "file:///C:/Users/Jason/Desktop/virtuallearningapp/lib/view/screens/student/login/form.dart"
+      });
+    },
+    get C17() {
+      return C[17] = dart.const({
+        __proto__: widget_inspector._Location.prototype,
+        [_Location_parameterLocations]: C[16] || CT.C16,
+        [_Location_name]: null,
+        [_Location_column]: 27,
+        [_Location_line]: 54,
+        [_Location_file]: "file:///C:/Users/Jason/Desktop/virtuallearningapp/lib/view/screens/student/login/form.dart"
+      });
+    },
+    get C18() {
+      return C[18] = dart.const({
+        __proto__: widget_inspector._Location.prototype,
+        [_Location_parameterLocations]: C[16] || CT.C16,
+        [_Location_name]: null,
+        [_Location_column]: 27,
+        [_Location_line]: 55,
+        [_Location_file]: "file:///C:/Users/Jason/Desktop/virtuallearningapp/lib/view/screens/student/login/form.dart"
+      });
+    },
+    get C21() {
+      return C[21] = dart.const({
+        __proto__: widget_inspector._Location.prototype,
+        [_Location_parameterLocations]: null,
+        [_Location_name]: "pages",
+        [_Location_column]: 25,
+        [_Location_line]: 52,
+        [_Location_file]: null
+      });
+    },
+    get C20() {
+      return C[20] = dart.constList([C[21] || CT.C21], T._LocationL());
+    },
+    get C19() {
+      return C[19] = dart.const({
+        __proto__: widget_inspector._Location.prototype,
+        [_Location_parameterLocations]: C[20] || CT.C20,
+        [_Location_name]: null,
+        [_Location_column]: 45,
+        [_Location_line]: 51,
+        [_Location_file]: "file:///C:/Users/Jason/Desktop/virtuallearningapp/lib/view/screens/student/login/form.dart"
+      });
+    },
+    get C24() {
+      return C[24] = dart.const({
+        __proto__: widget_inspector._Location.prototype,
+        [_Location_parameterLocations]: null,
+        [_Location_name]: "text",
+        [_Location_column]: 15,
+        [_Location_line]: 41,
+        [_Location_file]: null
+      });
+    },
+    get C25() {
+      return C[25] = dart.const({
+        __proto__: widget_inspector._Location.prototype,
+        [_Location_parameterLocations]: null,
+        [_Location_name]: "onPressed",
+        [_Location_column]: 15,
+        [_Location_line]: 42,
+        [_Location_file]: null
+      });
+    },
+    get C23() {
+      return C[23] = dart.constList([C[24] || CT.C24, C[25] || CT.C25], T._LocationL());
+    },
+    get C22() {
+      return C[22] = dart.const({
+        __proto__: widget_inspector._Location.prototype,
+        [_Location_parameterLocations]: C[23] || CT.C23,
+        [_Location_name]: null,
+        [_Location_column]: 13,
+        [_Location_line]: 40,
+        [_Location_file]: "file:///C:/Users/Jason/Desktop/virtuallearningapp/lib/view/screens/student/login/form.dart"
+      });
+    },
+    get C28() {
+      return C[28] = dart.const({
+        __proto__: widget_inspector._Location.prototype,
+        [_Location_parameterLocations]: null,
+        [_Location_name]: "crossAxisAlignment",
+        [_Location_column]: 11,
+        [_Location_line]: 34,
+        [_Location_file]: null
+      });
+    },
+    get C29() {
+      return C[29] = dart.const({
+        __proto__: widget_inspector._Location.prototype,
+        [_Location_parameterLocations]: null,
+        [_Location_name]: "children",
+        [_Location_column]: 11,
+        [_Location_line]: 35,
+        [_Location_file]: null
+      });
+    },
+    get C27() {
+      return C[27] = dart.constList([C[28] || CT.C28, C[29] || CT.C29], T._LocationL());
+    },
+    get C26() {
+      return C[26] = dart.const({
+        __proto__: widget_inspector._Location.prototype,
+        [_Location_parameterLocations]: C[27] || CT.C27,
+        [_Location_name]: null,
+        [_Location_column]: 16,
+        [_Location_line]: 33,
+        [_Location_file]: "file:///C:/Users/Jason/Desktop/virtuallearningapp/lib/view/screens/student/login/form.dart"
+      });
+    },
+    get C32() {
+      return C[32] = dart.const({
+        __proto__: widget_inspector._Location.prototype,
+        [_Location_parameterLocations]: null,
+        [_Location_name]: "padding",
+        [_Location_column]: 9,
+        [_Location_line]: 32,
+        [_Location_file]: null
+      });
+    },
+    get C33() {
+      return C[33] = dart.const({
+        __proto__: widget_inspector._Location.prototype,
+        [_Location_parameterLocations]: null,
+        [_Location_name]: "child",
+        [_Location_column]: 9,
+        [_Location_line]: 33,
+        [_Location_file]: null
+      });
+    },
+    get C31() {
+      return C[31] = dart.constList([C[32] || CT.C32, C[33] || CT.C33], T._LocationL());
+    },
+    get C30() {
+      return C[30] = dart.const({
+        __proto__: widget_inspector._Location.prototype,
+        [_Location_parameterLocations]: C[31] || CT.C31,
+        [_Location_name]: null,
+        [_Location_column]: 14,
+        [_Location_line]: 31,
+        [_Location_file]: "file:///C:/Users/Jason/Desktop/virtuallearningapp/lib/view/screens/student/login/form.dart"
+      });
+    },
+    get C36() {
+      return C[36] = dart.const({
+        __proto__: widget_inspector._Location.prototype,
+        [_Location_parameterLocations]: null,
+        [_Location_name]: "key",
+        [_Location_column]: 7,
+        [_Location_line]: 30,
+        [_Location_file]: null
+      });
+    },
+    get C37() {
+      return C[37] = dart.const({
+        __proto__: widget_inspector._Location.prototype,
+        [_Location_parameterLocations]: null,
+        [_Location_name]: "child",
+        [_Location_column]: 7,
+        [_Location_line]: 31,
+        [_Location_file]: null
+      });
+    },
+    get C35() {
+      return C[35] = dart.constList([C[36] || CT.C36, C[37] || CT.C37], T._LocationL());
+    },
+    get C34() {
+      return C[34] = dart.const({
+        __proto__: widget_inspector._Location.prototype,
+        [_Location_parameterLocations]: C[35] || CT.C35,
+        [_Location_name]: null,
+        [_Location_column]: 12,
+        [_Location_line]: 29,
+        [_Location_file]: "file:///C:/Users/Jason/Desktop/virtuallearningapp/lib/view/screens/student/login/form.dart"
+      });
+    }
+  }, false);
+  var C = Array(38).fill(void 0);
+  var I = ["package:virtuallearningapp/view/screens/student/login/form.dart"];
+  form$.StudentForm = class StudentForm extends framework.StatefulWidget {
+    createState() {
+      return new form$.StudentFormState.new();
+    }
+  };
+  (form$.StudentForm.new = function(opts) {
+    let $36creationLocationd_0dea112b090073317d4 = opts && '$creationLocationd_0dea112b090073317d4' in opts ? opts.$creationLocationd_0dea112b090073317d4 : null;
+    form$.StudentForm.__proto__.new.call(this, {$creationLocationd_0dea112b090073317d4: $36creationLocationd_0dea112b090073317d4});
+    ;
+  }).prototype = form$.StudentForm.prototype;
+  dart.addTypeTests(form$.StudentForm);
+  dart.addTypeCaches(form$.StudentForm);
+  dart.setMethodSignature(form$.StudentForm, () => ({
+    __proto__: dart.getMethods(form$.StudentForm.__proto__),
+    createState: dart.fnType(dart.legacy(form$.StudentFormState), [])
+  }));
+  dart.setLibraryUri(form$.StudentForm, I[0]);
+  var formKey = dart.privateName(form$, "StudentFormState.formKey");
+  var EdgeInsets_bottom = dart.privateName(edge_insets, "EdgeInsets.bottom");
+  var EdgeInsets_right = dart.privateName(edge_insets, "EdgeInsets.right");
+  var EdgeInsets_top = dart.privateName(edge_insets, "EdgeInsets.top");
+  var EdgeInsets_left = dart.privateName(edge_insets, "EdgeInsets.left");
+  var _Location_parameterLocations = dart.privateName(widget_inspector, "_Location.parameterLocations");
+  var _Location_name = dart.privateName(widget_inspector, "_Location.name");
+  var _Location_column = dart.privateName(widget_inspector, "_Location.column");
+  var _Location_line = dart.privateName(widget_inspector, "_Location.line");
+  var _Location_file = dart.privateName(widget_inspector, "_Location.file");
+  form$.StudentFormState = class StudentFormState extends framework.State$(dart.legacy(form$.StudentForm)) {
+    get formKey() {
+      return this[formKey];
+    }
+    set formKey(value) {
+      super.formKey = value;
+    }
+    build(context) {
+      return new form.Form.new({key: this.formKey, child: new basic.Padding.new({padding: C[0] || CT.C0, child: new basic.Column.new({crossAxisAlignment: flex.CrossAxisAlignment.stretch, children: T.JSArrayOfWidgetL().of([new form_textfield.CustomFormField.new({hintText: "Email", obsureText: false, $creationLocationd_0dea112b090073317d4: C[1] || CT.C1}), new basic.SizedBox.new({height: 20.0, $creationLocationd_0dea112b090073317d4: C[5] || CT.C5}), new form_textfield.CustomFormField.new({hintText: "Password", obsureText: true, $creationLocationd_0dea112b090073317d4: C[8] || CT.C8}), new basic.SizedBox.new({height: 20.0, $creationLocationd_0dea112b090073317d4: C[12] || CT.C12}), new button.CustomButton.new({text: "SUBMIT", onPressed: dart.fn(() => {
+                  if (dart.test(this.formKey.currentState.validate())) {
+                    navigator.Navigator.push(dart.dynamic, context, new page.MaterialPageRoute.new({builder: dart.fn(context => new bottom_navigation_bar.BottomNavBAr.new({pages: T.JSArrayOfWidgetL().of([new dashboard.StudentDashboard.new({$creationLocationd_0dea112b090073317d4: C[15] || CT.C15}), new course_content.StudentCourseContent.new({$creationLocationd_0dea112b090073317d4: C[17] || CT.C17}), new profile.StudentProfile.new({$creationLocationd_0dea112b090073317d4: C[18] || CT.C18})]), $creationLocationd_0dea112b090073317d4: C[19] || CT.C19}), T.BuildContextLToBottomNavBArL())}));
+                  }
+                }, T.VoidToNull()), $creationLocationd_0dea112b090073317d4: C[22] || CT.C22})]), $creationLocationd_0dea112b090073317d4: C[26] || CT.C26}), $creationLocationd_0dea112b090073317d4: C[30] || CT.C30}), $creationLocationd_0dea112b090073317d4: C[34] || CT.C34});
+    }
+  };
+  (form$.StudentFormState.new = function() {
+    this[formKey] = T.GlobalKeyOfFormStateL().new();
+    form$.StudentFormState.__proto__.new.call(this);
+    ;
+  }).prototype = form$.StudentFormState.prototype;
+  dart.addTypeTests(form$.StudentFormState);
+  dart.addTypeCaches(form$.StudentFormState);
+  dart.setMethodSignature(form$.StudentFormState, () => ({
+    __proto__: dart.getMethods(form$.StudentFormState.__proto__),
+    build: dart.fnType(dart.legacy(framework.Widget), [dart.legacy(framework.BuildContext)])
+  }));
+  dart.setLibraryUri(form$.StudentFormState, I[0]);
+  dart.setFieldSignature(form$.StudentFormState, () => ({
+    __proto__: dart.getFields(form$.StudentFormState.__proto__),
+    formKey: dart.finalFieldType(dart.legacy(framework.GlobalKey$(dart.legacy(form.FormState))))
+  }));
+  dart.trackLibraries("packages/virtuallearningapp/view/screens/student/login/form.dart", {
+    "package:virtuallearningapp/view/screens/student/login/form.dart": form$
+  }, {
+  }, '{"version":3,"sourceRoot":"","sources":["form.dart"],"names":[],"mappings":";;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;AAWI,YAAO;IACT;;;;;;EACF;;;;;;;;;;;;;;;;;;;IAUQ;;;;;;UAGoB;AAExB,YAAO,yBACA,qBACE,sDAEE,0CACkC,2CACrB,yBAChB,kDAA0B,qBAAqB,gEAC/C,gCAAiB,+DACjB,kDAA0B,wBAAwB,+DAClD,gCAAiB,iEACjB,mCACQ,qBACK;AAET,gCAAI,AAAQ,AAAa;AAetB,oBAXS,uCACR,OAAO,EACP,yCACW,QAAC,WAAY,mDACb,yBACL,+FACA,wGACA;;;IAYxB;;;IA3CM,gBAAU;;;EA4ClB","file":"../../../../../../../../../packages/virtuallearningapp/view/screens/student/login/form.dart.lib.js"}');
+  // Exports:
+  return {
+    view__screens__student__login__form: form$
+  };
+}));
+
+//# sourceMappingURL=form.dart.lib.js.map

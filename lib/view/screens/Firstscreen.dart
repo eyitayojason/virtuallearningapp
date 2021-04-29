@@ -50,19 +50,17 @@ class FirstScreen extends StatelessWidget {
                       SizedBox(
                         height: 20,
                       ),
-                      Center(
-                        child: InkWell(
-                          onTap: () => Navigator.push(
-                              context,
-                              MaterialPageRoute(
-                                builder: (context) => Signup(),
-                              )),
-                          child: Text(
-                            "Signup",
-                            style: TextStyle(fontWeight: FontWeight.bold),
-                          ),
-                        ),
-                      )
+                      CustomButton(
+                        text: "REGISTER",
+                        onPressed: () {
+                          Navigator.push(
+                            context,
+                            MaterialPageRoute(
+                              builder: (context) => Signup(),
+                            ),
+                          );
+                        },
+                      ),
                     ],
                   ),
                 ),

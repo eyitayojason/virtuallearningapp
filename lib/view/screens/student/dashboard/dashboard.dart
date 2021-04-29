@@ -13,7 +13,7 @@ class StudentDashboard extends StatelessWidget {
         appBar: PreferredSize(
           preferredSize: Size.fromHeight(100),
           child: CustomAppBar(
-            username: "Saliu Johnson",
+            username: "Student Name",
             departmentname: "HND Computer Science",
           ),
         ),

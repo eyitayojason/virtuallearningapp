@@ -1,10 +1,42 @@
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
+import 'package:virtuallearningapp/services%20and%20providers/auth.dart';
 import 'package:virtuallearningapp/view/screens/lecturer/dashboard/layouts/assignment_updates.dart';
 import 'package:virtuallearningapp/view/screens/lecturer/dashboard/layouts/chat_updates.dart';
 import 'package:virtuallearningapp/view/screens/widgets/appbar.dart';
 import 'package:virtuallearningapp/view/screens/widgets/news.dart';
 
-class LecturerDashboard extends StatelessWidget {
+Authentication authentication;
+final _auth = FirebaseAuth.instance;
+User loggedinuser;
+
+class LecturerDashboard extends StatefulWidget {
+  @override
+  _LecturerDashboardState createState() => _LecturerDashboardState();
+}
+
+class _LecturerDashboardState extends State<LecturerDashboard> {
+  void getCurrentUser() async {
+    try {
+      final user = _auth.currentUser;
+
+      if (user != null) {
+        loggedinuser = user;
+        print(loggedinuser.email);
+      }
+    } catch (e) {
+      print(e);
+    }
+  }
+  @override
+ 
+
+  void initState() {
+    // TODO: implement initState
+    super.initState();
+    getCurrentUser();
+  }
+
   @override
   Widget build(BuildContext context) {
     return SafeArea(
@@ -13,7 +45,7 @@ class LecturerDashboard extends StatelessWidget {
         appBar: PreferredSize(
           preferredSize: Size.fromHeight(100),
           child: CustomAppBar(
-            username: "Mr Ogundele",
+            username: loggedinuser.email,
             departmentname: "Department Of Computer Science",
           ),
         ),
