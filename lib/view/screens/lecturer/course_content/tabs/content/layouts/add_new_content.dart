@@ -1,10 +1,17 @@
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:file_picker/file_picker.dart';
+import 'package:firebase_auth/firebase_auth.dart';
 import 'dart:io';
 import 'package:flutter/material.dart';
 import 'package:line_icons/line_icon.dart';
 import 'package:virtuallearningapp/services%20and%20providers/auth.dart';
 
 Authentication authentication = Authentication();
+final _firestore = FirebaseFirestore.instance;
+User loggedinuser;
+
+String url;
+
 File file;
 
 class AddNewContent extends StatefulWidget {
@@ -48,7 +55,7 @@ class _AddNewContentState extends State<AddNewContent> {
                     SizedBox(
                       width: 20,
                     ),
-                    Text("Add New Content") 
+                    Text("Add New Content")
                   ],
                 ),
               )
@@ -58,4 +65,14 @@ class _AddNewContentState extends State<AddNewContent> {
       ),
     );
   }
+}
+
+_sendMessage({
+  String pdf,
+}) async {
+  await _firestore.collection("Messages").add({
+    "sender": loggedinuser.displayName,
+    "PdfURL": pdf,
+    "timestamp": Timestamp.now().toDate()
+  });
 }

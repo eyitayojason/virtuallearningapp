@@ -1,10 +1,12 @@
 import 'dart:io';
 
-import 'package:another_flushbar/flushbar.dart';
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:firebase_storage/firebase_storage.dart';
 import 'package:flutter/material.dart';
+
+
 import 'package:virtuallearningapp/services%20and%20providers/model.dart';
 import 'package:path/path.dart';
 
@@ -20,6 +22,11 @@ class Authentication with ChangeNotifier {
   FireUser _userFromFirebaseUser(User user) {
     return user != null ? FireUser(user.uid) : null;
   }
+
+  // void urlLauncher() {
+  //   launch("$url");
+  //   notifyListeners();
+  // }
 
   Future signInWithEmailAndPassword(
     String email,
@@ -69,7 +76,6 @@ class Authentication with ChangeNotifier {
     print('File Uploaded');
 
     url = await storageReference.getDownloadURL();
-    
   }
 
   void getCurrentUser() async {
@@ -84,22 +90,22 @@ class Authentication with ChangeNotifier {
     }
   }
 
-  void showSubmitRequestSnackBar(BuildContext context, String message) async {
-    Flushbar(
-      flushbarPosition: FlushbarPosition.TOP,
-      message: message,
-      icon: Icon(
-        Icons.info_outline,
-        size: 28.0,
-        color: Colors.white,
-      ),
-      backgroundColor: Colors.green,
-      duration: Duration(seconds: 4),
-      leftBarIndicatorColor: Colors.green,
-    )..show(context);
+  // void showSubmitRequestSnackBar(BuildContext context, String message) async {
+  //   Flushbar(
+  //     flushbarPosition: FlushbarPosition.TOP,
+  //     message: message,
+  //     icon: Icon(
+  //       Icons.info_outline,
+  //       size: 28.0,
+  //       color: Colors.white,
+  //     ),
+  //     backgroundColor: Colors.green,
+  //     duration: Duration(seconds: 4),
+  //     leftBarIndicatorColor: Colors.green,
+  //   )..show(context);
 
-    notifyListeners();
-  }
+  //   notifyListeners();
+  // }
 
   void writeNewUserToDatabase(String displayName) async {
     //check if already signed up

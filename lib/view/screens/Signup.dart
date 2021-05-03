@@ -31,9 +31,7 @@ final formKey = GlobalKey<FormState>();
       });
       authentication.signUpwithEmailandPassword(email, password, displayName).then((val) {
         if (val != null) {
-          authentication.showSubmitRequestSnackBar(
-              context, "Registration Sucessful, Proceed to Login");
-          Navigator.pushReplacement(
+            Navigator.pushReplacement(
             context,
             MaterialPageRoute(
               builder: (context) => FirstScreen(),

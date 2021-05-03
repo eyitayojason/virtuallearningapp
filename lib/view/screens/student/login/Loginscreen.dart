@@ -45,8 +45,6 @@ class _StudentLoginState extends State<StudentLogin> {
       });
       authService.signInWithEmailAndPassword(email, password).then((val) {
         if (val != null) {
-          authService.showSubmitRequestSnackBar(
-              context, "Welcome " + loggedinuser.email);
           Navigator.pushReplacement(
             context,
             MaterialPageRoute(

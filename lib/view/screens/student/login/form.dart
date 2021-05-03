@@ -94,8 +94,7 @@ class _StudentFormState extends State<StudentForm> {
                         ),
                       );
                       authentication.writeNewUserToDatabase(displayName);
-                      authentication.showSubmitRequestSnackBar(
-                          context, "Welcome " + loggedinuser.email);
+                    
                     });
                   } catch (e) {
                     print(e);

@@ -46,8 +46,6 @@ class _LecturerLoginState extends State<LecturerLogin> {
       });
       authService.signInWithEmailAndPassword(email, password).then((val) {
         if (val != null) {
-          authService.showSubmitRequestSnackBar(
-              context, "Welcome " + loggedinuser.email);
           Navigator.pushReplacement(
             context,
             MaterialPageRoute(
@@ -61,7 +59,7 @@ class _LecturerLoginState extends State<LecturerLogin> {
           );
           setState(() {
             isLoading = false;
-          });
+          });         
         }
       });
     }

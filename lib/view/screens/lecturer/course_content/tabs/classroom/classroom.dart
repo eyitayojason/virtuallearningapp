@@ -46,7 +46,11 @@ class _LecturerClassroomState extends State<LecturerClassroom> {
   }
 
   Future selectFile() async {
-    final result = await FilePicker.platform.pickFiles(allowMultiple: false);
+    final result = await FilePicker.platform.pickFiles(
+      allowMultiple: true,
+      allowCompression: true,
+      type: FileType.any,
+    );
     if (result == null) return;
     final path = result.files.single.path;
 

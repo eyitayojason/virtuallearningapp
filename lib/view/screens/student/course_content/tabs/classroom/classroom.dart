@@ -14,6 +14,8 @@ MessagesStream messageStream;
 String url;
 UploadTask uploadTask;
 File file;
+String pdf;
+String path;
 
 class StudentClassroom extends StatefulWidget {
   @override
@@ -49,7 +51,7 @@ class _StudentClassroomState extends State<StudentClassroom> {
   Future selectFile() async {
     final result = await FilePicker.platform.pickFiles(allowMultiple: false);
     if (result == null) return;
-    final path = result.files.single.path;
+    path = result.files.single.path;
 
     setState(() => file = File(path));
   }
@@ -93,7 +95,10 @@ class _StudentClassroomState extends State<StudentClassroom> {
                             await selectFile().whenComplete(() async {
                               await uploadFile();
                             });
-                            await _sendMessage(imageUrl: url, messageText: "");
+                            await _sendMessage(
+                              imageUrl: url,
+                              messageText: "",
+                            );
                           },
                           child: Icon(
                             Icons.add,
@@ -123,7 +128,9 @@ class _StudentClassroomState extends State<StudentClassroom> {
                       FloatingActionButton(
                         onPressed: () async {
                           await _sendMessage(
-                              imageUrl: null, messageText: userMessage);
+                            imageUrl: null,
+                            messageText: userMessage,
+                          );
                         },
                         child: Icon(
                           Icons.send,
@@ -145,7 +152,10 @@ class _StudentClassroomState extends State<StudentClassroom> {
   }
 }
 
-_sendMessage({String messageText, String imageUrl}) async {
+_sendMessage({
+  String messageText,
+  String imageUrl,
+}) async {
   await _firestore.collection("Messages").add({
     "sender": loggedinuser.displayName,
     "text": messageText,
@@ -153,3 +163,11 @@ _sendMessage({String messageText, String imageUrl}) async {
     "timestamp": Timestamp.now().toDate()
   });
 }
+
+// FutureBuilder<File>(
+//   future: DefaultCacheManager().getSingleFile(
+//     'https://github.com/espresso3389/flutter_pdf_render/raw/master/example/assets/hello.pdf'),
+//   builder: (context, snapshot) => snapshot.hasData
+//     ? PdfViewer.openFile(snapshot.data!.path)
+//     : Container( /* placeholder */),
+// )
