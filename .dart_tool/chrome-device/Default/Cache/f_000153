@@ -1,0 +1,842 @@
+define(['dart_sdk', 'packages/flutter/src/widgets/widget_span.dart', 'packages/flutter/src/material/page.dart', 'packages/virtuallearningapp/view/screens/student/bottom_navigation_bar/bottom_navigation_bar.dart', 'packages/virtuallearningapp/view/screens/student/dashboard/dashboard.dart', 'packages/virtuallearningapp/view/screens/student/course_content/course_content.dart', 'packages/flutter/src/widgets/safe_area.dart', 'packages/flutter/src/material/icon_button.dart', 'packages/modal_progress_hud/modal_progress_hud.dart', 'packages/flutter/src/widgets/single_child_scroll_view.dart', 'packages/sizer/sizer.dart', 'packages/virtuallearningapp/view/screens/widgets/logo.dart', 'packages/flutter/src/widgets/form.dart', 'packages/flutter/src/painting/edge_insets.dart', 'packages/flutter/src/rendering/flex.dart', 'packages/virtuallearningapp/view/screens/widgets/form_textfield.dart', 'packages/flutter/src/services/text_input.dart', 'packages/virtuallearningapp/view/screens/widgets/button.dart', 'packages/firebase_auth/firebase_auth.dart', 'packages/virtuallearningapp/services%20and%20providers/auth.dart'], (function load__packages__virtuallearningapp__view__screens__student__login__Loginscreen_dart(dart_sdk, packages__flutter__src__widgets__widget_span$46dart, packages__flutter__src__material__page$46dart, packages__virtuallearningapp__view__screens__student__bottom_navigation_bar__bottom_navigation_bar$46dart, packages__virtuallearningapp__view__screens__student__dashboard__dashboard$46dart, packages__virtuallearningapp__view__screens__student__course_content__course_content$46dart, packages__flutter__src__widgets__safe_area$46dart, packages__flutter__src__material__icon_button$46dart, packages__modal_progress_hud__modal_progress_hud$46dart, packages__flutter__src__widgets__single_child_scroll_view$46dart, packages__sizer__sizer$46dart, packages__virtuallearningapp__view__screens__widgets__logo$46dart, packages__flutter__src__widgets__form$46dart, packages__flutter__src__painting__edge_insets$46dart, packages__flutter__src__rendering__flex$46dart, packages__virtuallearningapp__view__screens__widgets__form_textfield$46dart, packages__flutter__src__services__text_input$46dart, packages__virtuallearningapp__view__screens__widgets__button$46dart, packages__firebase_auth__firebase_auth$46dart, packages__virtuallearningapp__services$3720and$3720providers__auth$46dart) {
+  'use strict';
+  const core = dart_sdk.core;
+  const async = dart_sdk.async;
+  const _interceptors = dart_sdk._interceptors;
+  const dart = dart_sdk.dart;
+  const dartx = dart_sdk.dartx;
+  const framework = packages__flutter__src__widgets__widget_span$46dart.src__widgets__framework;
+  const navigator = packages__flutter__src__widgets__widget_span$46dart.src__widgets__navigator;
+  const widget_inspector = packages__flutter__src__widgets__widget_span$46dart.src__widgets__widget_inspector;
+  const basic = packages__flutter__src__widgets__widget_span$46dart.src__widgets__basic;
+  const heroes = packages__flutter__src__widgets__widget_span$46dart.src__widgets__heroes;
+  const text = packages__flutter__src__widgets__widget_span$46dart.src__widgets__text;
+  const page = packages__flutter__src__material__page$46dart.src__material__page;
+  const bottom_navigation_bar = packages__virtuallearningapp__view__screens__student__bottom_navigation_bar__bottom_navigation_bar$46dart.view__screens__student__bottom_navigation_bar__bottom_navigation_bar;
+  const dashboard = packages__virtuallearningapp__view__screens__student__dashboard__dashboard$46dart.view__screens__student__dashboard__dashboard;
+  const course_content = packages__virtuallearningapp__view__screens__student__course_content__course_content$46dart.view__screens__student__course_content__course_content;
+  const safe_area = packages__flutter__src__widgets__safe_area$46dart.src__widgets__safe_area;
+  const scaffold = packages__flutter__src__material__icon_button$46dart.src__material__scaffold;
+  const modal_progress_hud = packages__modal_progress_hud__modal_progress_hud$46dart.modal_progress_hud;
+  const single_child_scroll_view = packages__flutter__src__widgets__single_child_scroll_view$46dart.src__widgets__single_child_scroll_view;
+  const sizer = packages__sizer__sizer$46dart.sizer;
+  const logo = packages__virtuallearningapp__view__screens__widgets__logo$46dart.view__screens__widgets__logo;
+  const form = packages__flutter__src__widgets__form$46dart.src__widgets__form;
+  const edge_insets = packages__flutter__src__painting__edge_insets$46dart.src__painting__edge_insets;
+  const flex = packages__flutter__src__rendering__flex$46dart.src__rendering__flex;
+  const form_textfield = packages__virtuallearningapp__view__screens__widgets__form_textfield$46dart.view__screens__widgets__form_textfield;
+  const text_input = packages__flutter__src__services__text_input$46dart.src__services__text_input;
+  const button = packages__virtuallearningapp__view__screens__widgets__button$46dart.view__screens__widgets__button;
+  const firebase_auth = packages__firebase_auth__firebase_auth$46dart.firebase_auth;
+  const auth = packages__virtuallearningapp__services$3720and$3720providers__auth$46dart.services$32and$32providers__auth;
+  var Loginscreen = Object.create(dart.library);
+  var $toString = dartx.toString;
+  dart._checkModuleNullSafetyMode(false);
+  var T = {
+    VoidToNull: () => (T.VoidToNull = dart.constFn(dart.fnType(core.Null, [])))(),
+    ObjectL: () => (T.ObjectL = dart.constFn(dart.legacy(core.Object)))(),
+    _LocationL: () => (T._LocationL = dart.constFn(dart.legacy(widget_inspector._Location)))(),
+    WidgetL: () => (T.WidgetL = dart.constFn(dart.legacy(framework.Widget)))(),
+    JSArrayOfWidgetL: () => (T.JSArrayOfWidgetL = dart.constFn(_interceptors.JSArray$(T.WidgetL())))(),
+    BottomNavBArL: () => (T.BottomNavBArL = dart.constFn(dart.legacy(bottom_navigation_bar.BottomNavBAr)))(),
+    BuildContextL: () => (T.BuildContextL = dart.constFn(dart.legacy(framework.BuildContext)))(),
+    BuildContextLToBottomNavBArL: () => (T.BuildContextLToBottomNavBArL = dart.constFn(dart.fnType(T.BottomNavBArL(), [T.BuildContextL()])))(),
+    dynamicToNull: () => (T.dynamicToNull = dart.constFn(dart.fnType(core.Null, [dart.dynamic])))(),
+    StringL: () => (T.StringL = dart.constFn(dart.legacy(core.String)))(),
+    dynamicToStringL: () => (T.dynamicToStringL = dart.constFn(dart.fnType(T.StringL(), [dart.dynamic])))(),
+    FormStateL: () => (T.FormStateL = dart.constFn(dart.legacy(form.FormState)))(),
+    GlobalKeyOfFormStateL: () => (T.GlobalKeyOfFormStateL = dart.constFn(framework.GlobalKey$(T.FormStateL())))()
+  };
+  var T$Eval = Object.assign({
+    _: () => T$Eval
+  }, T);
+  var S = {
+    _: () => S
+  };
+  var S$Eval = Object.assign({
+    _: () => S$Eval
+  }, S);
+  const CT = Object.create({
+    _: () => (C, CT)
+  });
+  dart.defineLazy(CT, {
+    get C1() {
+      return C[1] = dart.constList([], T._LocationL());
+    },
+    get C0() {
+      return C[0] = dart.const({
+        __proto__: widget_inspector._Location.prototype,
+        [_Location_parameterLocations]: C[1] || CT.C1,
+        [_Location_name]: null,
+        [_Location_column]: 19,
+        [_Location_line]: 55,
+        [_Location_file]: "file:///C:/Users/Jason/Desktop/virtuallearningapp/lib/view/screens/student/login/Loginscreen.dart"
+      });
+    },
+    get C2() {
+      return C[2] = dart.const({
+        __proto__: widget_inspector._Location.prototype,
+        [_Location_parameterLocations]: C[1] || CT.C1,
+        [_Location_name]: null,
+        [_Location_column]: 19,
+        [_Location_line]: 56,
+        [_Location_file]: "file:///C:/Users/Jason/Desktop/virtuallearningapp/lib/view/screens/student/login/Loginscreen.dart"
+      });
+    },
+    get C5() {
+      return C[5] = dart.const({
+        __proto__: widget_inspector._Location.prototype,
+        [_Location_parameterLocations]: null,
+        [_Location_name]: "pages",
+        [_Location_column]: 17,
+        [_Location_line]: 54,
+        [_Location_file]: null
+      });
+    },
+    get C4() {
+      return C[4] = dart.constList([C[5] || CT.C5], T._LocationL());
+    },
+    get C3() {
+      return C[3] = dart.const({
+        __proto__: widget_inspector._Location.prototype,
+        [_Location_parameterLocations]: C[4] || CT.C4,
+        [_Location_name]: null,
+        [_Location_column]: 37,
+        [_Location_line]: 53,
+        [_Location_file]: "file:///C:/Users/Jason/Desktop/virtuallearningapp/lib/view/screens/student/login/Loginscreen.dart"
+      });
+    },
+    get C8() {
+      return C[8] = dart.const({
+        __proto__: widget_inspector._Location.prototype,
+        [_Location_parameterLocations]: null,
+        [_Location_name]: "height",
+        [_Location_column]: 28,
+        [_Location_line]: 85,
+        [_Location_file]: null
+      });
+    },
+    get C7() {
+      return C[7] = dart.constList([C[8] || CT.C8], T._LocationL());
+    },
+    get C6() {
+      return C[6] = dart.const({
+        __proto__: widget_inspector._Location.prototype,
+        [_Location_parameterLocations]: C[7] || CT.C7,
+        [_Location_name]: null,
+        [_Location_column]: 19,
+        [_Location_line]: 85,
+        [_Location_file]: "file:///C:/Users/Jason/Desktop/virtuallearningapp/lib/view/screens/student/login/Loginscreen.dart"
+      });
+    },
+    get C10() {
+      return C[10] = dart.const({
+        __proto__: widget_inspector._Location.prototype,
+        [_Location_parameterLocations]: C[1] || CT.C1,
+        [_Location_name]: null,
+        [_Location_column]: 34,
+        [_Location_line]: 88,
+        [_Location_file]: "file:///C:/Users/Jason/Desktop/virtuallearningapp/lib/view/screens/student/login/Loginscreen.dart"
+      });
+    },
+    get C9() {
+      return C[9] = dart.const({
+        __proto__: logo.Yctlogo.prototype,
+        [Widget__location]: C[10] || CT.C10,
+        [Widget_key]: null
+      });
+    },
+    get C13() {
+      return C[13] = dart.const({
+        __proto__: widget_inspector._Location.prototype,
+        [_Location_parameterLocations]: null,
+        [_Location_name]: "tag",
+        [_Location_column]: 21,
+        [_Location_line]: 87,
+        [_Location_file]: null
+      });
+    },
+    get C14() {
+      return C[14] = dart.const({
+        __proto__: widget_inspector._Location.prototype,
+        [_Location_parameterLocations]: null,
+        [_Location_name]: "child",
+        [_Location_column]: 21,
+        [_Location_line]: 88,
+        [_Location_file]: null
+      });
+    },
+    get C12() {
+      return C[12] = dart.constList([C[13] || CT.C13, C[14] || CT.C14], T._LocationL());
+    },
+    get C11() {
+      return C[11] = dart.const({
+        __proto__: widget_inspector._Location.prototype,
+        [_Location_parameterLocations]: C[12] || CT.C12,
+        [_Location_name]: null,
+        [_Location_column]: 19,
+        [_Location_line]: 86,
+        [_Location_file]: "file:///C:/Users/Jason/Desktop/virtuallearningapp/lib/view/screens/student/login/Loginscreen.dart"
+      });
+    },
+    get C17() {
+      return C[17] = dart.const({
+        __proto__: widget_inspector._Location.prototype,
+        [_Location_parameterLocations]: null,
+        [_Location_name]: "height",
+        [_Location_column]: 28,
+        [_Location_line]: 90,
+        [_Location_file]: null
+      });
+    },
+    get C16() {
+      return C[16] = dart.constList([C[17] || CT.C17], T._LocationL());
+    },
+    get C15() {
+      return C[15] = dart.const({
+        __proto__: widget_inspector._Location.prototype,
+        [_Location_parameterLocations]: C[16] || CT.C16,
+        [_Location_name]: null,
+        [_Location_column]: 19,
+        [_Location_line]: 90,
+        [_Location_file]: "file:///C:/Users/Jason/Desktop/virtuallearningapp/lib/view/screens/student/login/Loginscreen.dart"
+      });
+    },
+    get C20() {
+      return C[20] = dart.const({
+        __proto__: widget_inspector._Location.prototype,
+        [_Location_parameterLocations]: null,
+        [_Location_name]: "data",
+        [_Location_column]: 24,
+        [_Location_line]: 91,
+        [_Location_file]: null
+      });
+    },
+    get C19() {
+      return C[19] = dart.constList([C[20] || CT.C20], T._LocationL());
+    },
+    get C18() {
+      return C[18] = dart.const({
+        __proto__: widget_inspector._Location.prototype,
+        [_Location_parameterLocations]: C[19] || CT.C19,
+        [_Location_name]: null,
+        [_Location_column]: 19,
+        [_Location_line]: 91,
+        [_Location_file]: "file:///C:/Users/Jason/Desktop/virtuallearningapp/lib/view/screens/student/login/Loginscreen.dart"
+      });
+    },
+    get C23() {
+      return C[23] = dart.const({
+        __proto__: widget_inspector._Location.prototype,
+        [_Location_parameterLocations]: null,
+        [_Location_name]: "height",
+        [_Location_column]: 28,
+        [_Location_line]: 92,
+        [_Location_file]: null
+      });
+    },
+    get C22() {
+      return C[22] = dart.constList([C[23] || CT.C23], T._LocationL());
+    },
+    get C21() {
+      return C[21] = dart.const({
+        __proto__: widget_inspector._Location.prototype,
+        [_Location_parameterLocations]: C[22] || CT.C22,
+        [_Location_name]: null,
+        [_Location_column]: 19,
+        [_Location_line]: 92,
+        [_Location_file]: "file:///C:/Users/Jason/Desktop/virtuallearningapp/lib/view/screens/student/login/Loginscreen.dart"
+      });
+    },
+    get C24() {
+      return C[24] = dart.const({
+        __proto__: edge_insets.EdgeInsets.prototype,
+        [EdgeInsets_bottom]: 0,
+        [EdgeInsets_right]: 20,
+        [EdgeInsets_top]: 0,
+        [EdgeInsets_left]: 20
+      });
+    },
+    get C27() {
+      return C[27] = dart.const({
+        __proto__: widget_inspector._Location.prototype,
+        [_Location_parameterLocations]: null,
+        [_Location_name]: "hintText",
+        [_Location_column]: 31,
+        [_Location_line]: 101,
+        [_Location_file]: null
+      });
+    },
+    get C28() {
+      return C[28] = dart.const({
+        __proto__: widget_inspector._Location.prototype,
+        [_Location_parameterLocations]: null,
+        [_Location_name]: "textInputType",
+        [_Location_column]: 31,
+        [_Location_line]: 102,
+        [_Location_file]: null
+      });
+    },
+    get C29() {
+      return C[29] = dart.const({
+        __proto__: widget_inspector._Location.prototype,
+        [_Location_parameterLocations]: null,
+        [_Location_name]: "obsureText",
+        [_Location_column]: 31,
+        [_Location_line]: 103,
+        [_Location_file]: null
+      });
+    },
+    get C30() {
+      return C[30] = dart.const({
+        __proto__: widget_inspector._Location.prototype,
+        [_Location_parameterLocations]: null,
+        [_Location_name]: "validate",
+        [_Location_column]: 31,
+        [_Location_line]: 104,
+        [_Location_file]: null
+      });
+    },
+    get C31() {
+      return C[31] = dart.const({
+        __proto__: widget_inspector._Location.prototype,
+        [_Location_parameterLocations]: null,
+        [_Location_name]: "onChanged",
+        [_Location_column]: 31,
+        [_Location_line]: 109,
+        [_Location_file]: null
+      });
+    },
+    get C26() {
+      return C[26] = dart.constList([C[27] || CT.C27, C[28] || CT.C28, C[29] || CT.C29, C[30] || CT.C30, C[31] || CT.C31], T._LocationL());
+    },
+    get C25() {
+      return C[25] = dart.const({
+        __proto__: widget_inspector._Location.prototype,
+        [_Location_parameterLocations]: C[26] || CT.C26,
+        [_Location_name]: null,
+        [_Location_column]: 27,
+        [_Location_line]: 100,
+        [_Location_file]: "file:///C:/Users/Jason/Desktop/virtuallearningapp/lib/view/screens/student/login/Loginscreen.dart"
+      });
+    },
+    get C34() {
+      return C[34] = dart.const({
+        __proto__: widget_inspector._Location.prototype,
+        [_Location_parameterLocations]: null,
+        [_Location_name]: "height",
+        [_Location_column]: 36,
+        [_Location_line]: 112,
+        [_Location_file]: null
+      });
+    },
+    get C33() {
+      return C[33] = dart.constList([C[34] || CT.C34], T._LocationL());
+    },
+    get C32() {
+      return C[32] = dart.const({
+        __proto__: widget_inspector._Location.prototype,
+        [_Location_parameterLocations]: C[33] || CT.C33,
+        [_Location_name]: null,
+        [_Location_column]: 27,
+        [_Location_line]: 112,
+        [_Location_file]: "file:///C:/Users/Jason/Desktop/virtuallearningapp/lib/view/screens/student/login/Loginscreen.dart"
+      });
+    },
+    get C37() {
+      return C[37] = dart.const({
+        __proto__: widget_inspector._Location.prototype,
+        [_Location_parameterLocations]: null,
+        [_Location_name]: "hintText",
+        [_Location_column]: 31,
+        [_Location_line]: 114,
+        [_Location_file]: null
+      });
+    },
+    get C38() {
+      return C[38] = dart.const({
+        __proto__: widget_inspector._Location.prototype,
+        [_Location_parameterLocations]: null,
+        [_Location_name]: "obsureText",
+        [_Location_column]: 31,
+        [_Location_line]: 115,
+        [_Location_file]: null
+      });
+    },
+    get C39() {
+      return C[39] = dart.const({
+        __proto__: widget_inspector._Location.prototype,
+        [_Location_parameterLocations]: null,
+        [_Location_name]: "validate",
+        [_Location_column]: 31,
+        [_Location_line]: 116,
+        [_Location_file]: null
+      });
+    },
+    get C40() {
+      return C[40] = dart.const({
+        __proto__: widget_inspector._Location.prototype,
+        [_Location_parameterLocations]: null,
+        [_Location_name]: "onChanged",
+        [_Location_column]: 31,
+        [_Location_line]: 121,
+        [_Location_file]: null
+      });
+    },
+    get C36() {
+      return C[36] = dart.constList([C[37] || CT.C37, C[38] || CT.C38, C[39] || CT.C39, C[40] || CT.C40], T._LocationL());
+    },
+    get C35() {
+      return C[35] = dart.const({
+        __proto__: widget_inspector._Location.prototype,
+        [_Location_parameterLocations]: C[36] || CT.C36,
+        [_Location_name]: null,
+        [_Location_column]: 27,
+        [_Location_line]: 113,
+        [_Location_file]: "file:///C:/Users/Jason/Desktop/virtuallearningapp/lib/view/screens/student/login/Loginscreen.dart"
+      });
+    },
+    get C43() {
+      return C[43] = dart.const({
+        __proto__: widget_inspector._Location.prototype,
+        [_Location_parameterLocations]: null,
+        [_Location_name]: "height",
+        [_Location_column]: 36,
+        [_Location_line]: 124,
+        [_Location_file]: null
+      });
+    },
+    get C42() {
+      return C[42] = dart.constList([C[43] || CT.C43], T._LocationL());
+    },
+    get C41() {
+      return C[41] = dart.const({
+        __proto__: widget_inspector._Location.prototype,
+        [_Location_parameterLocations]: C[42] || CT.C42,
+        [_Location_name]: null,
+        [_Location_column]: 27,
+        [_Location_line]: 124,
+        [_Location_file]: "file:///C:/Users/Jason/Desktop/virtuallearningapp/lib/view/screens/student/login/Loginscreen.dart"
+      });
+    },
+    get C46() {
+      return C[46] = dart.const({
+        __proto__: widget_inspector._Location.prototype,
+        [_Location_parameterLocations]: null,
+        [_Location_name]: "text",
+        [_Location_column]: 31,
+        [_Location_line]: 126,
+        [_Location_file]: null
+      });
+    },
+    get C47() {
+      return C[47] = dart.const({
+        __proto__: widget_inspector._Location.prototype,
+        [_Location_parameterLocations]: null,
+        [_Location_name]: "onPressed",
+        [_Location_column]: 31,
+        [_Location_line]: 127,
+        [_Location_file]: null
+      });
+    },
+    get C45() {
+      return C[45] = dart.constList([C[46] || CT.C46, C[47] || CT.C47], T._LocationL());
+    },
+    get C44() {
+      return C[44] = dart.const({
+        __proto__: widget_inspector._Location.prototype,
+        [_Location_parameterLocations]: C[45] || CT.C45,
+        [_Location_name]: null,
+        [_Location_column]: 27,
+        [_Location_line]: 125,
+        [_Location_file]: "file:///C:/Users/Jason/Desktop/virtuallearningapp/lib/view/screens/student/login/Loginscreen.dart"
+      });
+    },
+    get C50() {
+      return C[50] = dart.const({
+        __proto__: widget_inspector._Location.prototype,
+        [_Location_parameterLocations]: null,
+        [_Location_name]: "crossAxisAlignment",
+        [_Location_column]: 25,
+        [_Location_line]: 98,
+        [_Location_file]: null
+      });
+    },
+    get C51() {
+      return C[51] = dart.const({
+        __proto__: widget_inspector._Location.prototype,
+        [_Location_parameterLocations]: null,
+        [_Location_name]: "children",
+        [_Location_column]: 25,
+        [_Location_line]: 99,
+        [_Location_file]: null
+      });
+    },
+    get C49() {
+      return C[49] = dart.constList([C[50] || CT.C50, C[51] || CT.C51], T._LocationL());
+    },
+    get C48() {
+      return C[48] = dart.const({
+        __proto__: widget_inspector._Location.prototype,
+        [_Location_parameterLocations]: C[49] || CT.C49,
+        [_Location_name]: null,
+        [_Location_column]: 30,
+        [_Location_line]: 97,
+        [_Location_file]: "file:///C:/Users/Jason/Desktop/virtuallearningapp/lib/view/screens/student/login/Loginscreen.dart"
+      });
+    },
+    get C54() {
+      return C[54] = dart.const({
+        __proto__: widget_inspector._Location.prototype,
+        [_Location_parameterLocations]: null,
+        [_Location_name]: "padding",
+        [_Location_column]: 23,
+        [_Location_line]: 96,
+        [_Location_file]: null
+      });
+    },
+    get C55() {
+      return C[55] = dart.const({
+        __proto__: widget_inspector._Location.prototype,
+        [_Location_parameterLocations]: null,
+        [_Location_name]: "child",
+        [_Location_column]: 23,
+        [_Location_line]: 97,
+        [_Location_file]: null
+      });
+    },
+    get C53() {
+      return C[53] = dart.constList([C[54] || CT.C54, C[55] || CT.C55], T._LocationL());
+    },
+    get C52() {
+      return C[52] = dart.const({
+        __proto__: widget_inspector._Location.prototype,
+        [_Location_parameterLocations]: C[53] || CT.C53,
+        [_Location_name]: null,
+        [_Location_column]: 28,
+        [_Location_line]: 95,
+        [_Location_file]: "file:///C:/Users/Jason/Desktop/virtuallearningapp/lib/view/screens/student/login/Loginscreen.dart"
+      });
+    },
+    get C58() {
+      return C[58] = dart.const({
+        __proto__: widget_inspector._Location.prototype,
+        [_Location_parameterLocations]: null,
+        [_Location_name]: "key",
+        [_Location_column]: 21,
+        [_Location_line]: 94,
+        [_Location_file]: null
+      });
+    },
+    get C59() {
+      return C[59] = dart.const({
+        __proto__: widget_inspector._Location.prototype,
+        [_Location_parameterLocations]: null,
+        [_Location_name]: "child",
+        [_Location_column]: 21,
+        [_Location_line]: 95,
+        [_Location_file]: null
+      });
+    },
+    get C57() {
+      return C[57] = dart.constList([C[58] || CT.C58, C[59] || CT.C59], T._LocationL());
+    },
+    get C56() {
+      return C[56] = dart.const({
+        __proto__: widget_inspector._Location.prototype,
+        [_Location_parameterLocations]: C[57] || CT.C57,
+        [_Location_name]: null,
+        [_Location_column]: 19,
+        [_Location_line]: 93,
+        [_Location_file]: "file:///C:/Users/Jason/Desktop/virtuallearningapp/lib/view/screens/student/login/Loginscreen.dart"
+      });
+    },
+    get C62() {
+      return C[62] = dart.const({
+        __proto__: widget_inspector._Location.prototype,
+        [_Location_parameterLocations]: null,
+        [_Location_name]: "children",
+        [_Location_column]: 17,
+        [_Location_line]: 84,
+        [_Location_file]: null
+      });
+    },
+    get C61() {
+      return C[61] = dart.constList([C[62] || CT.C62], T._LocationL());
+    },
+    get C60() {
+      return C[60] = dart.const({
+        __proto__: widget_inspector._Location.prototype,
+        [_Location_parameterLocations]: C[61] || CT.C61,
+        [_Location_name]: null,
+        [_Location_column]: 22,
+        [_Location_line]: 83,
+        [_Location_file]: "file:///C:/Users/Jason/Desktop/virtuallearningapp/lib/view/screens/student/login/Loginscreen.dart"
+      });
+    },
+    get C65() {
+      return C[65] = dart.const({
+        __proto__: widget_inspector._Location.prototype,
+        [_Location_parameterLocations]: null,
+        [_Location_name]: "child",
+        [_Location_column]: 15,
+        [_Location_line]: 83,
+        [_Location_file]: null
+      });
+    },
+    get C64() {
+      return C[64] = dart.constList([C[65] || CT.C65], T._LocationL());
+    },
+    get C63() {
+      return C[63] = dart.const({
+        __proto__: widget_inspector._Location.prototype,
+        [_Location_parameterLocations]: C[64] || CT.C64,
+        [_Location_name]: null,
+        [_Location_column]: 20,
+        [_Location_line]: 82,
+        [_Location_file]: "file:///C:/Users/Jason/Desktop/virtuallearningapp/lib/view/screens/student/login/Loginscreen.dart"
+      });
+    },
+    get C68() {
+      return C[68] = dart.const({
+        __proto__: widget_inspector._Location.prototype,
+        [_Location_parameterLocations]: null,
+        [_Location_name]: "child",
+        [_Location_column]: 13,
+        [_Location_line]: 82,
+        [_Location_file]: null
+      });
+    },
+    get C67() {
+      return C[67] = dart.constList([C[68] || CT.C68], T._LocationL());
+    },
+    get C66() {
+      return C[66] = dart.const({
+        __proto__: widget_inspector._Location.prototype,
+        [_Location_parameterLocations]: C[67] || CT.C67,
+        [_Location_name]: null,
+        [_Location_column]: 18,
+        [_Location_line]: 81,
+        [_Location_file]: "file:///C:/Users/Jason/Desktop/virtuallearningapp/lib/view/screens/student/login/Loginscreen.dart"
+      });
+    },
+    get C71() {
+      return C[71] = dart.const({
+        __proto__: widget_inspector._Location.prototype,
+        [_Location_parameterLocations]: null,
+        [_Location_name]: "inAsyncCall",
+        [_Location_column]: 11,
+        [_Location_line]: 80,
+        [_Location_file]: null
+      });
+    },
+    get C72() {
+      return C[72] = dart.const({
+        __proto__: widget_inspector._Location.prototype,
+        [_Location_parameterLocations]: null,
+        [_Location_name]: "child",
+        [_Location_column]: 11,
+        [_Location_line]: 81,
+        [_Location_file]: null
+      });
+    },
+    get C70() {
+      return C[70] = dart.constList([C[71] || CT.C71, C[72] || CT.C72], T._LocationL());
+    },
+    get C69() {
+      return C[69] = dart.const({
+        __proto__: widget_inspector._Location.prototype,
+        [_Location_parameterLocations]: C[70] || CT.C70,
+        [_Location_name]: null,
+        [_Location_column]: 15,
+        [_Location_line]: 79,
+        [_Location_file]: "file:///C:/Users/Jason/Desktop/virtuallearningapp/lib/view/screens/student/login/Loginscreen.dart"
+      });
+    },
+    get C75() {
+      return C[75] = dart.const({
+        __proto__: widget_inspector._Location.prototype,
+        [_Location_parameterLocations]: null,
+        [_Location_name]: "body",
+        [_Location_column]: 9,
+        [_Location_line]: 79,
+        [_Location_file]: null
+      });
+    },
+    get C74() {
+      return C[74] = dart.constList([C[75] || CT.C75], T._LocationL());
+    },
+    get C73() {
+      return C[73] = dart.const({
+        __proto__: widget_inspector._Location.prototype,
+        [_Location_parameterLocations]: C[74] || CT.C74,
+        [_Location_name]: null,
+        [_Location_column]: 14,
+        [_Location_line]: 78,
+        [_Location_file]: "file:///C:/Users/Jason/Desktop/virtuallearningapp/lib/view/screens/student/login/Loginscreen.dart"
+      });
+    },
+    get C78() {
+      return C[78] = dart.const({
+        __proto__: widget_inspector._Location.prototype,
+        [_Location_parameterLocations]: null,
+        [_Location_name]: "child",
+        [_Location_column]: 7,
+        [_Location_line]: 78,
+        [_Location_file]: null
+      });
+    },
+    get C77() {
+      return C[77] = dart.constList([C[78] || CT.C78], T._LocationL());
+    },
+    get C76() {
+      return C[76] = dart.const({
+        __proto__: widget_inspector._Location.prototype,
+        [_Location_parameterLocations]: C[77] || CT.C77,
+        [_Location_name]: null,
+        [_Location_column]: 12,
+        [_Location_line]: 77,
+        [_Location_file]: "file:///C:/Users/Jason/Desktop/virtuallearningapp/lib/view/screens/student/login/Loginscreen.dart"
+      });
+    }
+  }, false);
+  var C = Array(79).fill(void 0);
+  var I = ["package:virtuallearningapp/view/screens/student/login/Loginscreen.dart"];
+  Loginscreen.StudentLogin = class StudentLogin extends framework.StatefulWidget {
+    createState() {
+      return new Loginscreen._StudentLoginState.new();
+    }
+  };
+  (Loginscreen.StudentLogin.new = function(opts) {
+    let $36creationLocationd_0dea112b090073317d4 = opts && '$creationLocationd_0dea112b090073317d4' in opts ? opts.$creationLocationd_0dea112b090073317d4 : null;
+    Loginscreen.StudentLogin.__proto__.new.call(this, {$creationLocationd_0dea112b090073317d4: $36creationLocationd_0dea112b090073317d4});
+    ;
+  }).prototype = Loginscreen.StudentLogin.prototype;
+  dart.addTypeTests(Loginscreen.StudentLogin);
+  dart.addTypeCaches(Loginscreen.StudentLogin);
+  dart.setMethodSignature(Loginscreen.StudentLogin, () => ({
+    __proto__: dart.getMethods(Loginscreen.StudentLogin.__proto__),
+    createState: dart.fnType(dart.legacy(Loginscreen._StudentLoginState), [])
+  }));
+  dart.setLibraryUri(Loginscreen.StudentLogin, I[0]);
+  var _Location_parameterLocations = dart.privateName(widget_inspector, "_Location.parameterLocations");
+  var _Location_name = dart.privateName(widget_inspector, "_Location.name");
+  var _Location_column = dart.privateName(widget_inspector, "_Location.column");
+  var _Location_line = dart.privateName(widget_inspector, "_Location.line");
+  var _Location_file = dart.privateName(widget_inspector, "_Location.file");
+  var Widget__location = dart.privateName(framework, "Widget._location");
+  var Widget_key = dart.privateName(framework, "Widget.key");
+  var EdgeInsets_bottom = dart.privateName(edge_insets, "EdgeInsets.bottom");
+  var EdgeInsets_right = dart.privateName(edge_insets, "EdgeInsets.right");
+  var EdgeInsets_top = dart.privateName(edge_insets, "EdgeInsets.top");
+  var EdgeInsets_left = dart.privateName(edge_insets, "EdgeInsets.left");
+  Loginscreen._StudentLoginState = class _StudentLoginState extends framework.State$(dart.legacy(Loginscreen.StudentLogin)) {
+    getCurrentUser() {
+      return async.async(dart.void, (function* getCurrentUser() {
+        try {
+          let user = Loginscreen._auth.currentUser;
+          if (user != null) {
+            this.setState(dart.fn(() => {
+              Loginscreen.loggedinuser = user;
+            }, T.VoidToNull()));
+          }
+        } catch (e$) {
+          let e = dart.getThrown(e$);
+          core.print(dart.toString(e));
+        }
+      }).bind(this));
+    }
+    signIn() {
+      if (dart.test(Loginscreen.formKey.currentState.validate())) {
+        this.setState(dart.fn(() => {
+          Loginscreen.isLoading = true;
+        }, T.VoidToNull()));
+        Loginscreen.authService.signInWithEmailAndPassword(Loginscreen.email, Loginscreen.password).then(core.Null, dart.fn(val => {
+          if (val != null) {
+            Loginscreen.authService.showSubmitRequestSnackBar(this.context, "Welcome " + dart.notNull(Loginscreen.loggedinuser.email));
+            navigator.Navigator.pushReplacement(dart.dynamic, T.ObjectL(), this.context, new page.MaterialPageRoute.new({builder: dart.fn(context => new bottom_navigation_bar.BottomNavBAr.new({pages: T.JSArrayOfWidgetL().of([new dashboard.StudentDashboard.new({$creationLocationd_0dea112b090073317d4: C[0] || CT.C0}), new course_content.StudentCourseContent.new({$creationLocationd_0dea112b090073317d4: C[2] || CT.C2})]), $creationLocationd_0dea112b090073317d4: C[3] || CT.C3}), T.BuildContextLToBottomNavBArL())}));
+            this.setState(dart.fn(() => {
+              Loginscreen.isLoading = false;
+            }, T.VoidToNull()));
+          }
+        }, T.dynamicToNull()));
+      }
+    }
+    initState() {
+      super.initState();
+      this.getCurrentUser();
+    }
+    build(context) {
+      return new safe_area.SafeArea.new({child: new scaffold.Scaffold.new({body: new modal_progress_hud.ModalProgressHUD.new({inAsyncCall: Loginscreen.isLoading, child: new single_child_scroll_view.SingleChildScrollView.new({child: new basic.Center.new({child: new basic.Column.new({children: T.JSArrayOfWidgetL().of([new basic.SizedBox.new({height: sizer['SizerExt|get#h'](10.0), $creationLocationd_0dea112b090073317d4: C[6] || CT.C6}), new heroes.Hero.new({tag: "yct", child: C[9] || CT.C9, $creationLocationd_0dea112b090073317d4: C[11] || CT.C11}), new basic.SizedBox.new({height: sizer['SizerExt|get#h'](5.0), $creationLocationd_0dea112b090073317d4: C[15] || CT.C15}), new text.Text.new("Login as a Student", {$creationLocationd_0dea112b090073317d4: C[18] || CT.C18}), new basic.SizedBox.new({height: sizer['SizerExt|get#h'](5.0), $creationLocationd_0dea112b090073317d4: C[21] || CT.C21}), new form.Form.new({key: Loginscreen.formKey, child: new basic.Padding.new({padding: C[24] || CT.C24, child: new basic.Column.new({crossAxisAlignment: flex.CrossAxisAlignment.stretch, children: T.JSArrayOfWidgetL().of([new form_textfield.CustomFormField.new({hintText: "Email", textInputType: text_input.TextInputType.emailAddress, obsureText: false, validate: dart.fn(value => {
+                                if (value == null || dart.dtest(dart.dload(value, 'isEmpty'))) {
+                                  return "Please enter your email";
+                                }
+                              }, T.dynamicToStringL()), onChanged: dart.fn(value => {
+                                Loginscreen.email = T.StringL().as(value);
+                              }, T.dynamicToNull()), $creationLocationd_0dea112b090073317d4: C[25] || CT.C25}), new basic.SizedBox.new({height: 20.0, $creationLocationd_0dea112b090073317d4: C[32] || CT.C32}), new form_textfield.CustomFormField.new({hintText: "Password", obsureText: true, validate: dart.fn(value => {
+                                if (value == null || dart.dtest(dart.dload(value, 'isEmpty'))) {
+                                  return "Please enter password";
+                                }
+                              }, T.dynamicToStringL()), onChanged: dart.fn(value => {
+                                Loginscreen.password = T.StringL().as(value);
+                              }, T.dynamicToNull()), $creationLocationd_0dea112b090073317d4: C[35] || CT.C35}), new basic.SizedBox.new({height: 20.0, $creationLocationd_0dea112b090073317d4: C[41] || CT.C41}), new button.CustomButton.new({text: "SUBMIT", onPressed: dart.fn(() => {
+                                this.signIn();
+                              }, T.VoidToNull()), $creationLocationd_0dea112b090073317d4: C[44] || CT.C44})]), $creationLocationd_0dea112b090073317d4: C[48] || CT.C48}), $creationLocationd_0dea112b090073317d4: C[52] || CT.C52}), $creationLocationd_0dea112b090073317d4: C[56] || CT.C56})]), $creationLocationd_0dea112b090073317d4: C[60] || CT.C60}), $creationLocationd_0dea112b090073317d4: C[63] || CT.C63}), $creationLocationd_0dea112b090073317d4: C[66] || CT.C66}), $creationLocationd_0dea112b090073317d4: C[69] || CT.C69}), $creationLocationd_0dea112b090073317d4: C[73] || CT.C73}), $creationLocationd_0dea112b090073317d4: C[76] || CT.C76});
+    }
+  };
+  (Loginscreen._StudentLoginState.new = function() {
+    Loginscreen._StudentLoginState.__proto__.new.call(this);
+    ;
+  }).prototype = Loginscreen._StudentLoginState.prototype;
+  dart.addTypeTests(Loginscreen._StudentLoginState);
+  dart.addTypeCaches(Loginscreen._StudentLoginState);
+  dart.setMethodSignature(Loginscreen._StudentLoginState, () => ({
+    __proto__: dart.getMethods(Loginscreen._StudentLoginState.__proto__),
+    getCurrentUser: dart.fnType(dart.void, []),
+    signIn: dart.fnType(dart.dynamic, []),
+    build: dart.fnType(dart.legacy(framework.Widget), [dart.legacy(framework.BuildContext)])
+  }));
+  dart.setLibraryUri(Loginscreen._StudentLoginState, I[0]);
+  dart.defineLazy(Loginscreen, {
+    /*Loginscreen.isLoading*/get isLoading() {
+      return false;
+    },
+    set isLoading(_) {},
+    /*Loginscreen.email*/get email() {
+      return null;
+    },
+    set email(_) {},
+    /*Loginscreen.password*/get password() {
+      return null;
+    },
+    set password(_) {},
+    /*Loginscreen.displayName*/get displayName() {
+      return null;
+    },
+    set displayName(_) {},
+    /*Loginscreen._auth*/get _auth() {
+      return firebase_auth.FirebaseAuth.instance;
+    },
+    /*Loginscreen.formKey*/get formKey() {
+      return T.GlobalKeyOfFormStateL().new();
+    },
+    /*Loginscreen.loggedinuser*/get loggedinuser() {
+      return null;
+    },
+    set loggedinuser(_) {},
+    /*Loginscreen.authService*/get authService() {
+      return new auth.Authentication.new();
+    },
+    set authService(_) {}
+  }, true);
+  dart.trackLibraries("packages/virtuallearningapp/view/screens/student/login/Loginscreen.dart", {
+    "package:virtuallearningapp/view/screens/student/login/Loginscreen.dart": Loginscreen
+  }, {
+  }, '{"version":3,"sourceRoot":"","sources":["Loginscreen.dart"],"names":[],"mappings":";;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;AAuBsC;IAAoB;;;;;;EAC1D;;;;;;;;;;;;;;;;;;;;;AAGqB;AACjB;AACQ,qBAAO,AAAM;AACnB,cAAI,AAAK,IAAD;AAGJ,YAFF,cAAS;AACY,cAAnB,2BAAe,IAAI;;;;cAGhB;AACY,UAAnB,WAAQ,cAAF,CAAC;;MAEX;;;AAGE,oBAAI,AAAQ,AAAa;AAGrB,QAFF,cAAS;AACS,UAAhB,wBAAY;;AAqBZ,QAnBF,AAAY,AAA4C,mDAAjB,mBAAO,sCAAe,QAAC;AAC5D,cAAI,AAAI,GAAD;AAEwC,YAD7C,AAAY,kDACR,cAAS,AAAW,0BAAE,AAAa;AAWtC,YAVS,+DACR,cACA,yCACW,QAAC,WAAY,mDACb,yBACL,6FACA;AAON,YAFF,cAAS;AACU,cAAjB,wBAAY;;;;;IAKtB;;AAImB,MAAX;AACU,MAAhB;IACF;UAG0B;AACxB,YAAO,oCACE,iCACC,0DACS,8BACN,+DACE,6BACE,gCACK,yBACR,gCAAsB,wBAAL,gEACjB,0BACO,wFAGP,gCAAqB,wBAAJ,iEACjB,kBAAK,kFACL,gCAAqB,wBAAJ,iEACjB,wBACO,4BACE,wDAEE,0CACkC,2CACrB,yBAChB,kDACc,wBACmB,mDACjB,iBACF,QAAC;AACT,oCAAI,AAAM,KAAD,uBAAkB,WAAN,KAAK;AACxB,wCAAO;;mEAGA,QAAC;AACG,oDAAb,eAAQ,KAAK;gHAEnB,gCAAiB,iEACjB,kDACc,wBACE,gBACF,QAAC;AACT,oCAAI,AAAM,KAAD,uBAAkB,WAAN,KAAK;AACxB,wCAAO;;mEAGA,QAAC;AACM,uDAAhB,eAAW,KAAK;gHAEtB,gCAAiB,iEACjB,mCACU,qBACK;AAOD,gCAAR;;IAa9B;;;;;EACF;;;;;;;;;;;MAvIK,qBAAS;YAAG;;;MACV,iBAAK;;;;MACL,oBAAQ;;;;MACR,uBAAW;;;;MACZ,iBAAK;YAAgB;;MACrB,mBAAO;YAAG;;MACX,wBAAY;;;;MACF,uBAAW;YAAG","file":"../../../../../../../../../packages/virtuallearningapp/view/screens/student/login/Loginscreen.dart.lib.js"}');
+  // Exports:
+  return {
+    view__screens__student__login__Loginscreen: Loginscreen
+  };
+}));
+
+//# sourceMappingURL=Loginscreen.dart.lib.js.map

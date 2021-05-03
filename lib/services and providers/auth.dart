@@ -1,54 +1,87 @@
+import 'dart:io';
+
 import 'package:another_flushbar/flushbar.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
+import 'package:firebase_storage/firebase_storage.dart';
 import 'package:flutter/material.dart';
-import 'package:virtuallearningapp/view/screens/lecturer/login/form.dart';
+import 'package:virtuallearningapp/services%20and%20providers/model.dart';
+import 'package:path/path.dart';
 
 class Authentication with ChangeNotifier {
   final _auth = FirebaseAuth.instance;
-  bool showspinner = false;
+
   String uemail;
   User loggedinuser;
+  UploadTask uploadTask;
+  File file;
+  String url;
 
-  signInWithEmailAndPassword(String loginemail, String loginpassword) async {
-    await _auth.signInWithEmailAndPassword(
-        email: loginemail, password: password);
+  FireUser _userFromFirebaseUser(User user) {
+    return user != null ? FireUser(user.uid) : null;
+  }
 
-    // final user = (await _auth.signInWithEmailAndPassword(
-    //         email: loginemail, password: loginpassword))
-    //     .user;
+  Future signInWithEmailAndPassword(
+    String email,
+    String password,
+  ) async {
+    try {
+      UserCredential userCredential = await _auth.signInWithEmailAndPassword(
+          email: email, password: password);
+      loggedinuser = userCredential.user;
+
+      return _userFromFirebaseUser(loggedinuser);
+    } catch (e) {
+      print(e.toString());
+    }
 
     notifyListeners();
   }
 
-  logout() {
-    _auth.signOut();
+  Future signUpwithEmailandPassword(
+      String email, String password, String displayName) async {
+    try {
+      UserCredential userCredential = await _auth
+          .createUserWithEmailAndPassword(email: email, password: password);
+      User user = userCredential.user;
+      await userCredential.user.updateProfile(displayName: displayName);
+      return _userFromFirebaseUser(user);
+    } catch (e) {
+      print(e.toString());
+    }
   }
 
-  // void getCurrentUser() async {
-  //   try {
-  //     final user = _auth.currentUser;
+  Future logout() async {
+    try {
+      return await _auth.signOut();
+    } catch (e) {
+      print(e.toString());
+      return null;
+    }
+  }
 
-  //     if (user != null) {
-  //       loggedinuser = user;
-  //       print(loggedinuser.email);
-  //     }
-  //   } catch (e) {
-  //     print(e);
-  //   }
+  Future uploadFile() async {
+    Reference storageReference = FirebaseStorage.instance
+        .ref()
+        .child('imageURL/${basename(file.path)}}');
+    uploadTask = storageReference.putFile(file);
+    await uploadTask.whenComplete(() {});
+    print('File Uploaded');
 
+    url = await storageReference.getDownloadURL();
     
-  // }
-
-  void showSpinner() async {
-    showspinner = true;
-
-    notifyListeners();
   }
 
-  void stopSpinner() async {
-    showspinner = false;
-    notifyListeners();
+  void getCurrentUser() async {
+    try {
+      final user = _auth.currentUser;
+
+      if (user != null) {
+        loggedinuser = user;
+      }
+    } catch (e) {
+      print(e);
+    }
   }
 
   void showSubmitRequestSnackBar(BuildContext context, String message) async {
@@ -68,33 +101,33 @@ class Authentication with ChangeNotifier {
     notifyListeners();
   }
 
-  void writeNewUserToDatabase() async {
-    try {
-      if (User != null) {
-        //check if already signed up
-        final QuerySnapshot result = await FirebaseFirestore.instance
-            .collection('users')
-            .where('id', isEqualTo: loggedinuser.uid)
-            .get();
-        final List<DocumentSnapshot> documents = result.docs;
-        if (documents.length == 0) {
-          //update data to server if new user
-          FirebaseFirestore.instance
-              .collection('users')
-              .doc(loggedinuser.uid)
-              .set({
-            'nickname': loggedinuser.displayName,
-            'photoUrl': loggedinuser.photoURL,
-            'id': loggedinuser.uid
-          }).whenComplete(() {
-            print("done");
-          });
-        }
-      }
-    } catch (e) {
-      print(e);
-    }
-
-    notifyListeners();
+  void writeNewUserToDatabase(String displayName) async {
+    //check if already signed up
+    // final QuerySnapshot result = await FirebaseFirestore.instance
+    //     .collection('users')
+    //     .where('id', isEqualTo: loggedinuser.uid)
+    //     .get();
+    // final List<DocumentSnapshot> documents = result.docs;
+    // if (documents.length == 0) {
+    //   //update data to server if new user
+    //   await FirebaseFirestore.instance
+    //       .collection('users')
+    //       .doc(loggedinuser.uid)
+    //       .set({
+    //     'fullname': loggedinuser.displayName,
+    //   }).whenComplete(() {
+    //     print("done");
+    //   });
+    // }
+    await FirebaseFirestore.instance
+        .collection('users')
+        .doc(loggedinuser.uid)
+        .set({
+      'fullname': loggedinuser.displayName,
+    }).whenComplete(() {
+      print("done");
+    });
   }
+
+  notifyListeners();
 }

@@ -1,11 +1,19 @@
+import 'dart:io';
 import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:file_picker/file_picker.dart';
 import 'package:firebase_auth/firebase_auth.dart';
+import 'package:firebase_storage/firebase_storage.dart';
 import 'package:flutter/material.dart';
 import 'package:virtuallearningapp/services%20and%20providers/messagestream.dart';
+import 'package:path/path.dart';
 
-final _auth = FirebaseAuth.instance;
 final _firestore = FirebaseFirestore.instance;
 User loggedinuser;
+final _auth = FirebaseAuth.instance;
+MessagesStream messageStream;
+String url;
+UploadTask uploadTask;
+File file;
 
 class StudentClassroom extends StatefulWidget {
   @override
@@ -14,11 +22,6 @@ class StudentClassroom extends StatefulWidget {
 
 class _StudentClassroomState extends State<StudentClassroom> {
   final messageTextController = TextEditingController();
-  @override
-  void initState() {
-    super.initState();
-    getCurrentUser();
-  }
 
   void getCurrentUser() async {
     try {
@@ -30,6 +33,31 @@ class _StudentClassroomState extends State<StudentClassroom> {
     } catch (e) {
       print(e);
     }
+  }
+
+  Future uploadFile() async {
+    Reference storageReference = FirebaseStorage.instance
+        .ref()
+        .child('imageURL/${basename(file.path)}}');
+    uploadTask = storageReference.putFile(file);
+    await uploadTask.whenComplete(() {});
+    print('File Uploaded');
+
+    url = await storageReference.getDownloadURL();
+  }
+
+  Future selectFile() async {
+    final result = await FilePicker.platform.pickFiles(allowMultiple: false);
+    if (result == null) return;
+    final path = result.files.single.path;
+
+    setState(() => file = File(path));
+  }
+
+  @override
+  void initState() {
+    super.initState();
+    getCurrentUser();
   }
 
   @override
@@ -60,7 +88,13 @@ class _StudentClassroomState extends State<StudentClassroom> {
                           color: Colors.orange,
                           borderRadius: BorderRadius.circular(30),
                         ),
-                        child: InkWell(
+                        child: GestureDetector(
+                          onTap: () async {
+                            await selectFile().whenComplete(() async {
+                              await uploadFile();
+                            });
+                            await _sendMessage(imageUrl: url, messageText: "");
+                          },
                           child: Icon(
                             Icons.add,
                             color: Colors.white,
@@ -87,13 +121,9 @@ class _StudentClassroomState extends State<StudentClassroom> {
                         width: 15,
                       ),
                       FloatingActionButton(
-                        onPressed: () {
-                          messageTextController.clear();
-                          _firestore.collection("Messages").add({
-                            "sender": loggedinuser.email,
-                            "text": userMessage,
-                            "timestamp": Timestamp.now().toDate()
-                          });
+                        onPressed: () async {
+                          await _sendMessage(
+                              imageUrl: null, messageText: userMessage);
                         },
                         child: Icon(
                           Icons.send,
@@ -113,4 +143,13 @@ class _StudentClassroomState extends State<StudentClassroom> {
       ),
     );
   }
+}
+
+_sendMessage({String messageText, String imageUrl}) async {
+  await _firestore.collection("Messages").add({
+    "sender": loggedinuser.displayName,
+    "text": messageText,
+    "imageURL": url,
+    "timestamp": Timestamp.now().toDate()
+  });
 }

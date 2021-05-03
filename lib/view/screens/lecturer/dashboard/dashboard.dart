@@ -22,15 +22,14 @@ class _LecturerDashboardState extends State<LecturerDashboard> {
 
       if (user != null) {
         loggedinuser = user;
-        print(loggedinuser.email);
+        
       }
     } catch (e) {
       print(e);
     }
   }
-  @override
- 
 
+  @override
   void initState() {
     // TODO: implement initState
     super.initState();
@@ -45,7 +44,12 @@ class _LecturerDashboardState extends State<LecturerDashboard> {
         appBar: PreferredSize(
           preferredSize: Size.fromHeight(100),
           child: CustomAppBar(
-            username: loggedinuser.email,
+            username: loggedinuser.displayName,
+            onpressed: () {
+              _auth.signOut().whenComplete(() {
+                Navigator.pop(context);
+              });
+            },
             departmentname: "Department Of Computer Science",
           ),
         ),

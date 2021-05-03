@@ -5,8 +5,34 @@ import 'package:virtuallearningapp/view/screens/student/course_content/tabs/cont
 import 'package:virtuallearningapp/view/screens/widgets/appbar.dart';
 
 User user;
+User loggedinuser;
+final _auth = FirebaseAuth.instance;
+String url;
 
-class StudentCourseContent extends StatelessWidget {
+class StudentCourseContent extends StatefulWidget {
+  @override
+  _StudentCourseContentState createState() => _StudentCourseContentState();
+}
+
+class _StudentCourseContentState extends State<StudentCourseContent> {
+  @override
+  void initState() {
+    super.initState();
+    getCurrentUser();
+  }
+
+  void getCurrentUser() async {
+    try {
+      final user = _auth.currentUser;
+
+      if (user != null) {
+        loggedinuser = user;
+      }
+    } catch (e) {
+      print(e);
+    }
+  }
+
   @override
   Widget build(BuildContext context) {
     return SafeArea(
@@ -21,7 +47,7 @@ class StudentCourseContent extends StatelessWidget {
               flexibleSpace: Padding(
                 padding: const EdgeInsets.only(bottom: 50),
                 child: CustomAppBar(
-                  username: "Student Name",
+                  username: loggedinuser.displayName,
                   departmentname: "HND Computer Science",
                 ),
               ),

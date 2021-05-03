@@ -19,7 +19,6 @@ class _LecturerCourseContentState extends State<LecturerCourseContent> {
 
       if (user != null) {
         loggedinuser = user;
-        print(loggedinuser.email);
       }
     } catch (e) {
       print(e);
@@ -46,7 +45,7 @@ class _LecturerCourseContentState extends State<LecturerCourseContent> {
               flexibleSpace: Padding(
                 padding: const EdgeInsets.only(bottom: 50),
                 child: CustomAppBar(
-                  username: loggedinuser.email,
+                  username: loggedinuser.displayName,
                   departmentname: "Department Of Computer Science",
                 ),
               ),
