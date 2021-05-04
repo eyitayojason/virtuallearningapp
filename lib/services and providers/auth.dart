@@ -18,6 +18,7 @@ class Authentication with ChangeNotifier {
   UploadTask uploadTask;
   File file;
   String url;
+  String pdf;
 
   FireUser _userFromFirebaseUser(User user) {
     return user != null ? FireUser(user.uid) : null;

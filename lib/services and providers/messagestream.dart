@@ -3,7 +3,6 @@ import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:syncfusion_flutter_pdfviewer/pdfviewer.dart';
-
 import 'package:virtuallearningapp/services%20and%20providers/auth.dart';
 import 'package:virtuallearningapp/services%20and%20providers/pdf.dart';
 import 'package:virtuallearningapp/view/screens/lecturer/course_content/tabs/classroom/classroom.dart';
@@ -35,7 +34,6 @@ class _MessagesStreamState extends State<MessagesStream> {
   void initState() {
     super.initState();
     authService.getCurrentUser();
-   
   }
 
   @override
@@ -60,12 +58,14 @@ class _MessagesStreamState extends State<MessagesStream> {
         for (var message in messages) {
           final messageText = message.data()["text"];
           url = message.data()["imageURL"];
+          //pdf = message.data()["pdfURL"];
           final messageSender = message.data()["sender"];
           final timestamp = message.data()["timestamp"];
           final currentUser = authService.loggedinuser.displayName;
           final messageBubble = MessageBubble(
             timestamp: timestamp,
             picture: url,
+            //pdf: pdf,
             sender: messageSender,
             text: messageText,
             isMe: currentUser == messageSender,
@@ -116,47 +116,48 @@ class MessageBubble extends StatelessWidget {
           Container(
             height: 200,
             child: GestureDetector(
-              onTap: () {
-                return url;
-              },
+              onTap: () {},
               child: SfPdfViewer.network(
-                "$url",
+                "$pdf",
               ),
             ),
           ),
           text == "" || null
               ? Container()
-              : Material(
-                  borderRadius: isMe
-                      ? BorderRadius.only(
-                          topLeft: Radius.circular(30),
-                          bottomLeft: Radius.circular(30),
-                          bottomRight: Radius.circular(30),
-                        )
-                      : BorderRadius.only(
-                          topRight: Radius.circular(30),
-                          bottomRight: Radius.circular(30),
-                          bottomLeft: Radius.circular(30),
+              : picture == "" || null
+                  ? Container()
+                  : Material(
+                      borderRadius: isMe
+                          ? BorderRadius.only(
+                              topLeft: Radius.circular(30),
+                              bottomLeft: Radius.circular(30),
+                              bottomRight: Radius.circular(30),
+                            )
+                          : BorderRadius.only(
+                              topRight: Radius.circular(30),
+                              bottomRight: Radius.circular(30),
+                              bottomLeft: Radius.circular(30),
+                            ),
+                      elevation: 4,
+                      color: isMe ? Colors.lightBlueAccent : Colors.white,
+                      child: Padding(
+                        padding:
+                            EdgeInsets.symmetric(horizontal: 20, vertical: 10),
+                        child: Column(
+                          children: [
+                            Text(
+                              "$text",
+                              style: TextStyle(
+                                  fontSize: 15,
+                                  color: isMe ? Colors.white : Colors.black54),
+                            ),
+                            // Image.network(
+                            //   "$picture",
+                            // ),
+                          ],
                         ),
-                  elevation: 4,
-                  color: isMe ? Colors.lightBlueAccent : Colors.white,
-                  child: Padding(
-                    padding: EdgeInsets.symmetric(horizontal: 20, vertical: 10),
-                    child: Column(
-                      children: [
-                        Text(
-                          "$text",
-                          style: TextStyle(
-                              fontSize: 15,
-                              color: isMe ? Colors.white : Colors.black54),
-                        ),
-                        Image.network(
-                          picture,
-                        ),
-                      ],
+                      ),
                     ),
-                  ),
-                ),
         ],
       ),
     );

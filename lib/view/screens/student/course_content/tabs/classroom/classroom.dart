@@ -97,6 +97,7 @@ class _StudentClassroomState extends State<StudentClassroom> {
                             });
                             await _sendMessage(
                               imageUrl: url,
+                              pdf: pdf,
                               messageText: "",
                             );
                           },
@@ -155,11 +156,13 @@ class _StudentClassroomState extends State<StudentClassroom> {
 _sendMessage({
   String messageText,
   String imageUrl,
+  String pdf,
 }) async {
   await _firestore.collection("Messages").add({
     "sender": loggedinuser.displayName,
     "text": messageText,
     "imageURL": url,
+    "pdfURL": pdf,
     "timestamp": Timestamp.now().toDate()
   });
 }
