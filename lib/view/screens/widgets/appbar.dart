@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:line_icons/line_icon.dart';
 
 class CustomAppBar extends StatelessWidget {
   final String username;
@@ -7,7 +8,8 @@ class CustomAppBar extends StatelessWidget {
   const CustomAppBar({
     Key key,
     this.username,
-    this.departmentname, this.onpressed,
+    this.departmentname,
+    this.onpressed,
   }) : super(key: key);
 
   @override
@@ -33,6 +35,7 @@ class CustomAppBar extends StatelessWidget {
                   children: [
                     Icon(
                       Icons.school,
+                      color: Colors.green,
                       size: 20,
                     ),
                     SizedBox(
@@ -46,16 +49,15 @@ class CustomAppBar extends StatelessWidget {
                 ),
               ],
             ),
-            Flexible(
-                          child: IconButton(
-                icon: Icon(
-                  Icons.logout,
-                  color: Colors.white,
-                  size: 30,
-                ),
-                onPressed: onpressed
-              ),
-            )
+            Expanded(
+              child: IconButton(
+                  icon: Icon(
+                    Icons.logout,
+                    color: Colors.white,
+                    size: 50,
+                  ),
+                  onPressed: onpressed),
+            ),
           ],
         ),
       ),

@@ -5,16 +5,13 @@ import 'package:virtuallearningapp/services%20and%20providers/auth.dart';
 import 'package:virtuallearningapp/view/Splashscreen.dart';
 import 'package:provider/provider.dart';
 import 'package:virtuallearningapp/view/screens/Signup.dart';
-import 'package:virtuallearningapp/view/screens/lecturer/dashboard/dashboard.dart';
-import 'package:virtuallearningapp/view/screens/student/bottom_navigation_bar/bottom_navigation_bar.dart';
+import 'package:virtuallearningapp/view/screens/lecturer/login/Loginscreen.dart';
 import 'package:virtuallearningapp/view/screens/widgets/form_textfield.dart';
-
-import 'view/screens/student/course_content/course_content.dart';
-import 'view/screens/student/dashboard/dashboard.dart';
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
   await Firebase.initializeApp();
+  authService.getCurrentUser();
 
   runApp(
     MultiProvider(
@@ -28,12 +25,17 @@ void main() async {
         ChangeNotifierProvider(
           create: (context) => Authentication(),
         ),
-     
       ],
       child: MyApp(),
     ),
   );
 }
+
+String firebaseDownloadUrl;
+String contentDownloadUrl;
+String chattext;
+String filepath;
+var week;
 
 class MyApp extends StatelessWidget {
   @override
@@ -41,16 +43,13 @@ class MyApp extends StatelessWidget {
     return Sizer(
       builder: (context, orientation, screenType) {
         return MaterialApp(
-          title: 'Virtual Learning App ',
-          debugShowCheckedModeBanner: false,
-          theme: ThemeData(),
-          home: BottomNavBAr(pages: [
-              StudentDashboard(),
-                  StudentCourseContent(),
-          ],)
-          
-          //Splashscreen(),
-        );
+            title: 'Virtual Learning App ',
+            debugShowCheckedModeBanner: false,
+            theme: ThemeData(),
+            home: Splashscreen()
+
+            //Splashscreen(),
+            );
       },
     );
   }

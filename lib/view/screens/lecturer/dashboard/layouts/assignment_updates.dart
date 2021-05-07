@@ -14,7 +14,8 @@ class AssignmentUpdates extends StatelessWidget {
       children: [
         Text(
           "ASSIGNMENTS",
-          style: TextStyle(fontWeight: FontWeight.bold, fontSize: 20),
+          style: TextStyle(fontWeight: FontWeight.bold,
+          color: Colors.white, fontSize: 20),
         ),
         Container(
           height: 20.0.h,

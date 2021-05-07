@@ -22,7 +22,6 @@ class _LecturerDashboardState extends State<LecturerDashboard> {
 
       if (user != null) {
         loggedinuser = user;
-        
       }
     } catch (e) {
       print(e);
@@ -40,21 +39,33 @@ class _LecturerDashboardState extends State<LecturerDashboard> {
   Widget build(BuildContext context) {
     return SafeArea(
       child: Scaffold(
-        backgroundColor: Colors.grey.shade400,
-        appBar: PreferredSize(
-          preferredSize: Size.fromHeight(100),
-          child: CustomAppBar(
-            username: loggedinuser.displayName,
-            onpressed: () {
-              _auth.signOut().whenComplete(() {
-                Navigator.pop(context);
-              });
-            },
-            departmentname: "Department Of Computer Science",
+          backgroundColor: Colors.grey.shade400,
+          appBar: PreferredSize(
+            preferredSize: Size.fromHeight(100),
+            child: CustomAppBar(
+              username: loggedinuser.displayName,
+              onpressed: () {
+                _auth.signOut().whenComplete(() {
+                  Navigator.pop(context);
+                });
+              },
+              departmentname: "Department Of Computer Science",
+            ),
           ),
-        ),
-        body: _Body(),
-      ),
+          body: Stack(
+            children: [
+              Image.asset(
+                "assets/images/schoolbg.png",
+                fit: BoxFit.fitHeight,height: double.infinity,
+              ),
+              Column(
+                children: [
+                  _Body(),
+                  Expanded(child: NewsScreen()),
+                ],
+              ),
+            ],
+          )),
     );
   }
 }
@@ -71,11 +82,8 @@ class _Body extends StatelessWidget {
         margin: EdgeInsets.all(10),
         child: Column(
           children: [
-            ChatUpdates(),
             SizedBox(height: 20),
             AssignmentUpdates(),
-            SizedBox(height: 20),
-            News(),
           ],
         ),
       ),

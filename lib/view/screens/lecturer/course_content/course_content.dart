@@ -59,7 +59,16 @@ class _LecturerCourseContentState extends State<LecturerCourseContent> {
               ),
             ),
           ),
-          body: _Body(),
+          body:Stack(
+            children: [
+              Image.asset(
+                "assets/images/schoolbg.png",
+                fit: BoxFit.fitHeight,height: double.infinity,
+              ),
+              _Body(),
+              
+            ],
+          )
         ),
       ),
     );

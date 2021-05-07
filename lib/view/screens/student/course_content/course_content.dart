@@ -39,40 +39,44 @@ class _StudentCourseContentState extends State<StudentCourseContent> {
       child: DefaultTabController(
         length: 2,
         child: Scaffold(
-          backgroundColor: Colors.grey.shade400,
-          appBar: PreferredSize(
-            preferredSize: Size.fromHeight(150),
-            child: AppBar(
-              leading: Container(),
-              flexibleSpace: Padding(
-                padding: const EdgeInsets.only(bottom: 50),
-                child: CustomAppBar(
-                  username: loggedinuser.displayName,
-                  departmentname: "HND Computer Science",
+            backgroundColor: Colors.grey.shade400,
+            appBar: PreferredSize(
+              preferredSize: Size.fromHeight(150),
+              child: AppBar(
+                leading: Container(),
+                flexibleSpace: Padding(
+                  padding: const EdgeInsets.only(bottom: 50),
+                  child: CustomAppBar(
+                    username: loggedinuser.displayName,
+                    departmentname: "HND Computer Science",
+                  ),
+                ),
+                backgroundColor: Colors.orange,
+                bottom: TabBar(
+                  indicatorColor: Colors.white,
+                  tabs: [
+                    Tab(text: 'CONTENT'),
+                    Tab(text: 'CLASSROOM'),
+                  ],
                 ),
               ),
-              backgroundColor: Colors.orange,
-              bottom: TabBar(
-                indicatorColor: Colors.white,
-                tabs: [
-                  Tab(text: 'CONTENT'),
-                  Tab(text: 'CLASSROOM'),
-                ],
-              ),
             ),
-          ),
-          body: _Body(),
-        ),
+            body: Stack(
+              children: [
+                Image.asset(
+                  "assets/images/schoolbg.png",
+                  fit: BoxFit.fitHeight,
+                  height: double.infinity,
+                ),
+                _Body(),
+              ],
+            )),
       ),
     );
   }
 }
 
 class _Body extends StatelessWidget {
-  const _Body({
-    Key key,
-  }) : super(key: key);
-
   @override
   Widget build(BuildContext context) {
     return TabBarView(

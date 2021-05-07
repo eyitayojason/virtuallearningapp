@@ -2,10 +2,6 @@ import 'package:flutter/material.dart';
 import 'package:sizer/sizer.dart';
 
 class UpdatesHorizontalListView extends StatelessWidget {
-  const UpdatesHorizontalListView({
-    Key key,
-  }) : super(key: key);
-
   @override
   Widget build(BuildContext context) {
     return Column(
@@ -15,6 +11,7 @@ class UpdatesHorizontalListView extends StatelessWidget {
           "UPDATES",
           style: TextStyle(
             fontWeight: FontWeight.bold,
+            color: Colors.white,
             fontSize: 20,
           ),
         ),
@@ -34,9 +31,7 @@ class UpdatesHorizontalListView extends StatelessWidget {
 }
 
 class UpdateItem extends StatelessWidget {
-  const UpdateItem({
-    Key key,
-  }) : super(key: key);
+  
 
   @override
   Widget build(BuildContext context) {
