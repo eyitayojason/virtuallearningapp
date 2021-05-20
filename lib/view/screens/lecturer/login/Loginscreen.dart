@@ -1,6 +1,7 @@
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:modal_progress_hud/modal_progress_hud.dart';
+import 'package:virtuallearningapp/helper/functions.dart';
 import 'package:virtuallearningapp/services%20and%20providers/auth.dart';
 import 'package:virtuallearningapp/view/screens/lecturer/course_content/course_content.dart';
 import 'package:virtuallearningapp/view/screens/lecturer/dashboard/dashboard.dart';
@@ -9,6 +10,7 @@ import 'package:virtuallearningapp/view/screens/widgets/button.dart';
 import 'package:virtuallearningapp/view/screens/widgets/form_textfield.dart';
 import 'package:virtuallearningapp/view/screens/widgets/logo.dart';
 import 'package:sizer/sizer.dart';
+import '../createquiz.dart';
 
 bool isLoading = false;
 String email;
@@ -53,13 +55,14 @@ class _LecturerLoginState extends State<LecturerLogin> {
                 pages: [
                   LecturerDashboard(),
                   LecturerCourseContent(),
+                  CreateQuiz(),
                 ],
               ),
             ),
           );
           setState(() {
             isLoading = false;
-          });         
+          });
         }
       });
     }
@@ -124,13 +127,9 @@ class _LecturerLoginState extends State<LecturerLogin> {
                           CustomButton(
                               text: 'SUBMIT',
                               onPressed: () {
-                                // try {
-                                //   if (loggedinuser != null)
-                                //     authentication.writeNewUserToDatabase(displayName);
-                                // } catch (e) {
-                                //   print(e);
-                                // }
                                 signIn();
+                                Helperfunctions
+                                    .saveUserLoggedInSharedPreference(true);
                               }),
                         ],
                       ),

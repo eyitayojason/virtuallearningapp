@@ -44,6 +44,10 @@ class _BottomNavBArState extends State<BottomNavBAr> {
               AssetImage(IconImages.course),
             ),
           ),
+            BottomNavigationBarItem(
+            label: 'Quiz',
+            icon: const Icon(Icons.question_answer_outlined)
+          ),
         ],
         currentIndex: _selectedIndex,
         selectedItemColor: Colors.amber[800],

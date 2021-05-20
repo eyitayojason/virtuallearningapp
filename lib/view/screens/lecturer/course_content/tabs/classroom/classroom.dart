@@ -4,6 +4,8 @@ import 'package:file_picker/file_picker.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:firebase_storage/firebase_storage.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_audio_recorder/flutter_audio_recorder.dart';
+import 'package:path_provider/path_provider.dart';
 import 'package:virtuallearningapp/main.dart';
 import 'package:virtuallearningapp/services%20and%20providers/messagestream.dart';
 import 'package:path/path.dart';
@@ -16,6 +18,17 @@ UploadTask uploadTask;
 File file;
 String pdf;
 String path;
+File audioFile;
+String _filePath;
+
+bool _isPlaying;
+bool _isUploading;
+bool _isRecorded;
+bool _isRecording;
+
+
+
+FlutterAudioRecorder _audioRecorder;
 
 class LecturerClassroom extends StatefulWidget {
   @override
@@ -59,10 +72,100 @@ class _LecturerClassroomState extends State<LecturerClassroom> {
   void initState() {
     super.initState();
     getCurrentUser();
+    _isPlaying = false;
+    _isUploading = false;
+    _isRecorded = false;
+    _isRecording = false;
+   
   }
 
   @override
   Widget build(BuildContext context) {
+    Future<void> _onFileUploadButtonPressed() async {
+      setState(() {
+        _isUploading = true;
+      });
+      try {
+        Reference storageReference = FirebaseStorage.instance.ref().child(
+            _filePath.substring(_filePath.lastIndexOf('/'), _filePath.length));
+        UploadTask task = storageReference.putFile(File(_filePath));
+        await task.whenComplete(() async {
+          recordingURL = await storageReference.getDownloadURL();
+        });
+        print(recordingURL);
+      } catch (error) {
+        print('Error occured while uplaoding to Firebase ${error.toString()}');
+        ScaffoldMessenger.of(context).showSnackBar(
+          SnackBar(
+            content: Text('Error occured while uplaoding'),
+          ),
+        );
+      } finally {
+        setState(() {
+          _isUploading = false;
+        });
+      }
+    }
+
+    void _onRecordAgainButtonPressed() {
+      setState(() {
+        _isRecorded = false;
+      });
+    }
+
+    // void _onPlayButtonPressed() async {
+    //   if (!_isPlaying) {
+    //     _isPlaying = true;
+    //     _audioPlayer.play();
+    //     _audioPlayer.fullPlaybackStateStream.listen((duration) {
+    //       setState(() {
+    //         _isPlaying = false;
+    //       });
+    //     });
+    //   } else {
+    //     _audioPlayer.pause();
+    //     _isPlaying = false;
+    //   }
+    //   setState(() {});
+    // }
+
+    Future<void> _startRecording() async {
+      final bool hasRecordingPermission =
+          await FlutterAudioRecorder.hasPermissions;
+      if (hasRecordingPermission) {
+        Directory directory = await getApplicationDocumentsDirectory();
+        String filepath = directory.path +
+            '/' +
+            DateTime.now().millisecondsSinceEpoch.toString() +
+            '.aac';
+        _audioRecorder =
+            FlutterAudioRecorder(filepath, audioFormat: AudioFormat.AAC);
+        await _audioRecorder.initialized;
+        _audioRecorder.start();
+        _filePath = filepath;
+        setState(() {});
+      } else {
+        ScaffoldMessenger.of(context).showSnackBar(SnackBar(
+          content: Center(
+            child: Text('Please enable recording permission'),
+          ),
+        ));
+      }
+    }
+
+    Future<void> _onRecordButtonPressed() async {
+      if (_isRecording) {
+        _audioRecorder.stop();
+        _isRecording = false;
+        _isRecorded = true;
+      } else {
+        _isRecorded = false;
+        _isRecording = true;
+        await _startRecording();
+      }
+      setState(() {});
+    }
+
     return DefaultTabController(
       length: 2,
       child: SafeArea(
@@ -105,9 +208,8 @@ class _LecturerClassroomState extends State<LecturerClassroom> {
                                 await _firestore.collection("Messages").add({
                                   "sender": loggedinuser.displayName,
                                   "imageURL": firebaseDownloadUrl,
-                                  "timestamp": Timestamp.now().toDate()
+                                  "timestamp": FieldValue.serverTimestamp()
                                 });
-                                print(firebaseDownloadUrl);
                               },
                               child: Icon(
                                 Icons.add,
@@ -134,13 +236,54 @@ class _LecturerClassroomState extends State<LecturerClassroom> {
                           SizedBox(
                             width: 15,
                           ),
+                          _isRecorded
+                              ? _isUploading
+                                  ? Column(
+                                      mainAxisAlignment:
+                                          MainAxisAlignment.center,
+                                      crossAxisAlignment:
+                                          CrossAxisAlignment.center,
+                                      children: [
+                                        Expanded(
+                                          child: CircularProgressIndicator(),
+                                        ),
+                                      ],
+                                    )
+                                  : Row(
+                                      mainAxisAlignment:
+                                          MainAxisAlignment.center,
+                                      crossAxisAlignment:
+                                          CrossAxisAlignment.center,
+                                      children: [
+                                        IconButton(
+                                            icon: Icon(Icons.upload_file),
+                                            onPressed: () async {
+                                              await _onFileUploadButtonPressed();
+                                              await _firestore
+                                                  .collection("Messages")
+                                                  .add({
+                                                "sender":
+                                                    loggedinuser.displayName,
+                                                "audioURL": recordingURL,
+                                                "timestamp":
+                                                    FieldValue.serverTimestamp()
+                                              });
+                                            }),
+                                      ],
+                                    )
+                              : IconButton(
+                                  icon: _isRecording
+                                      ? Icon(Icons.pause)
+                                      : Icon(Icons.fiber_manual_record),
+                                  onPressed: _onRecordButtonPressed,
+                                ),
                           FloatingActionButton(
                             onPressed: () {
                               messageTextController.clear();
                               _firestore.collection("Messages").add({
                                 "sender": loggedinuser.displayName,
                                 "text": chattext,
-                                "timestamp": Timestamp.now().toDate()
+                                "timestamp": FieldValue.serverTimestamp(),
                               });
                             },
                             child: Icon(
@@ -164,11 +307,3 @@ class _LecturerClassroomState extends State<LecturerClassroom> {
     );
   }
 }
-
-// FutureBuilder<File>(
-//   future: DefaultCacheManager().getSingleFile(
-//     'https://github.com/espresso3389/flutter_pdf_render/raw/master/example/assets/hello.pdf'),
-//   builder: (context, snapshot) => snapshot.hasData
-//     ? PdfViewer.openFile(snapshot.data!.path)
-//     : Container( /* placeholder */),
-// )

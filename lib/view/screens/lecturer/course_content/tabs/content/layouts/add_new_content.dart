@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:line_icons/line_icon.dart';
 import 'package:virtuallearningapp/services%20and%20providers/auth.dart';
 
 Authentication authentication = Authentication();
@@ -20,7 +19,7 @@ class AddNewContent extends StatelessWidget {
             children: [
               Row(
                 children: [
-                  LineIcon(Icons.upload_outlined),
+                  Icon(Icons.upload_outlined),
                   SizedBox(
                     width: 20,
                   ),

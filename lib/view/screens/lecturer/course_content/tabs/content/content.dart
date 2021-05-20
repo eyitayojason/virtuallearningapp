@@ -73,7 +73,7 @@ class _LecturerWeeklyCourseContentsState
   Widget build(BuildContext context) {
     return StreamBuilder<QuerySnapshot>(
         stream: FirebaseFirestore.instance
-            .collection("Messages")
+            .collection("Coursecontent")
             .orderBy("timestamp", descending: false)
             .snapshots(),
         builder: (context, snapshot) {
@@ -178,14 +178,12 @@ class _LecturerWeeklyCourseContentsState
                                               courseTitleController.clear();
                                               await uploadContent();
                                               await FirebaseFirestore.instance
-                                                  .collection("Messages")
+                                                  .collection("Coursecontent")
                                                   .add({
                                                 "sender":
                                                     loggedinuser.displayName,
                                                 "fileURL": contentDownloadUrl,
-                                                "timestamp": DateTime.now()
-                                                    .day
-                                                    .toString(),
+                                                "timestamp": FieldValue.serverTimestamp(),
                                                 "week": week,
                                                 "coursetitle": title,
                                               });

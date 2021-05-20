@@ -1,9 +1,13 @@
+import 'package:audio_wave/audio_wave.dart';
+import 'package:audioplayer/audioplayer.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
-import 'package:syncfusion_flutter_pdfviewer/pdfviewer.dart';
+import 'package:provider/provider.dart';
 import 'package:virtuallearningapp/main.dart';
 import 'package:virtuallearningapp/view/screens/lecturer/login/Loginscreen.dart';
+
+import 'auth.dart';
 
 AsyncSnapshot snapshot;
 FirebaseAuth _auth;
@@ -30,6 +34,15 @@ class _MessagesStreamState extends State<MessagesStream> {
   void initState() {
     super.initState();
     getCurrentUser();
+    authService.initAudioPlayer();
+  }
+
+  @override
+  void dispose() {
+    positionSubscription.cancel();
+    audioPlayerStateSubscription.cancel();
+    audioPlayer.stop();
+    super.dispose();
   }
 
   @override
@@ -48,6 +61,7 @@ class _MessagesStreamState extends State<MessagesStream> {
         List<MessageBubble> messageBubbles = [];
         for (var message in messages) {
           final messagechattext = message.data()["text"];
+          recordingURL = message.data()["audioURL"];
           firebaseDownloadUrl = message.data()["imageURL"];
           final messageSender = message.data()["sender"];
           final timestamp = message.data()["timestamp"];
@@ -55,6 +69,7 @@ class _MessagesStreamState extends State<MessagesStream> {
           final messageBubble = MessageBubble(
             timestamp: timestamp,
             picture: firebaseDownloadUrl,
+            voiceNote: recordingURL,
             sender: messageSender,
             text: messagechattext,
             isMe: currentUser == messageSender,
@@ -79,17 +94,19 @@ class MessageBubble extends StatelessWidget {
     this.text,
     this.timestamp,
     this.picture,
+    this.voiceNote,
     this.isMe,
   }) : super(key: key);
   final timestamp;
   final String sender;
   final String text;
   final String picture;
+  final String voiceNote;
   final bool isMe;
 
   @override
   Widget build(BuildContext context) {
-    //var authentication = Provider.of<Authentication>(context);
+    var authentication = Provider.of<Authentication>(context);
     return Padding(
       padding: EdgeInsets.all(10.0),
       child: Column(
@@ -106,11 +123,66 @@ class MessageBubble extends StatelessWidget {
           SizedBox(
             height: 10,
           ),
-
-          Image.network(picture.toString(),
-              height: 300,
-              errorBuilder: (context, error, stackTrace) => Container()),
-          //
+          Image.network(
+            picture.toString(),
+            height: 300,
+            errorBuilder: (context, error, stackTrace) => Container(),
+          ),
+          Container(
+            padding: EdgeInsets.all(16.0),
+            child: Column(
+              mainAxisSize: MainAxisSize.min,
+              children: [
+                Row(mainAxisSize: MainAxisSize.min, children: [
+                  IconButton(
+                    onPressed: isPlaying ? null : () => authentication.play(),
+                    iconSize: 20.0,
+                    icon: Icon(Icons.play_arrow),
+                    color: Colors.cyan,
+                  ),
+                  // IconButton(
+                  //   onPressed: isPlaying ? () => authentication.pause() : null,
+                  //   iconSize: 20.0,
+                  //   icon: Icon(Icons.pause),
+                  //   color: Colors.cyan,
+                  // ),
+                ]),
+                position != null  
+                    ? AudioWave(
+                        height: 32,
+                        width: 88,
+                        spacing: 2.5,
+                        bars: [
+                          AudioWaveBar(
+                              height: 10, color: Colors.lightBlueAccent),
+                          AudioWaveBar(height: 30, color: Colors.blue),
+                          AudioWaveBar(height: 70, color: Colors.black),
+                          AudioWaveBar(height: 40),
+                          AudioWaveBar(height: 20, color: Colors.orange),
+                          AudioWaveBar(
+                              height: 10, color: Colors.lightBlueAccent),
+                          AudioWaveBar(height: 30, color: Colors.blue),
+                          AudioWaveBar(height: 70, color: Colors.black),
+                          AudioWaveBar(height: 40),
+                          AudioWaveBar(height: 20, color: Colors.orange),
+                          AudioWaveBar(
+                              height: 10, color: Colors.lightBlueAccent),
+                          AudioWaveBar(height: 30, color: Colors.blue),
+                          AudioWaveBar(height: 70, color: Colors.black),
+                          AudioWaveBar(height: 40),
+                          AudioWaveBar(height: 20, color: Colors.orange),
+                          AudioWaveBar(
+                              height: 10, color: Colors.lightBlueAccent),
+                          AudioWaveBar(height: 30, color: Colors.blue),
+                          AudioWaveBar(height: 70, color: Colors.black),
+                          AudioWaveBar(height: 40),
+                          AudioWaveBar(height: 20, color: Colors.orange),
+                        ],
+                      )
+                    : Container()
+              ],
+            ),
+          ),
           text == null
               ? Container()
               : Material(

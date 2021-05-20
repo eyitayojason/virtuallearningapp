@@ -2,6 +2,8 @@ import 'dart:async';
 import 'package:flutter/material.dart';
 import 'package:flutter_spinkit/flutter_spinkit.dart';
 import 'package:virtuallearningapp/view/screens/Firstscreen.dart';
+import 'package:virtuallearningapp/view/screens/assesmenthome.dart';
+import 'package:virtuallearningapp/view/screens/lecturer/createquiz.dart';
 import 'package:virtuallearningapp/view/screens/widgets/logo.dart';
 
 class Splashscreen extends StatefulWidget {

@@ -1,16 +1,13 @@
 import 'package:flutter/material.dart';
-import 'package:line_icons/line_icon.dart';
-
 class CustomAppBar extends StatelessWidget {
   final String username;
   final String departmentname;
   final Function onpressed;
   const CustomAppBar({
-    Key key,
     this.username,
     this.departmentname,
     this.onpressed,
-  }) : super(key: key);
+  });
 
   @override
   Widget build(BuildContext context) {

@@ -1,8 +1,10 @@
 import 'dart:io';
+import 'package:audioplayer/audioplayer.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:firebase_storage/firebase_storage.dart';
 import 'package:flutter/material.dart';
+import 'package:virtuallearningapp/main.dart';
 import 'package:virtuallearningapp/services%20and%20providers/model.dart';
 import 'package:path/path.dart';
 
@@ -128,4 +130,58 @@ class Authentication with ChangeNotifier {
   }
 
   notifyListeners();
+  Future play() async {
+    await audioPlayer.play(recordingURL);
+
+    playerState = PlayerState.playing;
+    notifyListeners();
+  }
+
+  Future pause() async {
+    await audioPlayer.pause();
+    playerState = PlayerState.paused;
+    notifyListeners();
+  }
+
+  Future stop() async {
+    await audioPlayer.stop();
+
+    playerState = PlayerState.stopped;
+    position = Duration();
+    notifyListeners();
+  }
+
+  Future mute(bool muted) async {
+    await audioPlayer.mute(muted);
+
+    isMuted = muted;
+    notifyListeners();
+  }
+    void initAudioPlayer() {
+    audioPlayer = AudioPlayer();
+    positionSubscription = audioPlayer.onAudioPositionChanged
+        .listen((p) =>  position = p);
+    audioPlayerStateSubscription = audioPlayer.onPlayerStateChanged.listen((s) {
+      if (s == AudioPlayerState.PLAYING) {
+      duration = audioPlayer.duration;
+      } else if (s == AudioPlayerState.STOPPED) {
+        onComplete();
+        
+          position = duration;
+        }
+      }
+    , onError: (msg) {
+      
+        playerState = PlayerState.stopped;
+        duration = Duration(seconds: 0);
+        position = Duration(seconds: 0);
+
+      notifyListeners();
+    });
+  }
+
+  void onComplete() {
+   playerState = PlayerState.stopped;
+   notifyListeners();
+  }
 }
