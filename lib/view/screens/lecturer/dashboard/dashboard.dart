@@ -2,13 +2,13 @@ import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:virtuallearningapp/services%20and%20providers/auth.dart';
 import 'package:virtuallearningapp/view/screens/lecturer/dashboard/layouts/assignment_updates.dart';
-import 'package:virtuallearningapp/view/screens/lecturer/dashboard/layouts/chat_updates.dart';
+import 'package:virtuallearningapp/helper/willpop.dart';
 import 'package:virtuallearningapp/view/screens/widgets/appbar.dart';
 import 'package:virtuallearningapp/view/screens/widgets/news.dart';
 
 Authentication authentication;
 final _auth = FirebaseAuth.instance;
-User loggedinuser;
+User currentuser;
 
 class LecturerDashboard extends StatefulWidget {
   @override
@@ -21,7 +21,8 @@ class _LecturerDashboardState extends State<LecturerDashboard> {
       final user = _auth.currentUser;
 
       if (user != null) {
-        loggedinuser = user;
+        currentuser = user;
+        setState(() {});
       }
     } catch (e) {
       print(e);
@@ -33,59 +34,58 @@ class _LecturerDashboardState extends State<LecturerDashboard> {
     // TODO: implement initState
     super.initState();
     getCurrentUser();
+    print(currentuser.displayName);
   }
 
   @override
   Widget build(BuildContext context) {
     return SafeArea(
-      child: Scaffold(
-          backgroundColor: Colors.grey.shade400,
-          appBar: PreferredSize(
-            preferredSize: Size.fromHeight(100),
-            child: CustomAppBar(
-              username: loggedinuser.displayName,
-              onpressed: () {
-                _auth.signOut().whenComplete(() {
-                  Navigator.pop(context);
-                });
-              },
-              departmentname: "Department Of Computer Science",
+      child: WillPop(
+        child: Scaffold(
+            backgroundColor: Colors.grey.shade400,
+            appBar: PreferredSize(
+              preferredSize: Size.fromHeight(100),
+              child: CustomAppBar(
+                username: currentuser.displayName,
+                onpressed: () {
+                  _auth.signOut().whenComplete(() {
+                    Navigator.pop(context);
+                  });
+                },
+                departmentname: "Department Of Computer Science",
+              ),
             ),
-          ),
-          body: Stack(
-            children: [
-              Image.asset(
-                "assets/images/schoolbg.png",
-                fit: BoxFit.fitHeight,height: double.infinity,
-              ),
-              Column(
-                children: [
-                  _Body(),
-                  Expanded(child: NewsScreen()),
-                ],
-              ),
-            ],
-          )),
-    );
-  }
-}
-
-class _Body extends StatelessWidget {
-  const _Body({
-    Key key,
-  }) : super(key: key);
-
-  @override
-  Widget build(BuildContext context) {
-    return SingleChildScrollView(
-      child: Container(
-        margin: EdgeInsets.all(10),
-        child: Column(
-          children: [
-            SizedBox(height: 20),
-            AssignmentUpdates(),
-          ],
-        ),
+            body: Stack(
+              children: [
+                Image.asset(
+                  "assets/images/schoolbg.png",
+                  fit: BoxFit.fitHeight,
+                  height: double.infinity,
+                ),
+                Padding(
+                  padding: const EdgeInsets.all(20.0),
+                  child: Column(
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: [
+                      Text(
+                        "ASSIGNMENTS",
+                        style: TextStyle(
+                            fontSize: 20,
+                            color: Colors.white,
+                            fontWeight: FontWeight.bold),
+                      ),
+                      Expanded(
+                        child: AssignmentUpdates(),
+                      ),
+                      SizedBox(
+                        height: 20,
+                      ),
+                      Expanded(flex: 2, child: NewsScreen()),
+                    ],
+                  ),
+                ),
+              ],
+            )),
       ),
     );
   }

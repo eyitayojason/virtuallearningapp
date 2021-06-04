@@ -1,9 +1,9 @@
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/rendering.dart';
-import 'package:virtuallearningapp/view/screens/student/dashboard/layouts/updates_horizontal_listview.dart';
 import 'package:virtuallearningapp/view/screens/widgets/appbar.dart';
 import 'package:virtuallearningapp/view/screens/widgets/news.dart';
+import 'package:virtuallearningapp/helper/willpop.dart';
 
 final _auth = FirebaseAuth.instance;
 User loggedinuser;
@@ -35,47 +35,41 @@ class _StudentDashboardState extends State<StudentDashboard> {
 
   Widget build(BuildContext context) {
     return SafeArea(
-      child: Scaffold(
-          backgroundColor: Colors.grey.shade400,
-          appBar: PreferredSize(
-            preferredSize: Size.fromHeight(100),
-            child: CustomAppBar(
-              username: loggedinuser.displayName,
-              onpressed: () {
-                _auth.signOut().whenComplete(() {
-                  Navigator.pop(context);
-                });
-              },
-              departmentname: "HND Computer Science",
+      child: WillPop(
+        child: Scaffold(
+            backgroundColor: Colors.grey.shade400,
+            appBar: PreferredSize(
+              preferredSize: Size.fromHeight(100),
+              child: CustomAppBar(
+                username: loggedinuser.displayName,
+                onpressed: () {
+                  _auth.signOut().whenComplete(() {
+                    Navigator.pop(context);
+                  });
+                },
+                departmentname: "HND Computer Science",
+              ),
             ),
-          ),
-          body: Stack(
-            children: [
-              Image.asset(
-                "assets/images/schoolbg.png",
-                fit: BoxFit.fitHeight,height: double.infinity,
-              ),
-              Column(
-                children: [
-                  _Body(),
-                  Expanded(child: NewsScreen()),
-                ],
-              ),
-            ],
-          )),
-    );
-  }
-}
-
-class _Body extends StatelessWidget {
- 
-  @override
-  Widget build(BuildContext context) {
-    return SingleChildScrollView(
-      child: Container(
-        margin: EdgeInsets.all(10),
-        child: UpdatesHorizontalListView(),
+            body: Stack(
+              children: [
+                Image.asset(
+                  "assets/images/schoolbg.png",
+                  fit: BoxFit.fitHeight,
+                  height: double.infinity,
+                ),
+                Padding(
+                  padding: const EdgeInsets.all(20.0),
+                  child: Column(
+                    children: [
+                     
+                      Expanded(child: NewsScreen()),
+                    ],
+                  ),
+                ),
+              ],
+            )),
       ),
     );
   }
 }
+

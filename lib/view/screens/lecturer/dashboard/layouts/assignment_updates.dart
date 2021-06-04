@@ -1,34 +1,105 @@
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
-import 'package:virtuallearningapp/view/screens/student/dashboard/layouts/updates_horizontal_listview.dart';
-import 'package:sizer/sizer.dart';
+import 'package:url_launcher/url_launcher.dart';
+import 'package:virtuallearningapp/main.dart';
 
-class AssignmentUpdates extends StatelessWidget {
-  const AssignmentUpdates({
-    Key key,
-  }) : super(key: key);
+class AssignmentUpdates extends StatefulWidget {
+  @override
+  _AssignmentUpdatesState createState() => _AssignmentUpdatesState();
+}
+
+class _AssignmentUpdatesState extends State<AssignmentUpdates> {
+  @override
+  void initState() {
+    // TODO: implement initState
+    super.initState();
+  }
 
   @override
   Widget build(BuildContext context) {
-    return Column(
-      crossAxisAlignment: CrossAxisAlignment.start,
-      children: [
-        Text(
-          "ASSIGNMENTS",
-          style: TextStyle(fontWeight: FontWeight.bold,
-          color: Colors.white, fontSize: 20),
-        ),
-        Container(
-          height: 20.0.h,
-          child: ListView(
-            scrollDirection: Axis.horizontal,
-            children: [
-              UpdateItem(),
-              UpdateItem(),
-              UpdateItem(),
-            ],
-          ),
-        )
-      ],
-    );
+    FirebaseFirestore _firestore = FirebaseFirestore.instance;
+    return StreamBuilder<QuerySnapshot>(
+        stream: _firestore
+            .collection("assignments")
+            .orderBy("timestamp", descending: false)
+            .snapshots(),
+        builder: (context, snapshot) {
+          if (!snapshot.hasData) {
+            return Center(child: CircularProgressIndicator());
+          }
+          final contents = snapshot.data.docs.reversed;
+          List<AssignmentCard> assignmentcontent = [];
+          for (var content in contents) {
+            courseweek = content.data()["week"];
+            final assignmentDownloadUrl = content.data()["fileURL"];
+            title = content.data()["coursetitle"];
+            final sender = content.data()["sender"];
+            coursetimestamp = content.data()["timestamp"].toString();
+            final coursecontent = AssignmentCard(
+                // courseTitle: title,
+                pdflinkk: assignmentDownloadUrl,
+                timestamp: coursetimestamp,
+                sender: sender);
+            assignmentcontent.add(coursecontent);
+          }
+          return ListView(
+              scrollDirection: Axis.horizontal, children: assignmentcontent);
+        });
+  }
+}
+
+class AssignmentCard extends StatelessWidget {
+  //final String courseTitle;
+  final String pdflinkk;
+  final String timestamp;
+  final String sender;
+
+  const AssignmentCard({this.pdflinkk, this.timestamp, this.sender});
+  @override
+  Widget build(BuildContext context) {
+    return InkWell(
+        onTap: () => _launchURL(pdflinkk),
+        child: Column(
+          crossAxisAlignment: CrossAxisAlignment.start,
+          children: [
+            Expanded(
+              child: Card(
+                color: Colors.white,
+                child: Column(
+                  crossAxisAlignment: CrossAxisAlignment.center,
+                  mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                  children: [
+                    Padding(
+                      padding: const EdgeInsets.all(8.0),
+                      child: Text(
+                        sender,
+                        style: TextStyle(
+                            fontWeight: FontWeight.bold, fontSize: 20),
+                      ),
+                    ),
+                    Expanded(
+                      child: Image.asset(
+                        "assets/images/pdf.png",
+                      ),
+                    ),
+                    Text(
+                      timestamp.substring(0, 11),
+                      style:
+                          TextStyle(fontWeight: FontWeight.bold, fontSize: 15),
+                    )
+                  ],
+                ),
+              ),
+            ),
+          ],
+        ));
+  }
+}
+
+_launchURL(var url) async {
+  if (await canLaunch(url)) {
+    await launch(url);
+  } else {
+    throw 'Could not launch $url';
   }
 }

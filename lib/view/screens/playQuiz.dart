@@ -2,7 +2,7 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:virtuallearningapp/services%20and%20providers/database.dart';
 import 'package:virtuallearningapp/services%20and%20providers/model.dart';
-import 'package:virtuallearningapp/widgets/quizPlayWidget.dart';
+import 'package:virtuallearningapp/view/screens/widgets/quizPlayWidget.dart';
 
 class QuizPlay extends StatefulWidget {
   final String quizId;

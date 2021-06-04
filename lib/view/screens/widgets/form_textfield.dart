@@ -23,7 +23,6 @@ class CustomFormField extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    // var provider = Provider.of<SignupAndValidationProvider>(context);
     return TextFormField(
       textAlign: TextAlign.center,
       controller: textEditingController,

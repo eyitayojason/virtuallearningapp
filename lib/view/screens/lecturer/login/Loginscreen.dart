@@ -18,7 +18,7 @@ String password;
 String displayName;
 final _auth = FirebaseAuth.instance;
 final formKey = GlobalKey<FormState>();
-User loggedinuser;
+
 Authentication authService = Authentication();
 
 class LecturerLogin extends StatefulWidget {
@@ -28,11 +28,13 @@ class LecturerLogin extends StatefulWidget {
 
 class _LecturerLoginState extends State<LecturerLogin> {
   void getCurrentUser() async {
+    // ignore: unused_local_variable
+    User _loggedinuser;
     try {
       final user = _auth.currentUser;
       if (user != null) {
         setState(() {
-          loggedinuser = user;
+          _loggedinuser = user;
         });
       }
     } catch (e) {

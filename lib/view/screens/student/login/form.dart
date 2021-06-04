@@ -2,7 +2,6 @@ import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:virtuallearningapp/services%20and%20providers/auth.dart';
-import 'package:virtuallearningapp/view/screens/Signup.dart';
 import 'package:virtuallearningapp/view/screens/student/bottom_navigation_bar/bottom_navigation_bar.dart';
 import 'package:virtuallearningapp/view/screens/student/course_content/course_content.dart';
 import 'package:virtuallearningapp/view/screens/student/dashboard/dashboard.dart';
@@ -93,8 +92,6 @@ class _StudentFormState extends State<StudentForm> {
                           ),
                         ),
                       );
-                      authentication.writeNewUserToDatabase(displayName);
-                    
                     });
                   } catch (e) {
                     print(e);

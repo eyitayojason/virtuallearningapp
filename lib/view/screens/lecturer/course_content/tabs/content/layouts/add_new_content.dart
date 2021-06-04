@@ -1,9 +1,15 @@
 import 'package:flutter/material.dart';
+
 import 'package:virtuallearningapp/services%20and%20providers/auth.dart';
 
 Authentication authentication = Authentication();
 
 class AddNewContent extends StatelessWidget {
+ final  String text;
+  const AddNewContent({
+    Key key,
+    this.text,
+  }) : super(key: key);
   @override
   Widget build(BuildContext context) {
     return Container(
@@ -23,7 +29,7 @@ class AddNewContent extends StatelessWidget {
                   SizedBox(
                     width: 20,
                   ),
-                  Text("Add New Content")
+                  Text(text)
                 ],
               )
             ],

@@ -1,8 +1,6 @@
-import 'dart:async';
-
-import 'package:audioplayer/audioplayer.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_audio_recorder/flutter_audio_recorder.dart';
 import 'package:sizer/sizer.dart';
 import 'package:virtuallearningapp/helper/functions.dart';
 import 'package:virtuallearningapp/services%20and%20providers/auth.dart';
@@ -39,25 +37,20 @@ void main() async {
 String firebaseDownloadUrl;
 String contentDownloadUrl;
 String recordingURL;
+String firebasevideoURL;
 String chattext;
-String filepath;
-var week;
-typedef void OnError(Exception exception);
-AudioPlayer audioPlugin = AudioPlayer();
-enum PlayerState { stopped, playing, paused }
- Duration duration;
-  Duration position;
-  AudioPlayer audioPlayer;
-  get isPlaying => playerState == PlayerState.playing;
-  get isPaused => playerState == PlayerState.paused;
-  PlayerState playerState = PlayerState.stopped;
-  get durationText =>
-      duration != null ? duration.toString().split('.').first : '';
-  get positionText =>
-      position != null ? position.toString().split('.').first : '';
-  bool isMuted = false;
-  StreamSubscription positionSubscription;
-  StreamSubscription audioPlayerStateSubscription;
+String audioname;
+String title;
+String coursetimestamp;
+String courseweek;
+bool isUploading;
+bool isRecorded;
+
+bool isRecording;
+String filePath;
+FlutterAudioRecorder audioRecorder;
+
+
 class MyApp extends StatefulWidget {
   @override
   _MyAppState createState() => _MyAppState();
@@ -88,9 +81,7 @@ class _MyAppState extends State<MyApp> {
             debugShowCheckedModeBanner: false,
             theme:
                 ThemeData(visualDensity: VisualDensity.adaptivePlatformDensity),
-            home: (_isLoggedin ?? false) ?
-             LecturerDashboard() : 
-             Splashscreen()
+            home: (_isLoggedin ?? false) ? LecturerDashboard() : Splashscreen()
             //Splashscreen(),
             );
       },

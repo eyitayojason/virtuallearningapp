@@ -3,7 +3,6 @@ import 'package:flutter/material.dart';
 import 'package:modal_progress_hud/modal_progress_hud.dart';
 import 'package:sizer/sizer.dart';
 import 'package:virtuallearningapp/services%20and%20providers/auth.dart';
-import 'package:virtuallearningapp/view/screens/lecturer/createquiz.dart';
 import 'package:virtuallearningapp/view/screens/student/bottom_navigation_bar/bottom_navigation_bar.dart';
 import 'package:virtuallearningapp/view/screens/student/course_content/course_content.dart';
 import 'package:virtuallearningapp/view/screens/student/dashboard/dashboard.dart';

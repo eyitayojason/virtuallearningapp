@@ -12,7 +12,7 @@ String email;
 String password;
 String displayName;
 String matricStaffno;
-User user;
+
 bool isLoading = false;
 
 
@@ -22,6 +22,7 @@ class Signup extends StatefulWidget {
 }
 
 class _SignupState extends State<Signup> {
+  User user;
   Authentication authentication = Authentication();
 final formKey = GlobalKey<FormState>();
   signUp() {

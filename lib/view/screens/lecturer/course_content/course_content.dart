@@ -2,10 +2,9 @@ import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:virtuallearningapp/view/screens/lecturer/course_content/tabs/classroom/classroom.dart';
 import 'package:virtuallearningapp/view/screens/lecturer/course_content/tabs/content/content.dart';
+import 'package:virtuallearningapp/view/screens/lecturer/course_content/tabs/content/layouts/add_new_content.dart';
 import 'package:virtuallearningapp/view/screens/widgets/appbar.dart';
-
-final _auth = FirebaseAuth.instance;
-User loggedinuser;
+import 'package:virtuallearningapp/helper/willpop.dart';
 
 class LecturerCourseContent extends StatefulWidget {
   @override
@@ -13,12 +12,13 @@ class LecturerCourseContent extends StatefulWidget {
 }
 
 class _LecturerCourseContentState extends State<LecturerCourseContent> {
+  User courseuser;
+  final _auth = FirebaseAuth.instance;
   void getCurrentUser() async {
     try {
       final user = _auth.currentUser;
-
       if (user != null) {
-        loggedinuser = user;
+        courseuser = user;
       }
     } catch (e) {
       print(e);
@@ -29,6 +29,7 @@ class _LecturerCourseContentState extends State<LecturerCourseContent> {
   void initState() {
     super.initState();
     getCurrentUser();
+    print(courseuser.displayName);
   }
 
   @override
@@ -36,57 +37,50 @@ class _LecturerCourseContentState extends State<LecturerCourseContent> {
     return SafeArea(
       child: DefaultTabController(
         length: 2,
-        child: Scaffold(
-          backgroundColor: Colors.grey.shade400,
-          appBar: PreferredSize(
-            preferredSize: Size.fromHeight(150),
-            child: AppBar(
-              leading: Container(),
-              flexibleSpace: Padding(
-                padding: const EdgeInsets.only(bottom: 50),
-                child: CustomAppBar(
-                  username: loggedinuser.displayName,
-                  departmentname: "Department Of Computer Science",
+        child: WillPop(
+                  child: Scaffold(
+            backgroundColor: Colors.grey.shade400,
+            appBar: PreferredSize(
+              preferredSize: Size.fromHeight(150),
+              child: AppBar(
+                leading: Container(),
+                flexibleSpace: Padding(
+                  padding: const EdgeInsets.only(bottom: 50),
+                  child: CustomAppBar(
+                    username: courseuser.displayName,
+                    departmentname: "Department Of Computer Science",
+                  ),
+                ),
+                backgroundColor: Colors.orange,
+                bottom: TabBar(
+                  indicatorColor: Colors.white,
+                  tabs: [
+                    Tab(text: 'CONTENT'),
+                    Tab(text: 'CLASSROOM'),
+                  ],
                 ),
               ),
-              backgroundColor: Colors.orange,
-              bottom: TabBar(
-                indicatorColor: Colors.white,
-                tabs: [
-                  Tab(text: 'CONTENT'),
-                  Tab(text: 'CLASSROOM'),
-                ],
-              ),
+            ),
+            body: Stack(
+              children: [
+                Image.asset(
+                  "assets/images/schoolbg.png",
+                  fit: BoxFit.fitHeight,
+                  height: double.infinity,
+                ),
+                TabBarView(
+                  children: [
+                    WeeklyCourseContents(
+                      addcontent: AddNewContent(text: "Add New Content",),
+                    ),
+                    LecturerClassroom(),
+                  ],
+                )
+              ],
             ),
           ),
-          body:Stack(
-            children: [
-              Image.asset(
-                "assets/images/schoolbg.png",
-                fit: BoxFit.fitHeight,height: double.infinity,
-              ),
-              _Body(),
-              
-            ],
-          )
         ),
       ),
-    );
-  }
-}
-
-class _Body extends StatelessWidget {
-  const _Body({
-    Key key,
-  }) : super(key: key);
-
-  @override
-  Widget build(BuildContext context) {
-    return TabBarView(
-      children: [
-        LecturerWeeklyCourseContents(),
-        LecturerClassroom(),
-      ],
     );
   }
 }
