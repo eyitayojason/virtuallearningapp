@@ -1,0 +1,5 @@
+com/zeno/flutter_audio_recorder/FlutterAudioRecorderPlugin.java
+ com.zeno.flutter_audio_recorder.FlutterAudioRecorderPlugin
+ com.zeno.flutter_audio_recorder.FlutterAudioRecorderPlugin$1
+com/zeno/flutter_audio_recorder/BuildConfig.java
+ com.zeno.flutter_audio_recorder.BuildConfig

@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+
 class CustomAppBar extends StatelessWidget {
   final String username;
   final String departmentname;
@@ -16,47 +17,47 @@ class CustomAppBar extends StatelessWidget {
       child: Padding(
         padding: const EdgeInsets.all(20.0),
         child: Row(
-          children: [
-            Column(
-              crossAxisAlignment: CrossAxisAlignment.start,
-              mainAxisAlignment: MainAxisAlignment.end,
-              children: [
-                Text(
-                  username,
-                  style: TextStyle(
-                      color: Colors.white,
-                      fontSize: 25,
-                      fontWeight: FontWeight.bold),
-                ),
-                Row(
-                  children: [
-                    Icon(
-                      Icons.school,
-                      color: Colors.green,
-                      size: 20,
-                    ),
-                    SizedBox(
-                      width: 10,
-                    ),
-                    Text(
-                      departmentname,
-                      style: TextStyle(color: Colors.white, fontSize: 12),
-                    ),
-                  ],
-                ),
-              ],
-            ),
-            Expanded(
-              child: IconButton(
+            children: [
+              Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                mainAxisAlignment: MainAxisAlignment.end,
+                children: [
+                  Text(
+                    username,
+                    style: TextStyle(
+                        color: Colors.white,
+                        fontSize: 20,
+                        fontWeight: FontWeight.bold),
+                  ),
+                  Row(
+                    children: [
+                      Icon(
+                        Icons.school,
+                        color: Colors.green,
+                        size: 20,
+                      ),
+                      SizedBox(
+                        width: 10,
+                      ),
+                      Text(
+                        departmentname,
+                        style: TextStyle(color: Colors.white, fontSize: 10),
+                      ),
+                    ],
+                  ),
+                ],
+              ),
+              IconButton(
+                  tooltip: "Logout",
                   icon: Icon(
                     Icons.logout,
                     color: Colors.white,
-                    size: 50,
+                    size: 30,
                   ),
                   onPressed: onpressed),
-            ),
-          ],
-        ),
+            ],
+            crossAxisAlignment: CrossAxisAlignment.start,
+            mainAxisAlignment: MainAxisAlignment.spaceBetween),
       ),
     );
   }

@@ -4,8 +4,10 @@ import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:virtuallearningapp/main.dart';
 import 'package:virtuallearningapp/services%20and%20providers/auth.dart';
+import 'package:virtuallearningapp/view/screens/Signup.dart';
 import 'package:virtuallearningapp/view/screens/student/course_content/tabs/classroom/classroom.dart';
 import 'package:virtuallearningapp/view/screens/lecturer/course_content/tabs/content/content.dart';
+import 'package:virtuallearningapp/view/screens/student/dashboard/dashboard.dart';
 import 'package:virtuallearningapp/view/screens/widgets/appbar.dart';
 import 'package:virtuallearningapp/helper/willpop.dart';
 
@@ -54,8 +56,8 @@ class _StudentCourseContentState extends State<StudentCourseContent> {
                 flexibleSpace: Padding(
                   padding: const EdgeInsets.only(bottom: 50),
                   child: CustomAppBar(
-                    username: loggedinuser.displayName,
-                    departmentname: "HND Computer Science",
+                    username: data.data()["displayName"],
+                    departmentname: data.data()["matricNo"],
                   ),
                 ),
                 backgroundColor: Colors.orange,
@@ -88,7 +90,7 @@ class _StudentCourseContentState extends State<StudentCourseContent> {
                                 .add({
                               "fileURL": contentDownloadUrl,
                               "timestamp": DateTime.now().toString(),
-                              "sender": loggedinuser.displayName,
+                              "sender": data.data()["matricNo"],
                             }).whenComplete(() {
                               ScaffoldMessenger.of(context).showSnackBar(
                                 SnackBar(

@@ -1,3 +1,4 @@
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_audio_recorder/flutter_audio_recorder.dart';
@@ -50,7 +51,6 @@ bool isRecording;
 String filePath;
 FlutterAudioRecorder audioRecorder;
 
-
 class MyApp extends StatefulWidget {
   @override
   _MyAppState createState() => _MyAppState();
@@ -58,10 +58,19 @@ class MyApp extends StatefulWidget {
 
 class _MyAppState extends State<MyApp> {
   bool _isLoggedin = false;
+  final Future<FirebaseApp> _initialization = Firebase.initializeApp();
   @override
   void initState() {
     // TODO: implement initState
     super.initState();
+    FirebaseAuth.instance.signOut();
+    FirebaseAuth.instance.userChanges().listen((User user) {
+      if (user == null) {
+        print('User is currently signed out!');
+      } else {
+        print('User is signed in!');
+      }
+    });
   }
 
   checkUserLoggedInStatus() async {
@@ -74,16 +83,52 @@ class _MyAppState extends State<MyApp> {
 
   @override
   Widget build(BuildContext context) {
-    return Sizer(
-      builder: (context, orientation, screenType) {
-        return MaterialApp(
-            title: 'Virtual Learning App ',
-            debugShowCheckedModeBanner: false,
-            theme:
-                ThemeData(visualDensity: VisualDensity.adaptivePlatformDensity),
-            home: (_isLoggedin ?? false) ? LecturerDashboard() : Splashscreen()
-            //Splashscreen(),
-            );
+    return FutureBuilder(
+      future: _initialization,
+      builder: (BuildContext context, AsyncSnapshot<dynamic> snapshot) {
+        if (snapshot.hasError) {
+          return Container(
+            child: Center(
+              child: Column(
+                children: [
+                  Text("Something Went Wrong While initializing app"),
+                  CircularProgressIndicator()
+                ],
+              ),
+            ),
+          );
+        }
+        if (snapshot.connectionState == ConnectionState.done) {
+          return Sizer(
+            builder: (context, orientation, screenType) {
+              return MaterialApp(
+                  title: 'Virtual Learning App ',
+                  debugShowCheckedModeBanner: false,
+                  theme: ThemeData(
+                      textSelectionTheme:
+                          TextSelectionThemeData(cursorColor: Colors.green),
+                      inputDecorationTheme: InputDecorationTheme(
+                        hintStyle: TextStyle(fontStyle: FontStyle.italic),
+                        focusedBorder: OutlineInputBorder(
+                          borderSide: BorderSide(color: Colors.green),
+                        ),
+                        enabledBorder: OutlineInputBorder(
+                          borderSide: BorderSide(color: Colors.black12),
+                        ),
+                      ),
+                      visualDensity: VisualDensity.adaptivePlatformDensity,
+                      fontFamily: "Poppins"),
+                  home: (_isLoggedin ?? false)
+                      ? LecturerDashboard()
+                      : Splashscreen()
+                  //Splashscreen(),
+                  );
+            },
+          );
+        }
+        return Center(
+          child: CircularProgressIndicator(),
+        );
       },
     );
   }

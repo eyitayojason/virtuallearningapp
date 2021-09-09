@@ -1,20 +1,23 @@
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:sizer/sizer.dart';
 import 'package:virtuallearningapp/services%20and%20providers/auth.dart';
+import 'package:virtuallearningapp/services%20and%20providers/model.dart';
 import 'package:virtuallearningapp/view/screens/Firstscreen.dart';
 import 'package:virtuallearningapp/view/screens/widgets/button.dart';
 import 'package:virtuallearningapp/view/screens/widgets/form_textfield.dart';
 import 'package:virtuallearningapp/view/screens/widgets/logo.dart';
 import 'package:modal_progress_hud/modal_progress_hud.dart';
+import 'package:virtuallearningapp/view/screens/widgets/alertdialog.dart';
 
+bool isLoading = false;
 String email;
 String password;
 String displayName;
 String matricStaffno;
 
-bool isLoading = false;
-
+User loggedinuser;
 
 class Signup extends StatefulWidget {
   @override
@@ -22,26 +25,49 @@ class Signup extends StatefulWidget {
 }
 
 class _SignupState extends State<Signup> {
-  User user;
+  @override
+  void initState() {
+    super.initState();
+    loggedinuser = FirebaseAuth.instance.currentUser;
+  }
+
   Authentication authentication = Authentication();
-final formKey = GlobalKey<FormState>();
-  signUp() {
+  final formKey = GlobalKey<FormState>();
+  signUp() async {
+    final FormState form = formKey.currentState;
     if (formKey.currentState.validate()) {
+      form.save();
       setState(() {
         isLoading = true;
       });
-      authentication.signUpwithEmailandPassword(email, password, displayName).then((val) {
-        if (val != null) {
-            Navigator.pushReplacement(
-            context,
-            MaterialPageRoute(
-              builder: (context) => FirstScreen(),
-            ),
-          );
-        }
-      });
+      try {
+        await authentication.signUpwithEmailandPassword(
+            email, password, displayName, matricStaffno);
+        // if (user != null) {
+
+        ScaffoldMessenger.of(context).showSnackBar(
+          SnackBar(
+            content: Text('Signup Sucess'),
+          ),
+        );
+
+        Navigator.pop(
+          context,
+          MaterialPageRoute(
+            builder: (context) => FirstScreen(),
+          ),
+        );
+        // } else {
+        //   ScaffoldMessenger.of(context).showSnackBar(
+        //     SnackBar(
+        //       content: Text('Signup Failed'),
+        //     ),
+        //   );
+        // }
+      } on FirebaseAuthException catch (e) {
+        AlrtDialog().showAlertDialog(context, e.toString().substring(30));
+      }
     }
-  
   }
 
   @override
@@ -52,6 +78,7 @@ final formKey = GlobalKey<FormState>();
           key: formKey,
           child: ModalProgressHUD(
             inAsyncCall: isLoading,
+            dismissible: true,
             child: SingleChildScrollView(
               child: Center(
                 child: Column(
@@ -119,8 +146,12 @@ final formKey = GlobalKey<FormState>();
                           SizedBox(height: 20),
                           CustomButton(
                             text: 'SIGNUP',
-                            onPressed: () {
-                              signUp();
+                            onPressed: () async {
+                              await signUp();
+
+                              setState(() {
+                                isLoading = false;
+                              });
                             },
                           ),
                         ],

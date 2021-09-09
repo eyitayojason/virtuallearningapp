@@ -11,6 +11,7 @@ import 'package:virtuallearningapp/view/screens/widgets/form_textfield.dart';
 import 'package:virtuallearningapp/view/screens/widgets/logo.dart';
 import 'package:sizer/sizer.dart';
 import '../createquiz.dart';
+import 'package:virtuallearningapp/view/screens/widgets/alertdialog.dart';
 
 bool isLoading = false;
 String email;
@@ -18,7 +19,7 @@ String password;
 String displayName;
 final _auth = FirebaseAuth.instance;
 final formKey = GlobalKey<FormState>();
-
+User loggedinuser;
 Authentication authService = Authentication();
 
 class LecturerLogin extends StatefulWidget {
@@ -42,32 +43,38 @@ class _LecturerLoginState extends State<LecturerLogin> {
     }
   }
 
-  final formKey = GlobalKey<FormState>();
-  signIn() {
+  signIn() async {
     if (formKey.currentState.validate()) {
       setState(() {
         isLoading = true;
       });
-      authService.signInWithEmailAndPassword(email, password).then((val) {
-        if (val != null) {
-          Navigator.pushReplacement(
-            context,
-            MaterialPageRoute(
-              builder: (context) => BottomNavBAr(
-                pages: [
-                  LecturerDashboard(),
-                  LecturerCourseContent(),
-                  CreateQuiz(),
-                ],
-              ),
+
+      try {
+        final status =
+            await authService.signInWithEmailAndPassword(email, password);
+
+        Navigator.pushReplacement(
+          context,
+          MaterialPageRoute(
+            builder: (context) => BottomNavBAr(
+              pages: [
+                LecturerDashboard(),
+                LecturerCourseContent(),
+                CreateQuiz(),
+              ],
             ),
-          );
-          setState(() {
-            isLoading = false;
-          });
-        }
-      });
+          ),
+        );
+        setState(() {
+          isLoading = false;
+        });
+      } catch (e) {
+        AlrtDialog().showAlertDialog(context, e.toString().substring(30));
+      }
     }
+    setState(() {
+      isLoading = false;
+    });
   }
 
   @override
@@ -82,6 +89,7 @@ class _LecturerLoginState extends State<LecturerLogin> {
       child: Scaffold(
         body: ModalProgressHUD(
           inAsyncCall: isLoading,
+          dismissible: true,
           child: SingleChildScrollView(
             child: Center(
               child: Column(

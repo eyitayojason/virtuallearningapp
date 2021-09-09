@@ -1,4 +1,5 @@
 import 'dart:io';
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:file_picker/file_picker.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:firebase_storage/firebase_storage.dart';
@@ -8,16 +9,31 @@ import 'package:path_provider/path_provider.dart';
 import 'package:virtuallearningapp/main.dart';
 import 'package:virtuallearningapp/services%20and%20providers/model.dart';
 import 'package:path/path.dart';
+import 'package:virtuallearningapp/view/screens/student/course_content/course_content.dart';
+
+enum AuthResultStatus {
+  successful,
+  emailAlreadyExists,
+  wrongPassword,
+  invalidEmail,
+  userNotFound,
+  userDisabled,
+  operationNotAllowed,
+  tooManyRequests,
+  undefined,
+}
+enum authProblems { UserNotFound, PasswordNotValid, NetworkError }
 
 class Authentication with ChangeNotifier {
   final _auth = FirebaseAuth.instance;
-
+  AuthResultStatus _status;
   String uemail;
   User loggedinuser;
   UploadTask uploadTask;
   File file;
   String url;
   String pdf;
+  AuthResultStatus authResultStatus;
   String videopath;
   String imagepath;
   bool isPressed = false;
@@ -25,32 +41,33 @@ class Authentication with ChangeNotifier {
     return user != null ? FireUser(user.uid) : null;
   }
 
-  Future signInWithEmailAndPassword(
+  Future<AuthResultStatus> signInWithEmailAndPassword(
     String email,
     String password,
   ) async {
-    try {
-      UserCredential userCredential = await _auth.signInWithEmailAndPassword(
-          email: email, password: password);
-      loggedinuser = userCredential.user;
-
-      return _userFromFirebaseUser(loggedinuser);
-    } catch (e) {
-      print(e.toString());
-    }
+    UserCredential userCredential = await _auth.signInWithEmailAndPassword(
+        email: email, password: password);
+    loggedinuser = userCredential.user;
+    return authResultStatus;
   }
 
-  Future signUpwithEmailandPassword(
-      String email, String password, String displayName) async {
-    try {
-      UserCredential userCredential = await _auth
-          .createUserWithEmailAndPassword(email: email, password: password);
-      User user = userCredential.user;
-      await userCredential.user.updateProfile(displayName: displayName);
-      return _userFromFirebaseUser(user);
-    } catch (e) {
-      print(e.toString());
-    }
+  Future signUpwithEmailandPassword(String email, String password,
+      String displayName, String matricStaffno) async {
+    User user;
+
+    UserCredential userCredential = await _auth.createUserWithEmailAndPassword(
+        email: email, password: password);
+
+    user = FirebaseAuth.instance.currentUser;
+    FirebaseFirestore.instance.collection('users').doc(user.uid).set({
+      'userid': user.uid,
+      'matricNo': matricStaffno,
+      "displayName": displayName
+    }).catchError((e) {
+      print(e);
+    });
+
+    return _userFromFirebaseUser(user);
   }
 
   Future logout() async {
@@ -220,5 +237,73 @@ class Authentication with ChangeNotifier {
     await _uploadTask.whenComplete(() async {
       contentDownloadUrl = await storageReference.getDownloadURL();
     });
+  }
+}
+
+class AuthExceptionHandler {
+  static handleException(e) {
+    print(e.code);
+    var status;
+    switch (e.code) {
+      case "ERROR_INVALID_EMAIL":
+        status = AuthResultStatus.invalidEmail;
+        break;
+      case "ERROR_WRONG_PASSWORD":
+        status = AuthResultStatus.wrongPassword;
+        break;
+      case "ERROR_USER_NOT_FOUND":
+        status = AuthResultStatus.userNotFound;
+        break;
+      case "ERROR_USER_DISABLED":
+        status = AuthResultStatus.userDisabled;
+        break;
+      case "ERROR_TOO_MANY_REQUESTS":
+        status = AuthResultStatus.tooManyRequests;
+        break;
+      case "ERROR_OPERATION_NOT_ALLOWED":
+        status = AuthResultStatus.operationNotAllowed;
+        break;
+      case "ERROR_EMAIL_ALREADY_IN_USE":
+        status = AuthResultStatus.emailAlreadyExists;
+        break;
+      default:
+        status = AuthResultStatus.undefined;
+    }
+    return status;
+  }
+
+  ///
+  /// Accepts AuthExceptionHandler.errorType
+  ///
+  static generateExceptionMessage(exceptionCode) {
+    String errorMessage;
+    switch (exceptionCode) {
+      case AuthResultStatus.invalidEmail:
+        errorMessage = "Your email address appears to be malformed.";
+        break;
+      case AuthResultStatus.wrongPassword:
+        errorMessage = "Your password is wrong.";
+        break;
+      case AuthResultStatus.userNotFound:
+        errorMessage = "User with this email doesn't exist.";
+        break;
+      case AuthResultStatus.userDisabled:
+        errorMessage = "User with this email has been disabled.";
+        break;
+      case AuthResultStatus.tooManyRequests:
+        errorMessage = "Too many requests. Try again later.";
+        break;
+      case AuthResultStatus.operationNotAllowed:
+        errorMessage = "Signing in with Email and Password is not enabled.";
+        break;
+      case AuthResultStatus.emailAlreadyExists:
+        errorMessage =
+            "The email has already been registered. Please login or reset your password.";
+        break;
+      default:
+        errorMessage = "An undefined Error happened.";
+    }
+
+    return errorMessage;
   }
 }

@@ -1,6 +1,9 @@
+import 'dart:math';
+
 import 'package:flutter/material.dart';
 import 'package:http/http.dart' as http;
 import 'dart:convert';
+import 'package:shimmer/shimmer.dart';
 
 class NewsScreen extends StatefulWidget {
   @override
@@ -11,11 +14,19 @@ var responsemap;
 
 class _NewsScreenState extends State<NewsScreen> {
   final List<NewsDetail> items = [];
-  void getNews() async {
+  static onError(error) {
+    print("the error is $error");
+   
+  }
+
+  Future<List<NewsDetail>> getNews() async {
     var apiKey =
         "https://newsapi.org/v2/top-headlines?country=ng&apiKey=bc9f48ec79d5429fbb1c9e1fcf7ff7a1";
-    http.Response response = await http.get(Uri.parse(apiKey));
-    //response = responsebody;
+    http.Response response = await http
+        .get(
+          Uri.parse(apiKey),
+        )
+        .catchError(onError);
     Map<String, dynamic> responseData = json.decode(response.body);
     responseData['articles'].forEach((newsDetail) {
       final NewsDetail news = NewsDetail(
@@ -26,19 +37,16 @@ class _NewsScreenState extends State<NewsScreen> {
         items.add(news);
       });
     });
+    return items;
   }
 
   @override
   void initState() {
     super.initState();
     getNews();
-    print(responsemap.toString());
-  }
-
-  @override
-  void dispose() {
-    // TODO: implement dispose
-    super.dispose();
+    print(
+      responsemap.toString(),
+    );
   }
 
   @override
@@ -55,37 +63,105 @@ class _NewsScreenState extends State<NewsScreen> {
           height: 10,
         ),
         Expanded(
-          child: ListView.builder(
-            itemCount: this.items.length,
-            itemBuilder: (context, index) {
-              var newsDetail = this.items[index];
-              return ListTile(
-                contentPadding: EdgeInsets.all(10.0),
-                leading: _itemThumbnail(newsDetail),
-                tileColor: Colors.white,
-                dense: true,
-                onTap: () {
-                  showDialog(
-                    context: context,
-                    barrierDismissible: true,
-                    builder: (context) {
-                      return Padding(
-                          padding: const EdgeInsets.all(100.0),
-                          child: Container(
-                            color: Colors.white,
-                            child: Column(
-                              mainAxisAlignment: MainAxisAlignment.spaceAround,
-                              crossAxisAlignment: CrossAxisAlignment.stretch,
-                              children: _renderBody(context, newsDetail),
-                            ),
-                          ));
+          child: FutureBuilder(
+              future: getNews(),
+              builder: (BuildContext context,
+                  AsyncSnapshot<List<NewsDetail>> snapshot) {
+                if (snapshot.hasData) {
+                  List<NewsDetail> items = snapshot.data;
+                  return ListView.builder(
+                    itemCount: items.length,
+                    itemBuilder: (context, index) {
+                      var newsDetail = items[index];
+                      return ListTile(
+                        contentPadding: EdgeInsets.all(10.0),
+                        leading: _itemThumbnail(newsDetail),
+                        tileColor: Colors.white,
+                        dense: true,
+                        onTap: () {
+                          showDialog(
+                            context: context,
+                            barrierDismissible: true,
+                            builder: (context) {
+                              return Padding(
+                                  padding: const EdgeInsets.all(100.0),
+                                  child: Container(
+                                    color: Colors.white,
+                                    child: ListView(children: [
+                                      Column(
+                                        mainAxisAlignment:
+                                            MainAxisAlignment.spaceAround,
+                                        crossAxisAlignment:
+                                            CrossAxisAlignment.stretch,
+                                        children:
+                                            _renderBody(context, newsDetail),
+                                      )
+                                    ]),
+                                  ));
+                            },
+                          );
+                        },
+                        title: _itemTitle(newsDetail),
+                      );
                     },
                   );
-                },
-                title: _itemTitle(newsDetail),
-              );
-            },
-          ),
+                }
+                return Center(
+                  child: Shimmer.fromColors(
+                    baseColor: Colors.grey[300],
+                    highlightColor: Colors.grey[100],
+                    child: ListView.builder(
+                      itemBuilder: (_, __) => Padding(
+                        padding: const EdgeInsets.only(bottom: 8.0),
+                        child: Row(
+                          crossAxisAlignment: CrossAxisAlignment.start,
+                          children: <Widget>[
+                            Container(
+                              width: 48.0,
+                              height: 48.0,
+                              color: Colors.white,
+                            ),
+                            const Padding(
+                              padding: EdgeInsets.symmetric(horizontal: 8.0),
+                            ),
+                            Expanded(
+                              child: Column(
+                                crossAxisAlignment: CrossAxisAlignment.start,
+                                children: <Widget>[
+                                  Container(
+                                    width: double.infinity,
+                                    height: 8.0,
+                                    color: Colors.white,
+                                  ),
+                                  const Padding(
+                                    padding:
+                                        EdgeInsets.symmetric(vertical: 2.0),
+                                  ),
+                                  Container(
+                                    width: double.infinity,
+                                    height: 8.0,
+                                    color: Colors.white,
+                                  ),
+                                  const Padding(
+                                    padding:
+                                        EdgeInsets.symmetric(vertical: 2.0),
+                                  ),
+                                  Container(
+                                    width: 40.0,
+                                    height: 8.0,
+                                    color: Colors.white,
+                                  ),
+                                ],
+                              ),
+                            )
+                          ],
+                        ),
+                      ),
+                      itemCount: 6,
+                    ),
+                  ),
+                );
+              }),
         ),
       ],
     );

@@ -1,7 +1,10 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/scheduler.dart';
 import 'package:url_launcher/url_launcher.dart';
 import 'package:virtuallearningapp/main.dart';
+
+int assignmentlist;
 
 class AssignmentUpdates extends StatefulWidget {
   @override
@@ -42,6 +45,12 @@ class _AssignmentUpdatesState extends State<AssignmentUpdates> {
                 sender: sender);
             assignmentcontent.add(coursecontent);
           }
+          SchedulerBinding.instance.addPostFrameCallback((_) {
+            setState(() {
+              assignmentlist = assignmentcontent.length;
+            });
+          });
+
           return ListView(
               scrollDirection: Axis.horizontal, children: assignmentcontent);
         });

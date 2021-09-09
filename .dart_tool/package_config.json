@@ -392,6 +392,12 @@
       "languageVersion": "2.1"
     },
     {
+      "name": "shimmer",
+      "rootUri": "file:///C:/src/flutter/.pub-cache/hosted/pub.dartlang.org/shimmer-2.0.0",
+      "packageUri": "lib/",
+      "languageVersion": "2.12"
+    },
+    {
       "name": "sizer",
       "rootUri": "file:///C:/src/flutter/.pub-cache/hosted/pub.dartlang.org/sizer-2.0.13",
       "packageUri": "lib/",
@@ -584,7 +590,7 @@
       "languageVersion": "2.7"
     }
   ],
-  "generated": "2021-06-04T21:50:52.397745Z",
+  "generated": "2021-06-08T17:52:47.093391Z",
   "generator": "pub",
   "generatorVersion": "2.12.3"
 }

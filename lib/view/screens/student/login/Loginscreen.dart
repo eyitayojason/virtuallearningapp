@@ -11,6 +11,7 @@ import 'package:virtuallearningapp/view/screens/widgets/form_textfield.dart';
 import 'package:virtuallearningapp/view/screens/widgets/logo.dart';
 
 import '../../assesmenthome.dart';
+import 'package:virtuallearningapp/view/screens/widgets/alertdialog.dart';
 
 bool isLoading = false;
 String email;
@@ -40,31 +41,38 @@ class _StudentLoginState extends State<StudentLogin> {
     }
   }
 
-  signIn() {
+  signIn() async {
     if (formKey.currentState.validate()) {
       setState(() {
         isLoading = true;
       });
-      authService.signInWithEmailAndPassword(email, password).then((val) {
-        if (val != null) {
-          Navigator.pushReplacement(
-            context,
-            MaterialPageRoute(
-              builder: (context) => BottomNavBAr(
-                pages: [
-                  StudentDashboard(),
-                  StudentCourseContent(),
-                  Home(),
-                ],
-              ),
+
+      try {
+        final status =
+            await authService.signInWithEmailAndPassword(email, password);
+
+        Navigator.pushReplacement(
+          context,
+          MaterialPageRoute(
+            builder: (context) => BottomNavBAr(
+              pages: [
+                StudentDashboard(),
+                StudentCourseContent(),
+                Home(),
+              ],
             ),
-          );
-          setState(() {
-            isLoading = false;
-          });
-        }
-      });
+          ),
+        );
+        setState(() {
+          isLoading = false;
+        });
+      } catch (e) {
+        AlrtDialog().showAlertDialog(context, e.toString().substring(30));
+      }
     }
+    setState(() {
+      isLoading = false;
+    });
   }
 
   @override
@@ -79,6 +87,7 @@ class _StudentLoginState extends State<StudentLogin> {
       child: Scaffold(
         body: ModalProgressHUD(
           inAsyncCall: isLoading,
+          dismissible: true,
           child: SingleChildScrollView(
             child: Center(
               child: Column(

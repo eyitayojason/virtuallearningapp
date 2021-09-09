@@ -3,6 +3,8 @@ import 'package:flutter/material.dart';
 import 'package:virtuallearningapp/view/screens/lecturer/course_content/tabs/classroom/classroom.dart';
 import 'package:virtuallearningapp/view/screens/lecturer/course_content/tabs/content/content.dart';
 import 'package:virtuallearningapp/view/screens/lecturer/course_content/tabs/content/layouts/add_new_content.dart';
+import 'package:virtuallearningapp/view/screens/lecturer/dashboard/dashboard.dart';
+import 'package:virtuallearningapp/view/screens/student/dashboard/dashboard.dart';
 import 'package:virtuallearningapp/view/screens/widgets/appbar.dart';
 import 'package:virtuallearningapp/helper/willpop.dart';
 
@@ -38,8 +40,8 @@ class _LecturerCourseContentState extends State<LecturerCourseContent> {
       child: DefaultTabController(
         length: 2,
         child: WillPop(
-                  child: Scaffold(
-            backgroundColor: Colors.grey.shade400,
+          child: Scaffold(
+            backgroundColor: Colors.grey.shade300,
             appBar: PreferredSize(
               preferredSize: Size.fromHeight(150),
               child: AppBar(
@@ -47,13 +49,13 @@ class _LecturerCourseContentState extends State<LecturerCourseContent> {
                 flexibleSpace: Padding(
                   padding: const EdgeInsets.only(bottom: 50),
                   child: CustomAppBar(
-                    username: courseuser.displayName,
-                    departmentname: "Department Of Computer Science",
+                    username: lecturerdata.data()["displayName"],
+                    departmentname: lecturerdata.data()["matricNo"],
                   ),
                 ),
                 backgroundColor: Colors.orange,
                 bottom: TabBar(
-                  indicatorColor: Colors.white,
+                  indicatorColor: Colors.green,
                   tabs: [
                     Tab(text: 'CONTENT'),
                     Tab(text: 'CLASSROOM'),
@@ -66,12 +68,16 @@ class _LecturerCourseContentState extends State<LecturerCourseContent> {
                 Image.asset(
                   "assets/images/schoolbg.png",
                   fit: BoxFit.fitHeight,
+                  color: Colors.white.withOpacity(0.8),
+                  colorBlendMode: BlendMode.screen,
                   height: double.infinity,
                 ),
                 TabBarView(
                   children: [
                     WeeklyCourseContents(
-                      addcontent: AddNewContent(text: "Add New Content",),
+                      addcontent: AddNewContent(
+                        text: "Add New Content",
+                      ),
                     ),
                     LecturerClassroom(),
                   ],
