@@ -56,8 +56,8 @@ class _StudentCourseContentState extends State<StudentCourseContent> {
                 flexibleSpace: Padding(
                   padding: const EdgeInsets.only(bottom: 50),
                   child: CustomAppBar(
-                    username: data.data()["displayName"],
-                    departmentname: data.data()["matricNo"],
+                    username: FirebaseAuth.instance.currentUser.displayName,
+                    departmentname: FirebaseAuth.instance.currentUser.photoURL,
                   ),
                 ),
                 backgroundColor: Colors.orange,

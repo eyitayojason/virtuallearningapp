@@ -1,8 +1,8 @@
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     package="com.example.virtuallearningapp">
    <application
-        android:label="virtuallearningapp"
-        android:icon="@mipmap/ic_launcher">
+        android:label="Cre8ive E-Learning App"
+        android:icon="@mipmap/launcher_icon">
         <activity
             android:name=".MainActivity"
             android:launchMode="singleTop"
@@ -38,4 +38,5 @@
             android:name="flutterEmbedding"
             android:value="2" />
     </application>
+    android.permission.INTERNET
 </manifest>

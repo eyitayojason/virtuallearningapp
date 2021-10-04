@@ -22,6 +22,8 @@ class _StudentDashboardState extends State<StudentDashboard> {
   void initState() {
     // TODO: implement initState
     super.initState();
+    FirebaseAuth.instance.currentUser;
+    print(FirebaseAuth.instance.currentUser.uid);
   }
 
   Widget build(BuildContext context) {
@@ -37,14 +39,15 @@ class _StudentDashboardState extends State<StudentDashboard> {
                     appBar: PreferredSize(
                       preferredSize: Size.fromHeight(100),
                       child: CustomAppBar(
-                        username: data.data()["displayName"],
-                        onpressed: () {
-                          _auth.signOut().whenComplete(() {
-                            Navigator.pop(context);
-                          });
-                        },
-                        departmentname: data.data()["matricNo"],
-                      ),
+                          username:
+                              FirebaseAuth.instance.currentUser.displayName,
+                          onpressed: () {
+                            _auth.signOut().whenComplete(() {
+                              Navigator.pop(context);
+                            });
+                          },
+                          departmentname:
+                              FirebaseAuth.instance.currentUser.photoURL),
                     ),
                     body: Stack(
                       children: [

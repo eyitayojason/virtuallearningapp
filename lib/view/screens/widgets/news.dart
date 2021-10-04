@@ -1,4 +1,3 @@
-import 'dart:math';
 
 import 'package:flutter/material.dart';
 import 'package:http/http.dart' as http;
@@ -16,7 +15,6 @@ class _NewsScreenState extends State<NewsScreen> {
   final List<NewsDetail> items = [];
   static onError(error) {
     print("the error is $error");
-   
   }
 
   Future<List<NewsDetail>> getNews() async {
@@ -183,6 +181,11 @@ Widget _itemThumbnail(NewsDetail newsDetail) {
 Widget _itemTitle(NewsDetail newsDetail) {
   return Text(
     newsDetail.title,
+    style: TextStyle(
+      color: Colors.black,
+      fontWeight: FontWeight.w500,
+      backgroundColor: Colors.white,
+    ),
   );
 }
 

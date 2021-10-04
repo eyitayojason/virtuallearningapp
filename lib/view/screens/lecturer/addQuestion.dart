@@ -1,7 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:virtuallearningapp/services%20and%20providers/database.dart';
-
-import '../assesmenthome.dart';
+import 'package:virtuallearningapp/view/screens/student/bottom_navigation_bar/bottom_navigation_bar.dart';
+import 'course_content/course_content.dart';
+import 'createquiz.dart';
+import 'dashboard/dashboard.dart';
 
 class AddQuestion extends StatefulWidget {
   final String quizId;
@@ -54,7 +56,6 @@ class _AddQuestionState extends State<AddQuestion> {
           "Add Question",
           style: TextStyle(color: Colors.black),
         ),
-        brightness: Brightness.light,
         elevation: 0.0,
         backgroundColor: Colors.transparent,
       ),
@@ -121,11 +122,17 @@ class _AddQuestionState extends State<AddQuestion> {
                         GestureDetector(
                           onTap: () {
                             Navigator.pushReplacement(
-                                context,
-                                MaterialPageRoute(
-                                  builder: (context) => Home(),
-                                ));
-                            //  Navigator.pop(context);
+                              context,
+                              MaterialPageRoute(
+                                builder: (context) => BottomNavBAr(
+                                  pages: [
+                                    LecturerDashboard(),
+                                    LecturerCourseContent(),
+                                    CreateQuiz(),
+                                  ],
+                                ),
+                              ),
+                            );
                           },
                           child: Container(
                             alignment: Alignment.center,
@@ -148,25 +155,20 @@ class _AddQuestionState extends State<AddQuestion> {
                         GestureDetector(
                           onTap: () async {
                             await uploadQuizData();
-                            showDialog(
-                                useSafeArea: true,
-                                builder: (context) => Container(
-                                      color: Colors.white,
-                                      child: Text(
-                                        "Question added sucesfully",
-                                        style: TextStyle(color: Colors.black),
-                                      ),
-                                    ),
-                                context: context);
+                            ScaffoldMessenger.of(context).showSnackBar(SnackBar(
+                              backgroundColor: Colors.green,
+                              content: Text("Question Added Sucessfully"),
+                            ));
                           },
                           child: Container(
                             alignment: Alignment.center,
                             width: MediaQuery.of(context).size.width / 2 - 40,
                             padding: EdgeInsets.symmetric(
-                                horizontal: 24, vertical: 20),
+                                horizontal: 24, vertical: 5),
                             decoration: BoxDecoration(
-                                color: Colors.orange,
-                                borderRadius: BorderRadius.circular(30)),
+                              color: Colors.orange,
+                              borderRadius: BorderRadius.circular(30),
+                            ),
                             child: Text(
                               "Add Question",
                               style:

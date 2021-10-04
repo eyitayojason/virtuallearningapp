@@ -15,7 +15,7 @@ class DatabaseService {
   }
 
   getData() async {
-    return  FirebaseFirestore.instance.collection("users").snapshots();
+    return FirebaseFirestore.instance.collection("users").snapshots();
   }
 
   Future<void> addQuizData(Map quizData, String quizId) async {
@@ -39,8 +39,8 @@ class DatabaseService {
     });
   }
 
-  getQuizData()async {
-    return  FirebaseFirestore.instance.collection("Quiz").snapshots();
+  getQuizData() async {
+    return FirebaseFirestore.instance.collection("Quiz").get();
   }
 
   getQuestionData(String quizId) async {

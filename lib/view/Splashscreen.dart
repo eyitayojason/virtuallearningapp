@@ -18,31 +18,32 @@ class _SplashScreenState extends State<Splashscreen> {
       Duration(seconds: 3),
       () => Navigator.pushReplacement(
         context,
-        MaterialPageRoute(builder: (context) => 
-           
-            FirstScreen(),
-            ),
+        MaterialPageRoute(
+          builder: (context) => FirstScreen(),
+        ),
       ),
     );
   }
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      body: Column(
-        mainAxisAlignment: MainAxisAlignment.center,
-        children: [
-          Center(
-            child: Hero(
-              tag: "yct",
-              child: const Yctlogo(),
+    return SafeArea(
+      child: Scaffold(
+        body: Column(
+          mainAxisAlignment: MainAxisAlignment.center,
+          children: [
+            Center(
+              child: Hero(
+                tag: "yct",
+                child: const Yctlogo(),
+              ),
             ),
-          ),
-          SizedBox(height: 20),
-          SpinKitCircle(
-            color: Colors.green,
-          ),
-        ],
+            SizedBox(height: 20),
+            SpinKitCircle(
+              color: Colors.green,
+            ),
+          ],
+        ),
       ),
     );
   }

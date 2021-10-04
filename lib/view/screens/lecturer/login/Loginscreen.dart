@@ -89,7 +89,7 @@ class _LecturerLoginState extends State<LecturerLogin> {
       child: Scaffold(
         body: ModalProgressHUD(
           inAsyncCall: isLoading,
-          dismissible: true,
+         
           child: SingleChildScrollView(
             child: Center(
               child: Column(

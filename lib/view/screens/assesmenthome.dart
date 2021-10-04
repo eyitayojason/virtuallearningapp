@@ -1,13 +1,12 @@
+import 'package:cached_network_image/cached_network_image.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
+import 'package:octo_image/octo_image.dart';
 import 'package:virtuallearningapp/services%20and%20providers/auth.dart';
 import 'package:virtuallearningapp/services%20and%20providers/database.dart';
-import 'package:virtuallearningapp/view/screens/lecturer/dashboard/dashboard.dart';
 import 'package:virtuallearningapp/view/screens/playQuiz.dart';
 import 'package:virtuallearningapp/view/screens/student/dashboard/dashboard.dart';
-
-import 'lecturer/course_content/course_content.dart';
-import 'lecturer/createquiz.dart';
 import 'student/bottom_navigation_bar/bottom_navigation_bar.dart';
 import 'student/course_content/course_content.dart';
 
@@ -42,12 +41,13 @@ class _HomeState extends State<Home> {
       child: Column(
         children: [
           Expanded(
-            child: StreamBuilder(
+            child: FutureBuilder(
+              future: databaseService.getQuizData(),
               builder: (
                 context,
                 snapshot,
               ) {
-                String dispName = data.data()["displayName"];
+                String dispName = FirebaseAuth.instance.currentUser.displayName;
                 return snapshot.data == null ||
                         snapshot.connectionState == ConnectionState.waiting ||
                         snapshot.connectionState == ConnectionState.none
@@ -79,15 +79,18 @@ class _HomeState extends State<Home> {
                           ),
                         ],
                       ))
-                    : ListView.builder(
+                    : ListView.separated(
+                        separatorBuilder: (context, index) => SizedBox(
+                              height: 20,
+                            ),
                         shrinkWrap: true,
                         physics: ClampingScrollPhysics(),
                         itemCount: snapshot.data.docs.length,
                         itemBuilder: (context, index) {
                           return QuizTile(
                             noOfQuestions: snapshot.data.docs.length,
-                            imageUrl:
-                                snapshot.data.docs[index].data()['quizImgUrl'],
+                            imageUrl: snapshot.data.docs[index]
+                                .data()['quizImgUrl'] as String,
                             title:
                                 snapshot.data.docs[index].data()['quizTitle'],
                             description:
@@ -106,7 +109,7 @@ class _HomeState extends State<Home> {
   @override
   void initState() {
     databaseService.getQuizData().then((value) {
-      quizStream = value;
+      // quizStream = value;
       setState(() {});
     });
     super.initState();
@@ -121,19 +124,12 @@ class _HomeState extends State<Home> {
         title: Text(
           "Assesment HomePage",
         ),
-        brightness: Brightness.light,
+        systemOverlayStyle: SystemUiOverlayStyle.dark,
         elevation: 0.0,
         backgroundColor: Colors.transparent,
         //brightness: Brightness.li,
       ),
       body: quizList(),
-      // floatingActionButton: FloatingActionButton(
-      //   child: Icon(Icons.add),
-      //   onPressed: () {
-      //     Navigator.push(
-      //         context, MaterialPageRoute(builder: (context) => CreateQuiz()));
-      //   },
-      // ),
     );
   }
 }
@@ -169,6 +165,14 @@ class QuizTile extends StatelessWidget {
           borderRadius: BorderRadius.circular(8),
           child: Stack(
             children: [
+              // OctoImage(
+              //   image: CachedNetworkImageProvider(imageUrl.toString()),
+              //   placeholderBuilder: OctoPlaceholder.blurHash(
+              //     'LEHV6nWB2yk8pyo0adR*.7kCMdnj',
+              //   ),
+              //   errorBuilder: OctoError.icon(color: Colors.red),
+              //   fit: BoxFit.cover,
+              // ),
               Image.network(
                 imageUrl,
                 fit: BoxFit.cover,

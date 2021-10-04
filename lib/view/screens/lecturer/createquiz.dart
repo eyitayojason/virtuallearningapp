@@ -1,5 +1,8 @@
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
+import 'package:provider/provider.dart';
 import 'package:random_string/random_string.dart';
+import 'package:virtuallearningapp/services%20and%20providers/auth.dart';
 import 'package:virtuallearningapp/services%20and%20providers/database.dart';
 import 'addQuestion.dart';
 
@@ -23,7 +26,7 @@ class _CreateQuizState extends State<CreateQuiz> {
       });
       quizId = randomAlphaNumeric(16);
       Map<String, String> quizData = {
-       // "quizId": quizId,
+        // "quizId": quizId,
         "quizImgUrl": quizImgUrl,
         "quizTitle": quizTitle,
         "quizDesc": quizDesc
@@ -40,17 +43,19 @@ class _CreateQuizState extends State<CreateQuiz> {
       });
     }
   }
+
   @override
   Widget build(BuildContext context) {
+    var _authProvider = Provider.of<Authentication>(context);
     return Scaffold(
       backgroundColor: Colors.white,
       appBar: AppBar(
-        leading:null,
+        leading: null,
         title: Text(
           "Assesment Page",
           style: TextStyle(color: Colors.black),
         ),
-        brightness: Brightness.light,
+        systemOverlayStyle: SystemUiOverlayStyle.light,
         elevation: 0.0,
         backgroundColor: Colors.transparent,
         //brightness: Brightness.li,
@@ -66,29 +71,30 @@ class _CreateQuizState extends State<CreateQuiz> {
               child: Container(
                 padding: EdgeInsets.symmetric(horizontal: 24),
                 child: Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
-                    TextFormField(
-                      validator: (val) =>
-                          val.isEmpty ? "Enter Quiz Image Url" : null,
-                      decoration: InputDecoration(
-                          hintText: "Quiz Image Url (Optional)"),
-                      onChanged: (val) {
-                        quizImgUrl = val;
+                    TextButton.icon(
+                      label: Text("Upload Quiz Image"),
+                      icon: Icon(Icons.upload),
+                      onPressed: () {
+                        _authProvider.selectImageFile();
                       },
                     ),
-                    SizedBox(
-                      height: 5,
+                    const SizedBox(
+                      height: 25,
                     ),
                     TextFormField(
                       validator: (val) =>
                           val.isEmpty ? "Enter Quiz Title" : null,
-                      decoration: InputDecoration(hintText: "Quiz Title"),
+                      decoration: InputDecoration(
+                        hintText: "Quiz Title",
+                      ),
                       onChanged: (val) {
                         quizTitle = val;
                       },
                     ),
-                    SizedBox(
-                      height: 5,
+                    const SizedBox(
+                      height: 25,
                     ),
                     TextFormField(
                       validator: (val) =>
@@ -100,7 +106,9 @@ class _CreateQuizState extends State<CreateQuiz> {
                     ),
                     Spacer(),
                     GestureDetector(
-                      onTap: () {
+                      onTap: () async {
+                        quizImgUrl = await _authProvider.uploadImageFile();
+                        print(quizImgUrl);
                         createQuiz();
                       },
                       child: Container(

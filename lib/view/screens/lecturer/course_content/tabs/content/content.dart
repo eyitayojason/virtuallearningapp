@@ -53,11 +53,11 @@ class _WeeklyCourseContentsState extends State<WeeklyCourseContents> {
   @override
   Widget build(BuildContext context) {
     var authProvider = Provider.of<Authentication>(context);
-    return StreamBuilder<QuerySnapshot>(
-        stream: _firestore
+    return FutureBuilder<QuerySnapshot>(
+        future: _firestore
             .collection("Coursecontent")
             .orderBy("timestamp", descending: false)
-            .snapshots(),
+            .get(),
         builder: (context, snapshot) {
           if (!snapshot.hasData) {
             return Center(child: CircularProgressIndicator());
@@ -65,10 +65,10 @@ class _WeeklyCourseContentsState extends State<WeeklyCourseContents> {
           final contents = snapshot.data.docs.reversed;
           List<CourseContentCard> coursecontents = [];
           for (var content in contents) {
-            courseweek = content.data()["week"];
-            contentDownloadUrl = content.data()["fileURL"];
-            title = content.data()["coursetitle"];
-            coursetimestamp = content.data()["timestamp"].toString();
+            courseweek = content.get("week");
+            contentDownloadUrl = content.get("fileURL");
+            title = content.get("coursetitle");
+            coursetimestamp = content.get("timestamp").toString();
             final coursecontent = CourseContentCard(
               courseTitle: title,
               pdflinkk: contentDownloadUrl,
@@ -77,8 +77,9 @@ class _WeeklyCourseContentsState extends State<WeeklyCourseContents> {
             );
             coursecontents.add(coursecontent);
           }
-          return Scaffold(resizeToAvoidBottomInset: false,
-                      body: Padding(
+          return Scaffold(
+            resizeToAvoidBottomInset: false,
+            body: Padding(
               padding: const EdgeInsets.all(15.0),
               child: Column(
                 children: [
@@ -87,7 +88,6 @@ class _WeeklyCourseContentsState extends State<WeeklyCourseContents> {
                   ),
                   InkWell(
                       onTap: () {
-                       
                         showModalBottomSheet(
                           context: context,
                           builder: (context) => Container(
@@ -108,7 +108,8 @@ class _WeeklyCourseContentsState extends State<WeeklyCourseContents> {
                                             value == null || value.isEmpty
                                                 ? 'Please enter lecture week'
                                                 : null,
-                                        onChanged: (value) => courseweek = value,
+                                        onChanged: (value) =>
+                                            courseweek = value,
                                       ),
                                     ),
                                     SizedBox(
@@ -143,22 +144,24 @@ class _WeeklyCourseContentsState extends State<WeeklyCourseContents> {
                                           ),
                                         ),
                                         SizedBox(
-                                          width: 100,
+                                          width: 50,
                                         ),
                                         Expanded(
                                           child: CustomButton(
                                             onPressed: () async {
                                               if (formKey.currentState
                                                   .validate()) {
-                                                 Navigator.pop(context);
+                                                Navigator.pop(context);
                                                 await authProvider
                                                     .uploadContent()
                                                     .whenComplete(() {
                                                   ScaffoldMessenger.of(context)
-                                                      .showSnackBar(SnackBar(
-                                                    content: Text(
-                                                        'Content Posted Sucessfully'),
-                                                  ));
+                                                      .showSnackBar(
+                                                    SnackBar(
+                                                      content: Text(
+                                                          'Content Posted Sucessfully'),
+                                                    ),
+                                                  );
                                                 });
                                                 await _firestore
                                                     .collection("Coursecontent")
@@ -167,13 +170,14 @@ class _WeeklyCourseContentsState extends State<WeeklyCourseContents> {
                                                   "timestamp": DateTime.now(),
                                                   "week": weekController.text,
                                                   "coursetitle":
-                                                      courseTitleController.text,
+                                                      courseTitleController
+                                                          .text,
                                                 });
                                               }
                                               weekController.clear();
                                               courseTitleController.clear();
                                             },
-                                            text: "Upload File",
+                                            text: "Upload",
                                           ),
                                         ),
                                       ],

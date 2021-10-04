@@ -5,6 +5,11 @@ if (localPropertiesFile.exists()) {
         localProperties.load(reader)
     }
 }
+  def keystoreProperties = new Properties()
+  def keystorePropertiesFile = rootProject.file('c:UsersUSER_NAMEupload-keystore.jks')
+  if (keystorePropertiesFile.exists()) {
+       keystoreProperties.load(new FileInputStream(c:UsersUSER_NAMEupload-keystore.jks))
+   }
 
 def flutterRoot = localProperties.getProperty('flutter.sdk')
 if (flutterRoot == null) {
@@ -43,13 +48,27 @@ android {
         versionName flutterVersionName
     }
 
-    buildTypes {
-        release {
-            // TODO: Add your own signing config for the release build.
-            // Signing with the debug keys for now, so `flutter run --release` works.
-            signingConfig signingConfigs.debug
-        }
-    }
+    // buildTypes {
+    //     release {
+    //         // TODO: Add your own signing config for the release build.
+    //         // Signing with the debug keys for now, so `flutter run --release` works.
+    //         signingConfig signingConfigs.debug
+    //     }
+    // }
+    signingConfigs {
+       release {
+           keyAlias keystoreProperties['upload']
+           keyPassword keystoreProperties['1297982a']
+           storeFile keystoreProperties['c:UsersUSER_NAMEupload-keystore.jks'] ? file(keystoreProperties['c:UsersUSER_NAMEupload-keystore.jks']) : null
+           storePassword keystoreProperties['1297982']
+       }
+   }
+   buildTypes {
+       release {
+           signingConfig signingConfigs.release
+       }
+   }
+
 }
 
 flutter {

@@ -9,6 +9,7 @@ import 'package:path_provider/path_provider.dart';
 import 'package:virtuallearningapp/main.dart';
 import 'package:virtuallearningapp/services%20and%20providers/model.dart';
 import 'package:path/path.dart';
+import 'package:virtuallearningapp/view/screens/Firstscreen.dart';
 import 'package:virtuallearningapp/view/screens/student/course_content/course_content.dart';
 
 enum AuthResultStatus {
@@ -51,23 +52,48 @@ class Authentication with ChangeNotifier {
     return authResultStatus;
   }
 
-  Future signUpwithEmailandPassword(String email, String password,
-      String displayName, String matricStaffno) async {
-    User user;
+  Future signUpwithEmailandPassword(String _email, String _password,
+      String _displayName, String _matricStaffno, BuildContext context) async {
+    User _user;
 
     UserCredential userCredential = await _auth.createUserWithEmailAndPassword(
-        email: email, password: password);
+        email: _email, password: _password);
 
-    user = FirebaseAuth.instance.currentUser;
-    FirebaseFirestore.instance.collection('users').doc(user.uid).set({
-      'userid': user.uid,
-      'matricNo': matricStaffno,
-      "displayName": displayName
-    }).catchError((e) {
-      print(e);
-    });
+    _user = userCredential.user;
+    if (_user != null) {
+      //add display name for just created user
+      _user.updateDisplayName(_displayName);
+      _user.updatePhotoURL(_matricStaffno);
 
-    return _userFromFirebaseUser(user);
+      //get updated user
+      await _user.reload();
+      _user = _auth.currentUser;
+      //print final version to console
+      print("Registered user:");
+      ScaffoldMessenger.of(context).showSnackBar(
+        SnackBar(
+          content: Text('Signup Sucess'),
+        ),
+      );
+
+      Navigator.pop(
+        context,
+        MaterialPageRoute(
+          builder: (context) => FirstScreen(),
+        ),
+      );
+
+      FirebaseFirestore.instance.collection('users').doc(_user.uid).set({
+        'userid': _user.uid,
+        'matricNo': _matricStaffno,
+        "displayName": _displayName
+      }).catchError((e) {
+        print(e);
+      });
+      await _auth.signOut();
+    } else {
+      print("Sign up failed");
+    }
   }
 
   Future logout() async {
@@ -87,7 +113,7 @@ class Authentication with ChangeNotifier {
     await uploadTask.whenComplete(() async {
       firebaseDownloadUrl = await storageReference.getDownloadURL();
     });
-    print(firebaseDownloadUrl);
+    return firebaseDownloadUrl;
   }
 
   Future selectImageFile() async {

@@ -87,7 +87,7 @@ class _StudentLoginState extends State<StudentLogin> {
       child: Scaffold(
         body: ModalProgressHUD(
           inAsyncCall: isLoading,
-          dismissible: true,
+         
           child: SingleChildScrollView(
             child: Center(
               child: Column(

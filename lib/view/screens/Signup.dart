@@ -1,10 +1,7 @@
-import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:sizer/sizer.dart';
 import 'package:virtuallearningapp/services%20and%20providers/auth.dart';
-import 'package:virtuallearningapp/services%20and%20providers/model.dart';
-import 'package:virtuallearningapp/view/screens/Firstscreen.dart';
 import 'package:virtuallearningapp/view/screens/widgets/button.dart';
 import 'package:virtuallearningapp/view/screens/widgets/form_textfield.dart';
 import 'package:virtuallearningapp/view/screens/widgets/logo.dart';
@@ -42,32 +39,14 @@ class _SignupState extends State<Signup> {
       });
       try {
         await authentication.signUpwithEmailandPassword(
-            email, password, displayName, matricStaffno);
-        // if (user != null) {
-
-        ScaffoldMessenger.of(context).showSnackBar(
-          SnackBar(
-            content: Text('Signup Sucess'),
-          ),
-        );
-
-        Navigator.pop(
-          context,
-          MaterialPageRoute(
-            builder: (context) => FirstScreen(),
-          ),
-        );
-        // } else {
-        //   ScaffoldMessenger.of(context).showSnackBar(
-        //     SnackBar(
-        //       content: Text('Signup Failed'),
-        //     ),
-        //   );
-        // }
+            email, password, displayName, matricStaffno, context);
       } on FirebaseAuthException catch (e) {
         AlrtDialog().showAlertDialog(context, e.toString().substring(30));
       }
     }
+    setState(() {
+      isLoading = false;
+    });
   }
 
   @override
@@ -111,7 +90,6 @@ class _SignupState extends State<Signup> {
                           SizedBox(height: 20),
                           CustomFormField(
                             hintText: 'Matric Number/Staff Number',
-                            textInputType: TextInputType.number,
                             obsureText: false,
                             validate: (value) {
                               if (value == null || value.isEmpty) {
@@ -148,7 +126,6 @@ class _SignupState extends State<Signup> {
                             text: 'SIGNUP',
                             onPressed: () async {
                               await signUp();
-
                               setState(() {
                                 isLoading = false;
                               });

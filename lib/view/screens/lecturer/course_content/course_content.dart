@@ -3,8 +3,6 @@ import 'package:flutter/material.dart';
 import 'package:virtuallearningapp/view/screens/lecturer/course_content/tabs/classroom/classroom.dart';
 import 'package:virtuallearningapp/view/screens/lecturer/course_content/tabs/content/content.dart';
 import 'package:virtuallearningapp/view/screens/lecturer/course_content/tabs/content/layouts/add_new_content.dart';
-import 'package:virtuallearningapp/view/screens/lecturer/dashboard/dashboard.dart';
-import 'package:virtuallearningapp/view/screens/student/dashboard/dashboard.dart';
 import 'package:virtuallearningapp/view/screens/widgets/appbar.dart';
 import 'package:virtuallearningapp/helper/willpop.dart';
 
@@ -49,8 +47,8 @@ class _LecturerCourseContentState extends State<LecturerCourseContent> {
                 flexibleSpace: Padding(
                   padding: const EdgeInsets.only(bottom: 50),
                   child: CustomAppBar(
-                    username: lecturerdata.data()["displayName"],
-                    departmentname: lecturerdata.data()["matricNo"],
+                    username: FirebaseAuth.instance.currentUser.displayName,
+                    departmentname: FirebaseAuth.instance.currentUser.photoURL,
                   ),
                 ),
                 backgroundColor: Colors.orange,

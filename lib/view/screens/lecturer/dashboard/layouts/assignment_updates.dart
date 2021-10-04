@@ -20,17 +20,16 @@ class _AssignmentUpdatesState extends State<AssignmentUpdates> {
 
   @override
   Widget build(BuildContext context) {
-    FirebaseFirestore _firestore = FirebaseFirestore.instance;
-    return StreamBuilder<QuerySnapshot>(
-        stream: _firestore
+    return FutureBuilder(
+        future: FirebaseFirestore.instance
             .collection("assignments")
             .orderBy("timestamp", descending: false)
-            .snapshots(),
+            .get(),
         builder: (context, snapshot) {
           if (!snapshot.hasData) {
             return Center(child: CircularProgressIndicator());
           }
-          final contents = snapshot.data.docs.reversed;
+          final contents = snapshot.data.docs;
           List<AssignmentCard> assignmentcontent = [];
           for (var content in contents) {
             courseweek = content.data()["week"];

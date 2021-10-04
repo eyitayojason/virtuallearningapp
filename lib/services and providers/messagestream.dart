@@ -4,10 +4,10 @@ import 'package:audioplayer/audioplayer.dart';
 import 'package:better_player/better_player.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:extended_image/extended_image.dart';
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:virtuallearningapp/main.dart';
-import 'package:virtuallearningapp/view/screens/lecturer/login/Loginscreen.dart';
 import '../main.dart';
 import 'auth.dart';
 
@@ -21,12 +21,11 @@ class MessagesStream extends StatefulWidget {
 
 class _MessagesStreamState extends State<MessagesStream> {
   @override
+  User _user;
   void initState() {
     // TODO: implement initState
     super.initState();
-    authService.getCurrentUser();
-
-    print(authService.loggedinuser.displayName);
+    _user = FirebaseAuth.instance.currentUser;
   }
 
   void dispose() async {
@@ -35,14 +34,16 @@ class _MessagesStreamState extends State<MessagesStream> {
   }
 
   @override
-  Widget build(BuildContext context) => StreamBuilder<QuerySnapshot>(
+  Widget build(BuildContext context) => StreamBuilder(
         stream: FirebaseFirestore.instance
             .collection("Messages")
             .orderBy("timestamp", descending: false)
             .snapshots(),
         builder: (context, snapshot) {
           if (snapshot.connectionState == ConnectionState.waiting) {
-            return Container();
+            return Center(
+              child: CircularProgressIndicator(),
+            );
           }
           final messages = snapshot.data.docs.reversed;
           List<MessageBubble> messageBubbles = [];
@@ -54,7 +55,7 @@ class _MessagesStreamState extends State<MessagesStream> {
             audioname = message.data()["audioName"];
             final messageSender = message.data()["sender"];
             final timestamp = message.data()["timestamp"];
-            final currentUser = authService.loggedinuser.displayName;
+            final currentUser = FirebaseAuth.instance.currentUser.displayName;
             final messageBubble = MessageBubble(
               timestamp: timestamp,
               picture: firebaseDownloadUrl,
@@ -238,98 +239,87 @@ class _MessageBubbleState extends State<MessageBubble> {
               : Card(
                   child: Container(
                     padding: EdgeInsets.all(16.0),
-                    child: Column(
-                      crossAxisAlignment: CrossAxisAlignment.start,
+                    child: Row(
                       children: [
-                        Row(
-                          children: [
-                            Image.asset(
-                              "assets/images/mp3.png",
-                              color: Colors.orange,
-                              fit: BoxFit.cover,
-                              height: 50,
-                            ),
-                            IconButton(
-                              onPressed: isPlaying
-                                  ? null
-                                  : () => play(widget.voiceNote),
-                              iconSize: 40.0,
-                              icon: Icon(Icons.play_arrow),
-                              color: Colors.cyan,
-                            ),
-                            // IconButton(
-                            //   onPressed: isPlaying ? () => pause() : null,
-                            //   iconSize: 20.0,
-                            //   icon: Icon(Icons.pause),
-                            //   color: Colors.cyan,
-                            // ),
-                            IconButton(
-                              onPressed:
-                                  isPlaying || isPaused ? () => stop() : null,
-                              iconSize: 40.0,
-                              icon: Icon(Icons.stop),
-                              color: Colors.cyan,
-                            ),
-
-                            isPlaying
-                                ? Flexible(
-                                    child: AudioWave(
-                                      height: 32,
-                                      width: 88,
-                                      spacing: 2.5,
-                                      bars: [
-                                        AudioWaveBar(
-                                            height: 10,
-                                            color: Colors.lightBlueAccent),
-                                        AudioWaveBar(
-                                            height: 30, color: Colors.blue),
-                                        AudioWaveBar(
-                                            height: 70, color: Colors.black),
-                                        AudioWaveBar(height: 40),
-                                        AudioWaveBar(
-                                            height: 20, color: Colors.orange),
-                                        AudioWaveBar(
-                                            height: 10,
-                                            color: Colors.lightBlueAccent),
-                                        AudioWaveBar(
-                                            height: 30, color: Colors.blue),
-                                        AudioWaveBar(
-                                            height: 70, color: Colors.black),
-                                        AudioWaveBar(height: 40),
-                                        AudioWaveBar(
-                                            height: 20, color: Colors.orange),
-                                        AudioWaveBar(
-                                            height: 10,
-                                            color: Colors.lightBlueAccent),
-                                        AudioWaveBar(
-                                            height: 30, color: Colors.blue),
-                                        AudioWaveBar(
-                                            height: 70, color: Colors.black),
-                                        AudioWaveBar(height: 40),
-                                        AudioWaveBar(
-                                            height: 20, color: Colors.orange),
-                                        AudioWaveBar(
-                                            height: 10,
-                                            color: Colors.lightBlueAccent),
-                                        AudioWaveBar(
-                                            height: 30, color: Colors.blue),
-                                        AudioWaveBar(
-                                            height: 70, color: Colors.black),
-                                        AudioWaveBar(height: 40),
-                                        AudioWaveBar(
-                                            height: 20, color: Colors.orange),
-                                      ],
-                                    ),
-                                  )
-                                : Text(
-                                    widget.audioname.toString(),
-                                    style: TextStyle(
-                                        fontSize: 20,
-                                        fontWeight: FontWeight.bold,
-                                        color: Colors.black87),
-                                  ),
-                          ],
+                        Image.asset(
+                          "assets/images/mp3.png",
+                          color: Colors.orange,
+                          fit: BoxFit.cover,
+                          height: 50,
                         ),
+                        IconButton(
+                          onPressed:
+                              isPlaying ? null : () => play(widget.voiceNote),
+                          iconSize: 40.0,
+                          icon: Icon(Icons.play_arrow),
+                          color: Colors.cyan,
+                        ),
+                        IconButton(
+                          onPressed:
+                              isPlaying || isPaused ? () => stop() : null,
+                          iconSize: 40.0,
+                          icon: Icon(Icons.stop),
+                          color: Colors.cyan,
+                        ),
+                        isPlaying
+                            ? Flexible(
+                                child: AudioWave(
+                                  height: 32,
+                                  width: 88,
+                                  spacing: 2.5,
+                                  bars: [
+                                    AudioWaveBar(
+                                        height: 10,
+                                        color: Colors.lightBlueAccent),
+                                    AudioWaveBar(
+                                        height: 30, color: Colors.blue),
+                                    AudioWaveBar(
+                                        height: 70, color: Colors.black),
+                                    AudioWaveBar(height: 40),
+                                    AudioWaveBar(
+                                        height: 20, color: Colors.orange),
+                                    AudioWaveBar(
+                                        height: 10,
+                                        color: Colors.lightBlueAccent),
+                                    AudioWaveBar(
+                                        height: 30, color: Colors.blue),
+                                    AudioWaveBar(
+                                        height: 70, color: Colors.black),
+                                    AudioWaveBar(height: 40),
+                                    AudioWaveBar(
+                                        height: 20, color: Colors.orange),
+                                    AudioWaveBar(
+                                        height: 10,
+                                        color: Colors.lightBlueAccent),
+                                    AudioWaveBar(
+                                        height: 30, color: Colors.blue),
+                                    AudioWaveBar(
+                                        height: 70, color: Colors.black),
+                                    AudioWaveBar(height: 40),
+                                    AudioWaveBar(
+                                        height: 20, color: Colors.orange),
+                                    AudioWaveBar(
+                                        height: 10,
+                                        color: Colors.lightBlueAccent),
+                                    AudioWaveBar(
+                                        height: 30, color: Colors.blue),
+                                    AudioWaveBar(
+                                        height: 70, color: Colors.black),
+                                    AudioWaveBar(height: 40),
+                                    AudioWaveBar(
+                                        height: 20, color: Colors.orange),
+                                  ],
+                                ),
+                              )
+                            : Flexible(
+                                child: Text(
+                                  widget.audioname.toString(),
+                                  style: TextStyle(
+                                      fontSize: 18,
+                                      fontWeight: FontWeight.w500,
+                                      color: Colors.black87),
+                                ),
+                              ),
                       ],
                     ),
                   ),

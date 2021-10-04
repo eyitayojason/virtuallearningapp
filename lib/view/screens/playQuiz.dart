@@ -49,23 +49,24 @@ class _QuizPlayState extends State<QuizPlay> {
     super.initState();
   }
 
-  QuestionModel getQuestionModelFromDatasnapshot(
+  QuestionModel getQuestionModelFromgetsnapshot(
       DocumentSnapshot questionSnapshot) {
     QuestionModel questionModel = QuestionModel();
-    questionModel.question = questionSnapshot.data()["question"];
+    questionModel.question = questionSnapshot.get("question");
+
     /// shuffling the options
     List<String> options = [
-      questionSnapshot.data()["option1"],
-      questionSnapshot.data()["option2"],
-      questionSnapshot.data()["option3"],
-      questionSnapshot.data()["option4"],
+      questionSnapshot.get("option1"),
+      questionSnapshot.get("option2"),
+      questionSnapshot.get("option3"),
+      questionSnapshot.get("option4"),
     ];
     options.shuffle();
     questionModel.option1 = options[0];
     questionModel.option2 = options[1];
     questionModel.option3 = options[2];
     questionModel.option4 = options[3];
-    questionModel.correctOption = questionSnapshot.data()["option1"];
+    questionModel.correctOption = questionSnapshot.get("option1");
     questionModel.answered = false;
     print(questionModel.correctOption.toLowerCase());
     return questionModel;
@@ -84,12 +85,13 @@ class _QuizPlayState extends State<QuizPlay> {
         appBar: AppBar(
           title: Text(
             "Welcome To Your Assesment",
-            style:
-                TextStyle(color: Colors.black54, fontWeight: FontWeight.bold),
+            style: TextStyle(
+                color: Colors.black54,
+                fontSize: 14,
+                fontWeight: FontWeight.bold),
           ),
           centerTitle: true,
           backgroundColor: Colors.transparent,
-          brightness: Brightness.light,
           elevation: 0.0,
         ),
         body: isLoading
@@ -110,7 +112,7 @@ class _QuizPlayState extends State<QuizPlay> {
                           ? Container(
                               child: Center(
                                 child: Text(
-                                  "No Data",
+                                  "No get",
                                   style: TextStyle(color: Colors.black),
                                 ),
                               ),
@@ -122,7 +124,7 @@ class _QuizPlayState extends State<QuizPlay> {
                               itemBuilder: (context, index) {
                                 return QuizPlayTile(
                                   questionModel:
-                                      getQuestionModelFromDatasnapshot(
+                                      getQuestionModelFromgetsnapshot(
                                           questionSnaphot.docs[index]),
                                   index: index,
                                 );

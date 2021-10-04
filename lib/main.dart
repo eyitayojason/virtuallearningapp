@@ -7,10 +7,8 @@ import 'package:virtuallearningapp/helper/functions.dart';
 import 'package:virtuallearningapp/services%20and%20providers/auth.dart';
 import 'package:virtuallearningapp/view/Splashscreen.dart';
 import 'package:provider/provider.dart';
-import 'package:virtuallearningapp/view/screens/Signup.dart';
 import 'package:virtuallearningapp/view/screens/lecturer/dashboard/dashboard.dart';
 import 'package:virtuallearningapp/view/screens/lecturer/login/Loginscreen.dart';
-import 'package:virtuallearningapp/view/screens/widgets/form_textfield.dart';
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
@@ -20,12 +18,6 @@ void main() async {
   runApp(
     MultiProvider(
       providers: [
-        Provider(
-          create: (context) => Signup(),
-        ),
-        Provider(
-          create: (context) => CustomFormField(),
-        ),
         ChangeNotifierProvider(
           create: (context) => Authentication(),
         ),
@@ -65,10 +57,10 @@ class _MyAppState extends State<MyApp> {
     super.initState();
     FirebaseAuth.instance.signOut();
     FirebaseAuth.instance.userChanges().listen((User user) {
-      if (user == null) {
-        print('User is currently signed out!');
-      } else {
+      if (user != null) {
         print('User is signed in!');
+      } else {
+        print('User is currently signed out!');
       }
     });
   }
