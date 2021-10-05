@@ -31,11 +31,13 @@ class _LecturerDashboardState extends State<LecturerDashboard> {
     }
   }
 
+  int badgeCount;
   @override
   void initState() {
     // TODO: implement initState
     super.initState();
     getCurrentUser();
+    assignmentlist = assignmentlist;
   }
 
   @override
@@ -80,10 +82,12 @@ class _LecturerDashboardState extends State<LecturerDashboard> {
                               color: Colors.white,
                               fontWeight: FontWeight.bold),
                         ),
-                        NamedIcon(
-                          iconData: Icons.picture_as_pdf_outlined,
-                          //  text2: assignmentlist,
-                        )
+                        assignmentlist != null
+                            ? NamedIcon(
+                                iconData: Icons.picture_as_pdf_outlined,
+                                text2: assignmentlist.toString(),
+                              )
+                            : SizedBox()
                       ],
                     ),
                     Expanded(
