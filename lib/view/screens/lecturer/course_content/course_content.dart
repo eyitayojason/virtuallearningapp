@@ -3,8 +3,8 @@ import 'package:flutter/material.dart';
 import 'package:virtuallearningapp/view/screens/lecturer/course_content/tabs/classroom/classroom.dart';
 import 'package:virtuallearningapp/view/screens/lecturer/course_content/tabs/content/content.dart';
 import 'package:virtuallearningapp/view/screens/lecturer/course_content/tabs/content/layouts/add_new_content.dart';
-import 'package:virtuallearningapp/view/screens/widgets/appbar.dart';
 import 'package:virtuallearningapp/helper/willpop.dart';
+import 'package:virtuallearningapp/widgets/appbar.dart';
 
 class LecturerCourseContent extends StatefulWidget {
   @override

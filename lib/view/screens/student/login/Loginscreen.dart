@@ -6,12 +6,11 @@ import 'package:virtuallearningapp/services%20and%20providers/auth.dart';
 import 'package:virtuallearningapp/view/screens/student/bottom_navigation_bar/bottom_navigation_bar.dart';
 import 'package:virtuallearningapp/view/screens/student/course_content/course_content.dart';
 import 'package:virtuallearningapp/view/screens/student/dashboard/dashboard.dart';
-import 'package:virtuallearningapp/view/screens/widgets/button.dart';
-import 'package:virtuallearningapp/view/screens/widgets/form_textfield.dart';
-import 'package:virtuallearningapp/view/screens/widgets/logo.dart';
-
+import 'package:virtuallearningapp/widgets/alertdialog.dart';
+import 'package:virtuallearningapp/widgets/button.dart';
+import 'package:virtuallearningapp/widgets/form_textfield.dart';
+import 'package:virtuallearningapp/widgets/logo.dart';
 import '../../assesmenthome.dart';
-import 'package:virtuallearningapp/view/screens/widgets/alertdialog.dart';
 
 bool isLoading = false;
 String email;
@@ -48,6 +47,7 @@ class _StudentLoginState extends State<StudentLogin> {
       });
 
       try {
+        // ignore: unused_local_variable
         final status =
             await authService.signInWithEmailAndPassword(email, password);
 
@@ -135,12 +135,7 @@ class _StudentLoginState extends State<StudentLogin> {
                           CustomButton(
                               text: 'SUBMIT',
                               onPressed: () {
-                                // try {
-                                //   if (loggedinuser != null)
-                                //     authentication.writeNewUserToDatabase(displayName);
-                                // } catch (e) {
-                                //   print(e);
-                                // }
+                               
                                 signIn();
                               }),
                         ],

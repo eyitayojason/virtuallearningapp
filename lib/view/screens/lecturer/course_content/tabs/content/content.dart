@@ -5,7 +5,7 @@ import 'package:provider/provider.dart';
 import 'package:virtuallearningapp/main.dart';
 import 'package:virtuallearningapp/services%20and%20providers/auth.dart';
 import 'package:virtuallearningapp/view/screens/lecturer/course_content/tabs/content/layouts/course_content_card.dart';
-import 'package:virtuallearningapp/view/screens/widgets/button.dart';
+import 'package:virtuallearningapp/widgets/button.dart';
 
 class WeeklyCourseContents extends StatefulWidget {
   const WeeklyCourseContents({Key key, this.addcontent});

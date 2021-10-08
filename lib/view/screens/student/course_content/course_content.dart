@@ -4,45 +4,33 @@ import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:virtuallearningapp/main.dart';
 import 'package:virtuallearningapp/services%20and%20providers/auth.dart';
-import 'package:virtuallearningapp/view/screens/Signup.dart';
 import 'package:virtuallearningapp/view/screens/student/course_content/tabs/classroom/classroom.dart';
 import 'package:virtuallearningapp/view/screens/lecturer/course_content/tabs/content/content.dart';
-import 'package:virtuallearningapp/view/screens/student/dashboard/dashboard.dart';
-import 'package:virtuallearningapp/view/screens/widgets/appbar.dart';
 import 'package:virtuallearningapp/helper/willpop.dart';
+import 'package:virtuallearningapp/widgets/appbar.dart';
 
-User user;
-User loggedinuser;
-final _auth = FirebaseAuth.instance;
-String url;
-
-class StudentCourseContent extends StatefulWidget {
-  @override
-  _StudentCourseContentState createState() => _StudentCourseContentState();
-}
-
-class _StudentCourseContentState extends State<StudentCourseContent> {
-  @override
-  void initState() {
-    super.initState();
-    getCurrentUser();
-  }
-
-  void getCurrentUser() async {
-    try {
-      final user = _auth.currentUser;
-
-      if (user != null) {
-        loggedinuser = user;
-      }
-    } catch (e) {
-      print(e);
-    }
-  }
+class StudentCourseContent extends StatelessWidget {
+  final _auth = FirebaseAuth.instance;
 
   @override
   Widget build(BuildContext context) {
     var authProvider = Provider.of<Authentication>(context);
+    submitAssignment() async {
+      await authProvider.selectContentFile();
+      await authProvider.uploadContent();
+      await FirebaseFirestore.instance.collection("assignments").add({
+        "fileURL": contentDownloadUrl,
+        "timestamp": DateTime.now().toString(),
+        "sender": _auth.currentUser.photoURL,
+      }).whenComplete(() {
+        ScaffoldMessenger.of(context).showSnackBar(
+          SnackBar(
+            content: Text('Assignment Submitted'),
+          ),
+        );
+      });
+    }
+
     return SafeArea(
       child: DefaultTabController(
         length: 2,
@@ -56,14 +44,14 @@ class _StudentCourseContentState extends State<StudentCourseContent> {
                 flexibleSpace: Padding(
                   padding: const EdgeInsets.only(bottom: 50),
                   child: CustomAppBar(
-                    username: FirebaseAuth.instance.currentUser.displayName,
-                    departmentname: FirebaseAuth.instance.currentUser.photoURL,
+                    username: _auth.currentUser.displayName,
+                    departmentname: _auth.currentUser.photoURL,
                   ),
                 ),
                 backgroundColor: Colors.orange,
                 bottom: TabBar(
                   indicatorColor: Colors.white,
-                  tabs: [
+                  tabs: const [
                     Tab(text: 'CONTENT'),
                     Tab(text: 'CLASSROOM'),
                   ],
@@ -82,24 +70,10 @@ class _StudentCourseContentState extends State<StudentCourseContent> {
                     WeeklyCourseContents(
                       addcontent: Card(
                         child: TextButton(
-                          onPressed: () async {
-                            await authProvider.selectContentFile();
-                            await authProvider.uploadContent();
-                            await FirebaseFirestore.instance
-                                .collection("assignments")
-                                .add({
-                              "fileURL": contentDownloadUrl,
-                              "timestamp": DateTime.now().toString(),
-                              "sender": data.data()["matricNo"],
-                            }).whenComplete(() {
-                              ScaffoldMessenger.of(context).showSnackBar(
-                                SnackBar(
-                                  content: Text('Assignment Submitted'),
-                                ),
-                              );
-                            });
+                          onPressed: () {
+                            submitAssignment();
                           },
-                          child: Text(
+                          child: const Text(
                             "Submit Assignment",
                             style: TextStyle(color: Colors.black),
                           ),

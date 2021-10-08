@@ -6,12 +6,12 @@ import 'package:virtuallearningapp/services%20and%20providers/auth.dart';
 import 'package:virtuallearningapp/view/screens/lecturer/course_content/course_content.dart';
 import 'package:virtuallearningapp/view/screens/lecturer/dashboard/dashboard.dart';
 import 'package:virtuallearningapp/view/screens/student/bottom_navigation_bar/bottom_navigation_bar.dart';
-import 'package:virtuallearningapp/view/screens/widgets/button.dart';
-import 'package:virtuallearningapp/view/screens/widgets/form_textfield.dart';
-import 'package:virtuallearningapp/view/screens/widgets/logo.dart';
 import 'package:sizer/sizer.dart';
+import 'package:virtuallearningapp/widgets/alertdialog.dart';
+import 'package:virtuallearningapp/widgets/button.dart';
+import 'package:virtuallearningapp/widgets/form_textfield.dart';
+import 'package:virtuallearningapp/widgets/logo.dart';
 import '../createquiz.dart';
-import 'package:virtuallearningapp/view/screens/widgets/alertdialog.dart';
 
 bool isLoading = false;
 String email;
@@ -50,6 +50,7 @@ class _LecturerLoginState extends State<LecturerLogin> {
       });
 
       try {
+        // ignore: unused_local_variable
         final status =
             await authService.signInWithEmailAndPassword(email, password);
 
@@ -69,7 +70,7 @@ class _LecturerLoginState extends State<LecturerLogin> {
           isLoading = false;
         });
       } catch (e) {
-        AlrtDialog().showAlertDialog(context, e.toString().substring(30));
+        AlrtDialog().showAlertDialog(context, e.toString().substring(30),);
       }
     }
     setState(() {

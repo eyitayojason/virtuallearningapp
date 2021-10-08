@@ -3,9 +3,10 @@ import 'package:flutter/material.dart';
 import 'package:virtuallearningapp/services%20and%20providers/auth.dart';
 import 'package:virtuallearningapp/view/screens/lecturer/dashboard/layouts/assignment_updates.dart';
 import 'package:virtuallearningapp/helper/willpop.dart';
-import 'package:virtuallearningapp/view/screens/widgets/appbar.dart';
-import 'package:virtuallearningapp/view/screens/widgets/news.dart';
-import 'package:virtuallearningapp/view/screens/widgets/notificationbadge.dart';
+import 'package:virtuallearningapp/widgets/appbar.dart';
+import 'package:virtuallearningapp/widgets/news.dart';
+import 'package:virtuallearningapp/widgets/notificationbadge.dart';
+
 
 Authentication authentication;
 final _auth = FirebaseAuth.instance;
@@ -96,7 +97,7 @@ class _LecturerDashboardState extends State<LecturerDashboard> {
                     SizedBox(
                       height: 20,
                     ),
-                    Expanded(flex: 2, child: NewsScreen()),
+                    Expanded(flex: 2, child: NewsScreen(),),
                   ],
                 ),
               ),

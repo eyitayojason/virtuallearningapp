@@ -2,11 +2,11 @@ import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:sizer/sizer.dart';
 import 'package:virtuallearningapp/services%20and%20providers/auth.dart';
-import 'package:virtuallearningapp/view/screens/widgets/button.dart';
-import 'package:virtuallearningapp/view/screens/widgets/form_textfield.dart';
-import 'package:virtuallearningapp/view/screens/widgets/logo.dart';
 import 'package:modal_progress_hud/modal_progress_hud.dart';
-import 'package:virtuallearningapp/view/screens/widgets/alertdialog.dart';
+import 'package:virtuallearningapp/widgets/alertdialog.dart';
+import 'package:virtuallearningapp/widgets/button.dart';
+import 'package:virtuallearningapp/widgets/form_textfield.dart';
+import 'package:virtuallearningapp/widgets/logo.dart';
 
 bool isLoading = false;
 String email;

@@ -1,4 +1,3 @@
-
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:virtuallearningapp/main.dart';
@@ -14,35 +13,12 @@ class LecturerClassroom extends StatefulWidget {
 class _LecturerClassroomState extends State<LecturerClassroom> {
   final messageTextController = TextEditingController();
 
-  final _auth = FirebaseAuth.instance;
-
-  void getCurrentUser() async {
-    try {
-      final user = _auth.currentUser;
-      if (user != null) {
-        LecturerClassroom.classroomuser = user;
-      }
-    } catch (e) {
-      print(e);
-    }
-  }
-
   @override
   void initState() {
     super.initState();
-    getCurrentUser();
-    //audioPlayer = AudioPlayer();
-    
     isUploading = false;
     isRecorded = false;
     isRecording = false;
-  }
-
-  @override
-  void dispose() {
-    // TODO: implement dispose
-    super.dispose();
-  //  audioPlayer.dispose();
   }
 
   @override
@@ -53,7 +29,7 @@ class _LecturerClassroomState extends State<LecturerClassroom> {
         child: WillPop(
           child: Scaffold(
             backgroundColor: Colors.grey.shade300,
-            body: ChatStream(messageTextController: messageTextController),
+            body: ChatStream(),
           ),
         ),
       ),

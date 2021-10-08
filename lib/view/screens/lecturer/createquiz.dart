@@ -3,7 +3,7 @@ import 'package:flutter/services.dart';
 import 'package:provider/provider.dart';
 import 'package:random_string/random_string.dart';
 import 'package:virtuallearningapp/services%20and%20providers/auth.dart';
-import 'package:virtuallearningapp/services%20and%20providers/database.dart';
+import 'package:virtuallearningapp/services%20and%20providers/databaseService.dart';
 import 'addQuestion.dart';
 
 class CreateQuiz extends StatefulWidget {

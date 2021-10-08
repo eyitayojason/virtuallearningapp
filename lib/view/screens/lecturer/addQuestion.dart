@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:virtuallearningapp/services%20and%20providers/database.dart';
+import 'package:virtuallearningapp/services%20and%20providers/databaseService.dart';
 import 'package:virtuallearningapp/view/screens/student/bottom_navigation_bar/bottom_navigation_bar.dart';
 import 'course_content/course_content.dart';
 import 'createquiz.dart';

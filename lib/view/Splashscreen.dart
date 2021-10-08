@@ -2,7 +2,7 @@ import 'dart:async';
 import 'package:flutter/material.dart';
 import 'package:flutter_spinkit/flutter_spinkit.dart';
 import 'package:virtuallearningapp/view/screens/Firstscreen.dart';
-import 'package:virtuallearningapp/view/screens/widgets/logo.dart';
+import 'package:virtuallearningapp/widgets/logo.dart';
 
 class Splashscreen extends StatefulWidget {
   Splashscreen({Key key}) : super(key: key);

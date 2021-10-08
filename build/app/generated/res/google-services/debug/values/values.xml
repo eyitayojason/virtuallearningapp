@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="default_web_client_id" translatable="false">888531787342-sq183aqkufvb23cbfurguatrtokvs6l6.apps.googleusercontent.com</string>
+    <string name="gcm_defaultSenderId" translatable="false">888531787342</string>
+    <string name="google_api_key" translatable="false">AIzaSyDwwwkDpUVr0qIbkKXEzZKwbysCZae6xCU</string>
+    <string name="google_app_id" translatable="false">1:888531787342:android:918b9ad191305a70b86d1f</string>
+    <string name="google_crash_reporting_api_key" translatable="false">AIzaSyDwwwkDpUVr0qIbkKXEzZKwbysCZae6xCU</string>
+    <string name="google_storage_bucket" translatable="false">virtuallearningapp.appspot.com</string>
+    <string name="project_id" translatable="false">virtuallearningapp</string>
+</resources>

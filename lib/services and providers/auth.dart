@@ -6,11 +6,12 @@ import 'package:firebase_storage/firebase_storage.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_audio_recorder/flutter_audio_recorder.dart';
 import 'package:path_provider/path_provider.dart';
+import 'package:virtuallearningapp/Models/NewsModel.dart';
 import 'package:virtuallearningapp/main.dart';
-import 'package:virtuallearningapp/services%20and%20providers/model.dart';
 import 'package:path/path.dart';
 import 'package:virtuallearningapp/view/screens/Firstscreen.dart';
-import 'package:virtuallearningapp/view/screens/student/course_content/course_content.dart';
+import 'package:http/http.dart' as http;
+import 'dart:convert';
 
 enum AuthResultStatus {
   successful,
@@ -24,10 +25,12 @@ enum AuthResultStatus {
   undefined,
 }
 enum authProblems { UserNotFound, PasswordNotValid, NetworkError }
+enum PlayerState { stopped, playing, paused }
 
 class Authentication with ChangeNotifier {
   final _auth = FirebaseAuth.instance;
-  AuthResultStatus _status;
+  var data;
+
   String uemail;
   User loggedinuser;
   UploadTask uploadTask;
@@ -38,9 +41,6 @@ class Authentication with ChangeNotifier {
   String videopath;
   String imagepath;
   bool isPressed = false;
-  FireUser _userFromFirebaseUser(User user) {
-    return user != null ? FireUser(user.uid) : null;
-  }
 
   Future<AuthResultStatus> signInWithEmailAndPassword(
     String email,
@@ -147,6 +147,7 @@ class Authentication with ChangeNotifier {
     file = File(videopath);
   }
 
+// getCurrentUser called in the main method
   void getCurrentUser() async {
     try {
       final user = _auth.currentUser;
@@ -156,25 +157,6 @@ class Authentication with ChangeNotifier {
     } catch (e) {
       print(e);
     }
-  }
-
-  void playpauseicon() {
-    isPressed = !isPressed;
-  }
-
-  void onPlayButtonPressed({@required String audio}) {
-    // if (!isPlaying) {
-    //   isPlaying = true;
-    //   audioPlayer.play(
-    //     audio,
-    //   );
-    //   audioPlayer.onPlayerCompletion.listen((duration) {
-    //     isPlaying = false;
-    //   });
-    // } else {
-    //   audioPlayer.stop();
-    //   isPlaying = false;
-    // }
   }
 
   Future<void> onFileUploadButtonPressed({
@@ -255,6 +237,26 @@ class Authentication with ChangeNotifier {
     print(contentpath);
   }
 
+  Future<List<NewsDetail>> getNews() async {
+    final List<NewsDetail> items = [];
+    var apiKey =
+        "https://newsapi.org/v2/top-headlines?country=ng&apiKey=bc9f48ec79d5429fbb1c9e1fcf7ff7a1";
+    http.Response response = await http.get(
+      Uri.parse(apiKey),
+    );
+    Map<String, dynamic> responseData = json.decode(response.body);
+    responseData['articles'].forEach((newsDetail) {
+      final NewsDetail news = NewsDetail(
+          description: newsDetail['description'],
+          title: newsDetail['title'],
+          url: newsDetail['urlToImage']);
+
+      items.add(news);
+      notifyListeners();
+    });
+    return items;
+  }
+
   Future uploadContent() async {
     UploadTask _uploadTask;
     Reference storageReference =
@@ -263,73 +265,5 @@ class Authentication with ChangeNotifier {
     await _uploadTask.whenComplete(() async {
       contentDownloadUrl = await storageReference.getDownloadURL();
     });
-  }
-}
-
-class AuthExceptionHandler {
-  static handleException(e) {
-    print(e.code);
-    var status;
-    switch (e.code) {
-      case "ERROR_INVALID_EMAIL":
-        status = AuthResultStatus.invalidEmail;
-        break;
-      case "ERROR_WRONG_PASSWORD":
-        status = AuthResultStatus.wrongPassword;
-        break;
-      case "ERROR_USER_NOT_FOUND":
-        status = AuthResultStatus.userNotFound;
-        break;
-      case "ERROR_USER_DISABLED":
-        status = AuthResultStatus.userDisabled;
-        break;
-      case "ERROR_TOO_MANY_REQUESTS":
-        status = AuthResultStatus.tooManyRequests;
-        break;
-      case "ERROR_OPERATION_NOT_ALLOWED":
-        status = AuthResultStatus.operationNotAllowed;
-        break;
-      case "ERROR_EMAIL_ALREADY_IN_USE":
-        status = AuthResultStatus.emailAlreadyExists;
-        break;
-      default:
-        status = AuthResultStatus.undefined;
-    }
-    return status;
-  }
-
-  ///
-  /// Accepts AuthExceptionHandler.errorType
-  ///
-  static generateExceptionMessage(exceptionCode) {
-    String errorMessage;
-    switch (exceptionCode) {
-      case AuthResultStatus.invalidEmail:
-        errorMessage = "Your email address appears to be malformed.";
-        break;
-      case AuthResultStatus.wrongPassword:
-        errorMessage = "Your password is wrong.";
-        break;
-      case AuthResultStatus.userNotFound:
-        errorMessage = "User with this email doesn't exist.";
-        break;
-      case AuthResultStatus.userDisabled:
-        errorMessage = "User with this email has been disabled.";
-        break;
-      case AuthResultStatus.tooManyRequests:
-        errorMessage = "Too many requests. Try again later.";
-        break;
-      case AuthResultStatus.operationNotAllowed:
-        errorMessage = "Signing in with Email and Password is not enabled.";
-        break;
-      case AuthResultStatus.emailAlreadyExists:
-        errorMessage =
-            "The email has already been registered. Please login or reset your password.";
-        break;
-      default:
-        errorMessage = "An undefined Error happened.";
-    }
-
-    return errorMessage;
   }
 }

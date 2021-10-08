@@ -7,40 +7,10 @@ import 'package:virtuallearningapp/main.dart';
 import 'auth.dart';
 import 'messagestream.dart';
 
-class ChatStream extends StatefulWidget {
-  const ChatStream({
-    @required this.messageTextController,
-  });
-  final TextEditingController messageTextController;
+class ChatStream extends StatelessWidget {
+  final TextEditingController messageTextController = TextEditingController();
 
   @override
-  State<ChatStream> createState() => _ChatStreamState();
-}
-
-class _ChatStreamState extends State<ChatStream> {
-  final FirebaseAuth _auth = FirebaseAuth.instance;
-  User currentuser;
-  bool isloggedin = false;
-  getUser() async {
-    User user = _auth.currentUser;
-    await user.reload();
-    user = _auth.currentUser;
-
-    if (user != null) {
-      setState(() {
-        this.currentuser = user;
-        this.isloggedin = true;
-      });
-    }
-  }
-
-  @override
-  void initState() {
-    super.initState();
-    getUser();
-    print(currentuser);
-  }
-
   Widget build(BuildContext context) {
     final _firestore = FirebaseFirestore.instance;
     var authprovider = Provider.of<Authentication>(
@@ -118,7 +88,7 @@ class _ChatStreamState extends State<ChatStream> {
                           hintText: "Write message...",
                           hintStyle: TextStyle(color: Colors.black54),
                           border: InputBorder.none),
-                      controller: widget.messageTextController,
+                      controller: messageTextController,
                       onChanged: (value) {
                         chattext = value;
                       },
@@ -167,12 +137,13 @@ class _ChatStreamState extends State<ChatStream> {
                                 ),
                           onPressed: () {
                             authprovider.onRecordButtonPressed();
-                          }),
+                          },
+                        ),
                   Padding(
                     padding: const EdgeInsets.all(8.0),
                     child: InkWell(
                       onTap: () async {
-                        widget.messageTextController.clear();
+                        messageTextController.clear();
                         _firestore.collection("Messages").add({
                           "sender":
                               FirebaseAuth.instance.currentUser.displayName,

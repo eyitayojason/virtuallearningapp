@@ -5,8 +5,9 @@ import 'package:virtuallearningapp/services%20and%20providers/auth.dart';
 import 'package:virtuallearningapp/view/screens/student/bottom_navigation_bar/bottom_navigation_bar.dart';
 import 'package:virtuallearningapp/view/screens/student/course_content/course_content.dart';
 import 'package:virtuallearningapp/view/screens/student/dashboard/dashboard.dart';
-import 'package:virtuallearningapp/view/screens/widgets/button.dart';
-import 'package:virtuallearningapp/view/screens/widgets/form_textfield.dart';
+import 'package:virtuallearningapp/widgets/button.dart';
+import 'package:virtuallearningapp/widgets/form_textfield.dart';
+
 
 String email;
 String password;

@@ -2,9 +2,9 @@ import 'package:flutter/material.dart';
 import 'package:virtuallearningapp/view/screens/Signup.dart';
 import 'package:virtuallearningapp/view/screens/lecturer/login/Loginscreen.dart';
 import 'package:virtuallearningapp/view/screens/student/login/Loginscreen.dart';
-import 'package:virtuallearningapp/view/screens/widgets/button.dart';
-import 'package:virtuallearningapp/view/screens/widgets/logo.dart';
 import 'package:virtuallearningapp/helper/willpop.dart';
+import 'package:virtuallearningapp/widgets/button.dart';
+import 'package:virtuallearningapp/widgets/logo.dart';
 
 class FirstScreen extends StatelessWidget {
   @override

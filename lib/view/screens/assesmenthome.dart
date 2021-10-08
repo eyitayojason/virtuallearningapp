@@ -1,10 +1,8 @@
-import 'package:cached_network_image/cached_network_image.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
-import 'package:octo_image/octo_image.dart';
 import 'package:virtuallearningapp/services%20and%20providers/auth.dart';
-import 'package:virtuallearningapp/services%20and%20providers/database.dart';
+import 'package:virtuallearningapp/services%20and%20providers/databaseService.dart';
 import 'package:virtuallearningapp/view/screens/playQuiz.dart';
 import 'package:virtuallearningapp/view/screens/student/dashboard/dashboard.dart';
 import 'student/bottom_navigation_bar/bottom_navigation_bar.dart';

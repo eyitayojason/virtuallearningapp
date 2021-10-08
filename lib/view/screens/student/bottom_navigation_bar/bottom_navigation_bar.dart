@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:virtuallearningapp/view/screens/widgets/icons.dart';
+import 'package:virtuallearningapp/widgets/icons.dart';
 
 class BottomNavBAr extends StatefulWidget {
   const BottomNavBAr({
