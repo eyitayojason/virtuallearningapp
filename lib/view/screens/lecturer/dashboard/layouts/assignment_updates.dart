@@ -13,12 +13,6 @@ class AssignmentUpdates extends StatefulWidget {
 
 class _AssignmentUpdatesState extends State<AssignmentUpdates> {
   @override
-  void initState() {
-    // TODO: implement initState
-    super.initState();
-  }
-
-  @override
   Widget build(BuildContext context) {
     return FutureBuilder(
         future: FirebaseFirestore.instance

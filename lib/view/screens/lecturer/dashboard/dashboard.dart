@@ -1,46 +1,13 @@
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
-import 'package:virtuallearningapp/services%20and%20providers/auth.dart';
 import 'package:virtuallearningapp/view/screens/lecturer/dashboard/layouts/assignment_updates.dart';
 import 'package:virtuallearningapp/helper/willpop.dart';
 import 'package:virtuallearningapp/widgets/appbar.dart';
 import 'package:virtuallearningapp/widgets/news.dart';
 import 'package:virtuallearningapp/widgets/notificationbadge.dart';
 
-
-Authentication authentication;
-final _auth = FirebaseAuth.instance;
-User currentuser;
-var lecturerdata;
-
-class LecturerDashboard extends StatefulWidget {
-  @override
-  _LecturerDashboardState createState() => _LecturerDashboardState();
-}
-
-class _LecturerDashboardState extends State<LecturerDashboard> {
-  void getCurrentUser() async {
-    try {
-      final user = _auth.currentUser;
-
-      if (user != null) {
-        currentuser = user;
-        setState(() {});
-      }
-    } catch (e) {
-      print(e);
-    }
-  }
-
-  int badgeCount;
-  @override
-  void initState() {
-    // TODO: implement initState
-    super.initState();
-    getCurrentUser();
-    assignmentlist = assignmentlist;
-  }
-
+class LecturerDashboard extends StatelessWidget {
+  final _auth = FirebaseAuth.instance;
   @override
   Widget build(BuildContext context) {
     return SafeArea(
@@ -52,11 +19,9 @@ class _LecturerDashboardState extends State<LecturerDashboard> {
             child: CustomAppBar(
               username: FirebaseAuth.instance.currentUser.displayName,
               onpressed: () async {
-                await _auth.signOut();
-
-                if (_auth.currentUser == null) {
+                _auth.signOut().whenComplete(() {
                   Navigator.pop(context);
-                }
+                });
               },
               departmentname: FirebaseAuth.instance.currentUser.photoURL,
             ),
@@ -97,7 +62,10 @@ class _LecturerDashboardState extends State<LecturerDashboard> {
                     SizedBox(
                       height: 20,
                     ),
-                    Expanded(flex: 2, child: NewsScreen(),),
+                    Expanded(
+                      flex: 2,
+                      child: NewsScreen(),
+                    ),
                   ],
                 ),
               ),

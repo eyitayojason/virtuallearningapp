@@ -16,48 +16,58 @@ class CustomAppBar extends StatelessWidget {
       color: Colors.orange,
       child: Padding(
         padding: const EdgeInsets.all(20.0),
-        child: Row(
+        child: Row(children: [
+          Column(
+            crossAxisAlignment: CrossAxisAlignment.start,
+            mainAxisAlignment: MainAxisAlignment.end,
             children: [
-              Column(
-                crossAxisAlignment: CrossAxisAlignment.start,
-                mainAxisAlignment: MainAxisAlignment.end,
+              Text(
+                username,
+                style: TextStyle(
+                    color: Colors.white,
+                    fontSize: 20,
+                    fontWeight: FontWeight.bold),
+              ),
+              Row(
                 children: [
-                  Text(
-                    username,
-                    style: TextStyle(
-                        color: Colors.white,
-                        fontSize: 20,
-                        fontWeight: FontWeight.bold),
+                  Icon(
+                    Icons.school,
+                    color: Colors.green,
+                    size: 20,
                   ),
-                  Row(
-                    children: [
-                      Icon(
-                        Icons.school,
-                        color: Colors.green,
-                        size: 20,
-                      ),
-                      SizedBox(
-                        width: 10,
-                      ),
-                      Text(
-                        departmentname,
-                        style: TextStyle(color: Colors.white, fontSize: 10),
-                      ),
-                    ],
+                  SizedBox(
+                    width: 10,
+                  ),
+                  Text(
+                    departmentname,
+                    style: TextStyle(color: Colors.white, fontSize: 10),
                   ),
                 ],
               ),
-              IconButton(
-                  tooltip: "Logout",
-                  icon: Icon(
-                    Icons.logout,
-                    color: Colors.white,
-                    size: 30,
-                  ),
-                  onPressed: onpressed),
             ],
-            crossAxisAlignment: CrossAxisAlignment.start,
-            mainAxisAlignment: MainAxisAlignment.spaceBetween),
+          ),
+          InkWell(
+            onTap: () => onpressed(),
+            child: Row(
+              children: [
+                Icon(
+                  Icons.logout,
+                  color: Colors.white,
+                  size: 30,
+                ),
+                SizedBox(
+                  width: 05,
+                ),
+                Text(
+                  "Signout",
+                  style: TextStyle(
+                    color: Colors.white,
+                  ),
+                )
+              ],
+            ),
+          ),
+        ], mainAxisAlignment: MainAxisAlignment.spaceBetween),
       ),
     );
   }

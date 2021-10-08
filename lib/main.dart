@@ -15,6 +15,7 @@ void main() async {
   await Firebase.initializeApp();
   authService.getCurrentUser();
 
+
   runApp(
     MultiProvider(
       providers: [

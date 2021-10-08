@@ -6,31 +6,8 @@ import 'package:virtuallearningapp/view/screens/lecturer/course_content/tabs/con
 import 'package:virtuallearningapp/helper/willpop.dart';
 import 'package:virtuallearningapp/widgets/appbar.dart';
 
-class LecturerCourseContent extends StatefulWidget {
-  @override
-  _LecturerCourseContentState createState() => _LecturerCourseContentState();
-}
-
-class _LecturerCourseContentState extends State<LecturerCourseContent> {
-  User courseuser;
+class LecturerCourseContent extends StatelessWidget {
   final _auth = FirebaseAuth.instance;
-  void getCurrentUser() async {
-    try {
-      final user = _auth.currentUser;
-      if (user != null) {
-        courseuser = user;
-      }
-    } catch (e) {
-      print(e);
-    }
-  }
-
-  @override
-  void initState() {
-    super.initState();
-    getCurrentUser();
-    print(courseuser.displayName);
-  }
 
   @override
   Widget build(BuildContext context) {
@@ -47,6 +24,11 @@ class _LecturerCourseContentState extends State<LecturerCourseContent> {
                 flexibleSpace: Padding(
                   padding: const EdgeInsets.only(bottom: 50),
                   child: CustomAppBar(
+                    onpressed: () {
+                      _auth.signOut().whenComplete(() {
+                        Navigator.pop(context);
+                      });
+                    },
                     username: FirebaseAuth.instance.currentUser.displayName,
                     departmentname: FirebaseAuth.instance.currentUser.photoURL,
                   ),

@@ -44,6 +44,11 @@ class StudentCourseContent extends StatelessWidget {
                 flexibleSpace: Padding(
                   padding: const EdgeInsets.only(bottom: 50),
                   child: CustomAppBar(
+                    onpressed: () {
+                      _auth.signOut().whenComplete(() {
+                        Navigator.pop(context);
+                      });
+                    },
                     username: _auth.currentUser.displayName,
                     departmentname: _auth.currentUser.photoURL,
                   ),
